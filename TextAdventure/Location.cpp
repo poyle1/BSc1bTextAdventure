@@ -40,6 +40,10 @@ void Location::setDescription(string nDesc)
 	this->description = nDesc;
 }
 
+void Location::addConnection(Location* nlocation)
+{
+}
+
 //Sets pointers to previous and next Location objects
 void Location::setConnections(Location* prevLoc, Location* nextLoc)
 {
