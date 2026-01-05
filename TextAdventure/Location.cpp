@@ -7,8 +7,8 @@ Location::Location()
 {
 	this->name = "Empty Location";
 	this->description = "This location is empty.";
-	this->prevLocation = nullptr;
-	this->nextLocation = nullptr;
+	//this->prevLocation = nullptr;
+	//this->nextLocation = nullptr;
 }
 
 //Parameters: Name, Description, 
@@ -16,8 +16,8 @@ Location::Location(string nName, string nDesc)
 {
 	name = nName;
 	description = nDesc;
-	prevLocation = nullptr;
-	nextLocation = nullptr;
+	//prevLocation = nullptr;
+	//nextLocation = nullptr;
 }
 
 string Location::getName()
@@ -40,42 +40,24 @@ void Location::setDescription(string nDesc)
 	this->description = nDesc;
 }
 
+int Location::getNumConnections()
+{
+	return this->connections.size();
+}
+
+vector<Location*> Location::getConnections()
+{
+	return this->connections;
+}
+
+
+
+void Location::getConnection()
+{
+
+}
+
 void Location::addConnection(Location* nlocation)
 {
-}
-
-//Sets pointers to previous and next Location objects
-void Location::setConnections(Location* prevLoc, Location* nextLoc)
-{
-	this->prevLocation = prevLoc;
-	this->nextLocation = nextLoc;
-}
-
-Location* Location::getNextLoc()
-{
-	return this->nextLocation;
-}
-
-Location* Location::getPrevLoc()
-{
-	return this->prevLocation;
-}
-bool Location::hasNextLoc()
-{
-	if (this->nextLocation == nullptr) {
-		return false;
-	}
-	else {
-		return true;
-	}
-}
-
-bool Location::hasPrevLoc()
-{
-	if (this->prevLocation == nullptr) {
-		return false;
-	}
-	else {
-		return true;
-	}
+	this->connections.push_back(nlocation);
 }

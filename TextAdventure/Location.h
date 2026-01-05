@@ -19,12 +19,16 @@ public:
 	Location(string nName, string nDesc);
 
 	string getName();
-	string getDescription();
 	void setName(string nName);
+	string getDescription();
 	void setDescription(string nDesc);
 
+	int getNumConnections(); ////int getHandSize();
+	vector<Location*> getConnections(); //vector<Card> getHand();;
 
-	void addConnection(Location* nlocation);
+	Location* getConnection(int index); //Card getCard(int index);
+	void addConnection(Location* nlocation); //void addCard(Card new_card);
+	
 
 	//Location* getNextLoc();
 	//Location* getPrevLoc();
