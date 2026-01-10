@@ -1,14 +1,12 @@
 #include "Location.h"
-#include <vector>
-#include <string>
-using namespace std;
+#include <iostream>
+
 
 Location::Location()
 {
 	this->name = "Empty Location";
 	this->description = "This location is empty.";
-	//this->prevLocation = nullptr;
-	//this->nextLocation = nullptr;
+	this->flavorText = "";
 }
 
 //Parameters: Name, Description, 
@@ -16,48 +14,54 @@ Location::Location(string nName, string nDesc)
 {
 	name = nName;
 	description = nDesc;
-	//prevLocation = nullptr;
-	//nextLocation = nullptr;
 }
 
 string Location::getName()
 {
 	return this->name;
 }
-string Location::getDescription()
-{
-	return this->description;
-}
-
-//Setters not yet needed, but could be useful if the name of a location
-//changes during gameplay for whatever reason
 void Location::setName(string nName)
 {
 	this->name = nName;
+}
+string Location::getDescription()
+{
+	return this->description;
 }
 void Location::setDescription(string nDesc)
 {
 	this->description = nDesc;
 }
 
-int Location::getNumConnections()
-{
-	return this->connections.size();
-}
-
 vector<Location*> Location::getConnections()
 {
-	return this->connections;
+	return this->connectionsVector;
 }
 
-
-
-void Location::getConnection()
+int Location::getNumConnections()
 {
+	return this->connectionsVector.size();
+}
 
+Location* Location::getConnection(int index)
+{
+	return this->connectionsVector[index];
 }
 
 void Location::addConnection(Location* nlocation)
 {
-	this->connections.push_back(nlocation);
+	this->connectionsVector.push_back(nlocation);
+}
+
+void Location::removeConnection(int index)
+{
+	this->connectionsVector.erase(this->connectionsVector.begin() + index);
+}
+
+void Location::outputConnections()
+{
+	for (int i = 0; i < this->connectionsVector.size(); i++)
+	{
+		cout << i + 1 << ") " << this->connectionsVector[i]->getName() << endl;
+	}
 }

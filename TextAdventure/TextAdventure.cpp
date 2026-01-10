@@ -21,9 +21,11 @@ int main()
 	Location loc2("Church Courtyard", "The courtyard is littered with heaps of tree debris. Broken headstones jut from the ground at odd angles.");
 	Location loc3("Ruined Church", "The church is in ruins, with collapsed walls and a crumbling roof. It is almost silent apart from the gentle tapping of branches on what remains of the stained glass windows.");
 	
-	loc1.setConnections(nullptr, &loc2);
-	loc2.setConnections(&loc1, &loc3);
-	loc3.setConnections(&loc2, nullptr);
+	loc1.addConnection(&loc2);
+	loc2.addConnection(&loc1);
+	loc2.addConnection(&loc3);
+	loc3.addConnection(&loc2);
+
 
 	Location* pCurrentLocation = &loc1;
 
@@ -44,17 +46,16 @@ int main()
 		cout << "====================================================================================================\n";
 		asciiArt(*pCurrentLocation);
 		cout << "====================================================================================================\n";
-		cout << "Enter a number to go to a location:\n\n";
-		if (pCurrentLocation->hasPrevLoc()) {
-			cout << "1)" << pCurrentLocation->getPrevLoc()->getName() << ".\n";
-		}
-
-		cout << "2)" << pCurrentLocation->getName() << ".\n";
-
-		if (pCurrentLocation->hasNextLoc()) {
-			cout << "3)" << pCurrentLocation->getNextLoc()->getName() << ".\n";
-		}
+		cout << "Enter a number to go to a location:\n";
+		cout << "Or enter '0' to learn more about your current location.\n\n";
 		
+		cout << "Available Locations:" << "\n";
+		for (int i = 0; i < pCurrentLocation->getNumConnections(); i++) {
+			cout << i + 1 << ")" << pCurrentLocation->getConnection(i)->getName() << ".\n";
+		}
+
+		pCurrentLocation->outputConnections();
+
 		cout << "====================================================================================================\n\n";
 
 		cout << "Input: ";
@@ -63,7 +64,7 @@ int main()
 
 		if (pCurrentLocation == &loc1)
 		{
-			if (input == "1")
+			if (input == "0")
 			{
 
 				cout << "You are already at the Forest Path.\n";

@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -9,10 +9,8 @@ class Location
 private:
 	string name;
 	string description;
-	vector <Location*> connections;
-
-	//Location* prevLocation;
-	//Location* nextLocation;
+	string flavorText;
+	vector <Location*> connectionsVector;
 
 public:
 	Location();
@@ -22,19 +20,19 @@ public:
 	void setName(string nName);
 	string getDescription();
 	void setDescription(string nDesc);
+	string getFlavorText();
+	void setFlavorText(string nFlavorText);
 
+	vector<Location*> getConnections(); //vector<Card> getHand();
 	int getNumConnections(); ////int getHandSize();
-	vector<Location*> getConnections(); //vector<Card> getHand();;
-
-	Location* getConnection(int index); //Card getCard(int index);
-	void addConnection(Location* nlocation); //void addCard(Card new_card);
 	
 
-	//Location* getNextLoc();
-	//Location* getPrevLoc();
+	Location* getConnection(int index); //Card getCard(int index);
+	void addConnection(Location* nLocation); //void addCard(Card new_card);
+	void removeConnection(int index); //void removeCard(int index);
 
-	bool hasNextLoc();
-	bool hasPrevLoc();
+	void outputConnections();
+
 
 	
 };
