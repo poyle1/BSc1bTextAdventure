@@ -33,6 +33,16 @@ void Location::setDescription(string nDesc)
 	this->description = nDesc;
 }
 
+string Location::getFlavorText()
+{
+	return this->flavorText;
+}
+
+void Location::setFlavorText(string nFlavorText)
+{
+	this->flavorText = nFlavorText;
+}
+
 vector<Location*> Location::getConnections()
 {
 	return this->connectionsVector;

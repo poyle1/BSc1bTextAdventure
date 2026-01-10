@@ -11,7 +11,6 @@ void titleScreen();
 void pauseAndFlush();
 void asciiArt(Location& pCurrentLocation);
 
-
 int main()
 {
 	// Maximize console window on startol
@@ -21,6 +20,10 @@ int main()
 	Location loc2("Church Courtyard", "The courtyard is littered with heaps of tree debris. Broken headstones jut from the ground at odd angles.");
 	Location loc3("Ruined Church", "The church is in ruins, with collapsed walls and a crumbling roof. It is almost silent apart from the gentle tapping of branches on what remains of the stained glass windows.");
 	
+	loc1.setFlavorText("The church courtyard lies ahead of you, past a crumbling stone wall");
+	loc2.setFlavorText("The ruined church looms ahead; its silhouette reminds you of shards of broken glass.");
+	loc3.setFlavorText("Debris litters the floor; sunlight streams through gaps in the roof, lading on the alter at the end of the hall.");
+
 	loc1.addConnection(&loc2);
 	loc2.addConnection(&loc1);
 	loc2.addConnection(&loc3);
@@ -66,9 +69,7 @@ int main()
 		{
 			if (input == "0")
 			{
-
-				cout << "You are already at the Forest Path.\n";
-				cout << "The church courtyard lies ahead of you, past a crumbling stone wall.\n";
+				cout << pCurrentLocation->getFlavorText() << endl;
 				pauseAndFlush();
 			}
 			else if (input == "2")
@@ -96,7 +97,7 @@ int main()
 			else if (input == "2")
 			{
 				cout << "You are already in the Church Courtyard.\n";
-				cout << "The ruined church looms ahead; its silhouette reminds you of shards of broken glass.";
+				cout << "";
 				pauseAndFlush();
 			}
 			else if (input == "3")
@@ -124,7 +125,7 @@ int main()
 			else if (input == "3")
 			{
 				cout << "You are already in the Ruined Church.\n";
-				cout << "Debris litters the floor; sunlight streams through gaps in the roof, lading on the alter at the end of the hall.\n";
+				cout << ".\n";
 				pauseAndFlush();
 			}
 		}
