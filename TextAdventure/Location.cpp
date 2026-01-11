@@ -43,16 +43,29 @@ void Location::setFlavorText(string nFlavorText)
 	this->flavorText = nFlavorText;
 }
 
+string Location::getEntryText()
+{
+	return this->entryText;
+}
+
+void Location::setEntryText(string nEntryText)
+{
+	this->entryText = nEntryText;
+}
+
+//Returns the entire vector of connections
 vector<Location*> Location::getConnections()
 {
 	return this->connectionsVector;
 }
 
+//Returns the number of connections in the vector
 int Location::getNumConnections()
 {
 	return this->connectionsVector.size();
 }
 
+//Returns a specific connection from the vector based on index
 Location* Location::getConnection(int index)
 {
 	return this->connectionsVector[index];
