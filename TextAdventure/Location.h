@@ -4,6 +4,9 @@
 
 using namespace std;
 
+//Syntax for inheritance
+//#include "Location.h"
+//class location: public Location
 class Location
 {
 private:

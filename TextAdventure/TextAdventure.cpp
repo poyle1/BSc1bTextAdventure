@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include "Location.h"
+#include "Item.h"
+#include "EdibleItem.h"
 #include <windows.h>
 
 using namespace std;
@@ -57,6 +59,25 @@ int main()
 	//
 	//Current location text should greater reflect the current location, instead of what is around it
 
+	vector<Item> basicItemsVec = {
+	Item("Old book", 1),
+	Item("Brass Goblet", 5),
+	Item("Gem", 10),
+	};
+
+	vector<EdibleItem> healthPotionsVec = {
+	EdibleItem("Small Health Potion", 5, 10, 0),
+	EdibleItem("Medium Health Potion", 10, 25, 0),
+	EdibleItem("Large Health Potion", 20, 50, 0),
+	};
+
+
+	//item testing
+	for (int i = 0; i < healthPotionsVec.size(); i++) {
+		cout << healthPotionsVec[i].getName() << endl;
+	}
+	system("pause");
+	
 
 	Location* pCurrentLocation = &loc1;
 
@@ -67,6 +88,8 @@ int main()
 	{
 		system("cls");
 
+
+
 		//Ascii art & line breaks are 100 characters wide
 		cout << "====================================================================================================\n";
 		cout << "Current location: " << pCurrentLocation->getName() << "\n";
@@ -76,7 +99,7 @@ int main()
 		cout << "====================================================================================================\n";
 		cout << "Enter a number to go to a location:\n";
 		cout << "Or enter '0' to learn more about your current location.\n\n";
-
+		
 		cout << "Available Locations:" << "\n";
 		pCurrentLocation->outputConnections();
 		cout << "====================================================================================================\n\n";

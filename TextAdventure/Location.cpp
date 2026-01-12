@@ -8,6 +8,12 @@ Location::Location()
 	this->description = "This location is empty.";
 	this->flavorText = "";
 }
+//syntax for constructor with parameters
+//Location::Location(string parameter1, int parameter2, bool parameter3) : Otherclass(parameter1)
+//{
+// //this->memberVariable1 = parameter1;
+//}
+
 
 //Parameters: Name, Description, 
 Location::Location(string nName, string nDesc)

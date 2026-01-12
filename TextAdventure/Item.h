@@ -4,10 +4,9 @@ using namespace std;
 
 class Item
 {
-private:
+protected:
 	string name;
 	int value;
-
 public:
 	Item();
 	Item(string nName, int nValue);
