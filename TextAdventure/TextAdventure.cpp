@@ -4,6 +4,8 @@
 #include "Location.h"
 #include "Item.h"
 #include "EdibleItem.h"
+#include "WeaponItem.h"
+#include "DefenceItem.h"
 #include <windows.h>
 
 using namespace std;
@@ -71,11 +73,21 @@ int main()
 	EdibleItem("Large Health Potion", 20, 50, 0),
 	};
 
+	WeaponItem rustSword("Rusty Sword", 15, 5);
+	DefenceItem woodShield("Wooden Shield", 10, 3);
+	EdibleItem apple("Apple", 2, 5, 10);
+	EdibleItem healingHerb("Healing Herb", 8, 15, 0);
 
-	//item testing
-	for (int i = 0; i < healthPotionsVec.size(); i++) {
-		cout << healthPotionsVec[i].getName() << endl;
-	}
+	
+
+	//A vector of item pointers designated by the asterisk (*)
+	//Contents are addresses of items, indicated by the ampersand (&)
+	//vector<Item*> inventoryVec = { &rustSword, &woodShield, &apple, &healingHerb };
+
+	//for (int i = 0; i < inventoryVec.size(); i++) {
+	//	inventoryVec[i]->inspectItem();
+	//}
+
 	system("pause");
 	
 

@@ -21,3 +21,9 @@ int Item::getValue()
 {
 	return 0;
 }
+
+void Item::inspectItem()
+{
+	cout << "Item Name: " << this->name << endl;
+	cout << "Item Value: " << this->value << endl;
+}
