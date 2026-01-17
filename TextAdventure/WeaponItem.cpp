@@ -1,4 +1,5 @@
 #include "WeaponItem.h"
+#include <string>
 
 //Default constructor
 WeaponItem::WeaponItem()
@@ -9,10 +10,8 @@ WeaponItem::WeaponItem()
 }
 
 //Parameterized constructor
-WeaponItem::WeaponItem(string nName, int nValue, int nDamageStat)
+WeaponItem::WeaponItem(string nName, int nValue, int nDamageStat) : Item(nName, nValue)
 {
-	this->name = nName;
-	this->value = nValue;
 	this->damageStat = nDamageStat;
 }
 
@@ -26,4 +25,9 @@ void WeaponItem::inspectItem()
 	cout << "Weapon Name: " << this->name << endl;
 	cout << "Weapon Value: " << this->value << endl;
 	cout << "Weapon Damage Stat: " << this->damageStat << endl;
+}
+
+string WeaponItem::toString()
+{
+	return "Weapon: " + this->name + " is worth " + to_string(this->value) + " gold, and increases damage by " + to_string(this->damageStat) + ".";
 }

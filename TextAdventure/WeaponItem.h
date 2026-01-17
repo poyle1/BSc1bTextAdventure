@@ -11,5 +11,7 @@ public:
 	int getDamageStat();
 
 	void inspectItem() override;
+	string toString() override;
+
 };
 

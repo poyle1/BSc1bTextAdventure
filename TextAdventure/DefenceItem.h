@@ -8,9 +8,10 @@ public:
 	//Default constructor
 	DefenceItem();
 	//Parameterized constructor
-	DefenceItem(string nName, int nValue, int nDamageStat);
+	DefenceItem(string nName, int nValue, int nDefenceStat);
 	
 	int getDefenceStat();
 	void inspectItem() override;
+	string toString() override;
 };
 

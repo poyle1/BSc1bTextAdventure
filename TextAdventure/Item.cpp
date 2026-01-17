@@ -1,4 +1,5 @@
 #include "Item.h"
+#include <string>
 
 Item::Item()
 {
@@ -19,11 +20,16 @@ string Item::getName()
 
 int Item::getValue()
 {
-	return 0;
+	return this->value;
 }
 
 void Item::inspectItem()
 {
 	cout << "Item Name: " << this->name << endl;
 	cout << "Item Value: " << this->value << endl;
+}
+
+string Item::toString()
+{
+	return "Item: " + this->name + " is worth " + to_string(this->value) + " gold.";
 }

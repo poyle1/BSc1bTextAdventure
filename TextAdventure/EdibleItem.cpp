@@ -6,34 +6,27 @@ EdibleItem::EdibleItem() : Item()
 {
 	this->name = "An Edible Item";
 	this->value = 0;
-	this->healthRestored = 0;
-	this->hungerRestored = 0;	
+	this->stamRestored = 0;
 }
 
-EdibleItem::EdibleItem(string nName, int nValue, int nHealthVal, int nHungerVal) : Item(nName, nValue)
+EdibleItem::EdibleItem(string nName, int nValue, int nStamVal) : Item(nName, nValue)
 {
-	this->healthRestored = nHealthVal;
-	this->hungerRestored = nHungerVal;
+	this->stamRestored = nStamVal;
 }
 
-int EdibleItem::getHealthRestored()
+int EdibleItem::getStamRestored()
 {
-	return this->healthRestored;
-}
-
-int EdibleItem::getHungerRestored()
-{
-	return this->hungerRestored;
+	return this->stamRestored;
 }
 
 void EdibleItem::inspectItem()
 {
 	cout << "Edible Item Name: " << this->name << endl;
 	cout << "Edible Item Value: " << this->value << endl;
-	if (hungerRestored > 0) {
-		cout << "This restores: " << this->hungerRestored << " hunger points." << endl;
-	}
-	if (healthRestored > 0) {
-		cout << "This restores: " << this->healthRestored << " health points." << endl;
-	}
+	cout << "Stamina Restored: " << this->stamRestored << endl;
+}
+
+string EdibleItem::toString()
+{
+	return "Item: " + this->name + " is worth " + to_string(this->value) + " gold, and restores " + to_string(this->stamRestored) + " stamina.";
 }

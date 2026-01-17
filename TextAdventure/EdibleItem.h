@@ -7,14 +7,16 @@ using namespace std;
 class EdibleItem : public Item
 {
 private:
-	int healthRestored;
-	int hungerRestored;
+	int stamRestored;
 
 public:
+	//Default constructor
 	EdibleItem();
-	EdibleItem(string nName, int nValue, int nHealthVal, int nHungerVal);
-	int getHealthRestored();
-	int getHungerRestored();
+	//Parameterized constructor
+	EdibleItem(string nName, int nValue, int nStamVal);
+
+	int getStamRestored();
 
 	void inspectItem() override;
+	string toString() override;
 };

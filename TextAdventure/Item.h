@@ -9,10 +9,14 @@ protected:
 	int value;
 
 public:
+	//Default constructor
 	Item();
+	//Parameterized constructor
 	Item(string nName, int nValue);
+
 	string getName();
-	int getValue();
+	virtual int getValue();
 	
 	virtual void inspectItem();
+	virtual string toString();
 };

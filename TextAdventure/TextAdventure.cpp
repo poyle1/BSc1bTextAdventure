@@ -7,6 +7,7 @@
 #include "WeaponItem.h"
 #include "DefenceItem.h"
 #include <windows.h>
+#include "Inventory.h"
 
 using namespace std;
 
@@ -68,15 +69,12 @@ int main()
 	};
 
 	vector<EdibleItem> healthPotionsVec = {
-	EdibleItem("Small Health Potion", 5, 10, 0),
-	EdibleItem("Medium Health Potion", 10, 25, 0),
-	EdibleItem("Large Health Potion", 20, 50, 0),
+	EdibleItem("Small Health Potion", 5, 3),
+	EdibleItem("Medium Health Potion", 10, 5),
+	EdibleItem("Large Health Potion", 20, 7),
 	};
 
-	WeaponItem rustSword("Rusty Sword", 15, 5);
-	DefenceItem woodShield("Wooden Shield", 10, 3);
-	EdibleItem apple("Apple", 2, 5, 10);
-	EdibleItem healingHerb("Healing Herb", 8, 15, 0);
+	
 
 	
 
@@ -85,8 +83,29 @@ int main()
 	//vector<Item*> inventoryVec = { &rustSword, &woodShield, &apple, &healingHerb };
 
 	//for (int i = 0; i < inventoryVec.size(); i++) {
-	//	inventoryVec[i]->inspectItem();
+	//	cout << inventoryVec[i]->toString() << endl << endl;
 	//}
+
+	Inventory playerInventory;
+
+	Item brick("Brick", 0);
+	WeaponItem rustSword("Rusty Sword", 15, 5);
+	DefenceItem woodShield("Wooden Shield", 10, 3);
+	EdibleItem apple("Apple", 3, 1);
+	EdibleItem healingHerb("Healing Herb", 6, 2);
+
+	playerInventory.addItem(rustSword);
+	playerInventory.addItem(woodShield);
+	playerInventory.addItem(apple);
+	playerInventory.addItem(brick);
+
+	playerInventory.outputInventory();
+	cout << "Total Inventory Value: " << playerInventory.getTotalValue() << " gold." << endl;
+
+	cout << rustSword.getValue () << endl;
+
+
+
 
 	system("pause");
 	

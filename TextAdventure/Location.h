@@ -38,7 +38,7 @@ public:
 	void addConnection(Location* nLocation); //void addCard(Card new_card);
 	void removeConnection(int index); //void removeCard(int index);
 
-	void outputConnections();
+	void outputConnections(); //void outputHand();
 
 
 	
