@@ -1,27 +1,26 @@
 #pragma once
 #include <iostream>
-#include "Player.h"
 
 using namespace std;
 
-class Monster
+class Player
 {
-protected:
+private:
 	int health;
-	string name;
 	bool alive;
+	string name;
 
 public:
-	Monster();
-	Monster(string nName);
+	Player();
+	Player(string nName);
 
-	string getName();
 	int getHealth();
 	void damage(int toDamage);
+	void heal(int toHeal);
+
+	void setName(string nName);
+	string getName();
 
 	bool isAlive();
 	void kill();
-
-	virtual void update(Player& currPlayer) = 0;
 };
-

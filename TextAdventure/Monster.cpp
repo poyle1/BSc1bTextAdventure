@@ -1,21 +1,17 @@
 #include "Monster.h"
 
-Monster::Monster()
+AbstractEnemy::Monster()
 {
-	this->name = "Unknown Monster";
-	this->description = "No description available.";
-	this->type = "Unknown Type";
-	this->health = 100;
-	this->attackPwr = 10;
-
+	this->health = 0;
+	this->name = "Unknown";
+	this->alive = false;
 }
-Monster::Monster(string nName, string nDesc, string nType, int nHealth, int nAttackPwr)
+
+Monster::Monster(string nName)
 {
+	this->health = 100;
 	this->name = nName;
-	this->description = nDesc;
-	this->type = nType;
-	this->health = nHealth;
-	this->attackPwr = nAttackPwr;
+	this->alive = false;
 }
 
 string Monster::getName()
@@ -23,22 +19,22 @@ string Monster::getName()
 	return this->name;
 }
 
-string Monster::getDescription()
-{
-	return this->description;
-}
-
-string Monster::getType()
-{
-	return this->type;
-}
-
 int Monster::getHealth()
 {
 	return this->health;
 }
 
-int Monster::getAttackPwr()
+void Monster::damage(int toDamage)
 {
-	return this->attackPwr;
+	this->health -= toDamage;
+}
+
+bool Monster::isAlive()
+{
+	return this->alive;
+}
+
+void Monster::kill()
+{
+	this->alive = false;
 }

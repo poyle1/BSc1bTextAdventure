@@ -127,22 +127,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bandit.cpp" />
     <ClCompile Include="DefenceItem.cpp" />
     <ClCompile Include="EdibleItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextAdventure.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bandit.h" />
     <ClInclude Include="DefenceItem.h" />
     <ClInclude Include="EdibleItem.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="WeaponItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
