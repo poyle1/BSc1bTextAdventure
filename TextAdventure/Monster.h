@@ -2,25 +2,24 @@
 #include <iostream>
 using namespace std;
 
-
 class Monster
 {
-private:
-	string name;
-	string description;
-	string type;
+protected:
 	int health;
-	int attackPwr;
+	string name;
+	bool alive;
 
 public:
 	Monster();
-	Monster(string nName, string nDesc, string nType, int nHealth, int nAttackPwr);
-
+	Monster(string nName);
 
 	string getName();
-	string getDescription();
-	string getType();
 	int getHealth();
-	int getAttackPwr();
+	void damage(int toDamage);
+
+	bool isAlive();
+	void kill();
+
+	virtual void update(Player& currPlayer) = 0;
 };
 

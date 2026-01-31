@@ -8,6 +8,9 @@
 #include "DefenceItem.h"
 #include <windows.h>
 #include "Inventory.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Bandit.h"
 
 using namespace std;
 
@@ -118,6 +121,24 @@ int main()
 
 	//gameIntro();
 	//titleScreen();
+
+
+	Player player1 = Player("Adventurer");
+	Bandit bandit1 = Bandit("Forest Bandit");
+	
+	//todo:
+	//while player is alive:
+	//get user input between attack or heal
+	//if heal, heal,
+	//if attack, damage bandit
+	//updare bandit object
+	//repeat until one is dead
+
+	while (player1.isAlive()) {
+
+	}
+
+
 
 	while (true)
 	{
