@@ -104,6 +104,10 @@ int main()
 
 	cout << rustSword.getValue () << endl;
 
+	Item testItem("Test Item", 99);
+	WeaponItem* testWeapon = new WeaponItem("Test Weapon", 150, 25);
+
+	
 
 
 
