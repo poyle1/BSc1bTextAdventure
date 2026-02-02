@@ -1,8 +1,9 @@
 #pragma once
-#include <iostream>
+#include <string>
+#include "Player.h"
 using namespace std;
 
-class BasicEnemy
+class NPC
 {
 protected:
 	int health;
@@ -10,8 +11,8 @@ protected:
 	bool alive;
 
 public:
-	BasicEnemy();
-	BasicEnemy(string nName);
+	NPC();
+	NPC(string nName);
 
 	string getName();
 	int getHealth();
@@ -22,4 +23,3 @@ public:
 
 	virtual void update(Player& currPlayer) = 0;
 };
-
