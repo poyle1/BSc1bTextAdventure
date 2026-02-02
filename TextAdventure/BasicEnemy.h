@@ -5,8 +5,8 @@ using namespace std;
 class BasicEnemy
 {
 protected:
-	int health;
 	string name;
+	int health;
 	bool alive;
 
 public:
@@ -16,10 +16,11 @@ public:
 	string getName();
 	int getHealth();
 	void damage(int toDamage);
+	void heal(int healBy);
 
 	bool isAlive();
 	void kill();
 
-	virtual void update(Player& currPlayer) = 0;
+	//virtual void update(Player& currPlayer) = 0;
 };
 

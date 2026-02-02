@@ -38,6 +38,10 @@ void enterLocation(Location* nloc);
 //Inventory system as a vector in the player class (equivalent to a players deck of cards from previous project)
 //
 //Current location text should greater reflect the current location, instead of what is around it
+//
+//MOSCOW METHOD
+//
+//Read CVS file to load locations, items, monsters.
 
 
 int main()

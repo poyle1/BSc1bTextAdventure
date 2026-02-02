@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "BasicEnemy.h"
+#include "Player.h"
 
 
 enum banditState {
@@ -18,6 +19,6 @@ public:
 	Bandit();
 	Bandit(string nName);
 
-	void update(Player& currPlayer) override;
+	void update(Player& currPlayer);
 };
 
