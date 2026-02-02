@@ -133,7 +133,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Location.cpp" />
-    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="BasicEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TextAdventure.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
@@ -145,7 +145,7 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Location.h" />
-    <ClInclude Include="Monster.h" />
+    <ClInclude Include="BasicEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="WeaponItem.h" />
   </ItemGroup>

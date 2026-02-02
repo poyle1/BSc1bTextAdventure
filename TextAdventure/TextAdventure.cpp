@@ -9,7 +9,7 @@
 #include <windows.h>
 #include "Inventory.h"
 #include "Player.h"
-#include "Monster.h"
+#include "BasicEnemy.h"
 #include "Bandit.h"
 
 using namespace std;
@@ -19,6 +19,26 @@ void titleScreen();
 void pauseAndFlush();
 void asciiArt(Location& pCurrentLocation);
 void enterLocation(Location* nloc);
+
+//TO ADD
+//A bool in the Location class to check if visited
+// 
+//A function to output text when returning to a previously visited location
+//use the bool to check if visited
+//If visited, output different text
+//
+//Add player class (Compare to player class from previous project)
+//Expand item class (Items are equivalent to cards from previous project)
+//Incorporate items to player class
+//Incorporate items into locations
+//Expand Monster class
+//Incorporate monsters into locations
+//Incorporate combat system between player and monsters
+//Monsters drop items when defeated, feeding into player inventory via player class
+//Inventory system as a vector in the player class (equivalent to a players deck of cards from previous project)
+//
+//Current location text should greater reflect the current location, instead of what is around it
+
 
 int main()
 {
@@ -45,41 +65,6 @@ int main()
 	loc2.addConnection(&loc1);
 	loc2.addConnection(&loc3);
 	loc3.addConnection(&loc2);
-
-	//TO ADD
-	//A bool in the Location class to check if visited
-	// 
-	//A function to output text when returning to a previously visited location
-	//use the bool to check if visited
-	//If visited, output different text
-	//
-	//Add player class (Compare to player class from previous project)
-	//Expand item class (Items are equivalent to cards from previous project)
-	//Incorporate items to player class
-	//Incorporate items into locations
-	//Expand Monster class
-	//Incorporate monsters into locations
-	//Incorporate combat system between player and monsters
-	//Monsters drop items when defeated, feeding into player inventory via player class
-	//Inventory system as a vector in the player class (equivalent to a players deck of cards from previous project)
-	//
-	//Current location text should greater reflect the current location, instead of what is around it
-
-	vector<Item> basicItemsVec = {
-	Item("Old book", 1),
-	Item("Brass Goblet", 5),
-	Item("Gem", 10),
-	};
-
-	vector<EdibleItem> healthPotionsVec = {
-	EdibleItem("Small Health Potion", 5, 3),
-	EdibleItem("Medium Health Potion", 10, 5),
-	EdibleItem("Large Health Potion", 20, 7),
-	};
-
-	
-
-	
 
 	//A vector of item pointers designated by the asterisk (*)
 	//Contents are addresses of items, indicated by the ampersand (&)
@@ -131,7 +116,23 @@ int main()
 	//repeat until one is dead
 
 	while (player1.isAlive()) {
-
+		cout << "Player Health: " << player1.getHealth() << endl;
+		cout << "Bandit Health: " << bandit1.getHealth() << endl;
+		cout << "Enter 1 to attack, or 2 to heal: ";
+		int userInput2;
+		cin >> userInput2;
+		if (userInput2 == 1) {
+			bandit1.damage(30);
+			cout << "You attack the bandit for 30 damage!" << endl;
+		}
+		else if (userInput2 == 2) {
+			player1.heal(20);
+			cout << "You heal yourself for 20 health!" << endl;
+		}
+		else {
+			cout << "Invalid input. Please enter 1 or 2." << endl;
+			continue;
+		}
 	}
 
 

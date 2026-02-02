@@ -1,11 +1,11 @@
 #include "Bandit.h"
 
-Bandit::Bandit() : Monster()
+Bandit::Bandit() : BasicEnemy()
 {
 	this->state = banditState::WAITING;
 }
 
-Bandit::Bandit(string nName) : Monster(nName)
+Bandit::Bandit(string nName) : BasicEnemy(nName)
 {
 	this->state = banditState::WAITING;
 }

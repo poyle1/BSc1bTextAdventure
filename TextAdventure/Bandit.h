@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Monster.h"
+#include "BasicEnemy.h"
 
 
 enum banditState {
@@ -9,7 +9,7 @@ enum banditState {
 	WAITING
 };
 
-class Bandit : public Monster
+class Bandit : public BasicEnemy
 {
 private:
 	banditState state;

@@ -1,40 +1,40 @@
-#include "Monster.h"
+#include "BasicEnemy.h"
 
-AbstractEnemy::Monster()
+BasicEnemy::BasicEnemy()
 {
 	this->health = 0;
 	this->name = "Unknown";
 	this->alive = false;
 }
 
-Monster::Monster(string nName)
+BasicEnemy::BasicEnemy(string nName)
 {
 	this->health = 100;
 	this->name = nName;
 	this->alive = false;
 }
 
-string Monster::getName()
+string BasicEnemy::getName()
 {
 	return this->name;
 }
 
-int Monster::getHealth()
+int BasicEnemy::getHealth()
 {
 	return this->health;
 }
 
-void Monster::damage(int toDamage)
+void BasicEnemy::damage(int toDamage)
 {
 	this->health -= toDamage;
 }
 
-bool Monster::isAlive()
+bool BasicEnemy::isAlive()
 {
 	return this->alive;
 }
 
-void Monster::kill()
+void BasicEnemy::kill()
 {
 	this->alive = false;
 }

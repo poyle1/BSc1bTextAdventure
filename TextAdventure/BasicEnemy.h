@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Monster
+class BasicEnemy
 {
 protected:
 	int health;
@@ -12,8 +12,8 @@ protected:
 	bool alive;
 
 public:
-	Monster();
-	Monster(string nName);
+	BasicEnemy();
+	BasicEnemy(string nName);
 
 	string getName();
 	int getHealth();
