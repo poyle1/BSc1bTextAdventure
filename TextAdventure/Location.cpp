@@ -6,6 +6,9 @@ Location::Location()
 {
 	this->name = "Empty Location";
 	this->description = "This location is empty.";
+	this->connections = {};
+
+
 	this->flavorText = "";
 }
 //syntax for constructor with parameters
@@ -62,35 +65,35 @@ void Location::setEntryText(string nEntryText)
 //Returns the entire vector of connections
 vector<Location*> Location::getConnections()
 {
-	return this->connectionsVector;
+	return this->connections;
 }
 
 //Returns the number of connections in the vector
 int Location::getNumConnections()
 {
-	return this->connectionsVector.size();
+	return this->connections.size();
 }
 
 //Returns a specific connection from the vector based on index
 Location* Location::getConnection(int index)
 {
-	return this->connectionsVector[index];
+	return this->connections[index];
 }
 
 void Location::addConnection(Location* nlocation)
 {
-	this->connectionsVector.push_back(nlocation);
+	this->connections.push_back(nlocation);
 }
 
 void Location::removeConnection(int index)
 {
-	this->connectionsVector.erase(this->connectionsVector.begin() + index);
+	this->connections.erase(this->connections.begin() + index);
 }
 
 void Location::outputConnections()
 {
-	for (int i = 0; i < this->connectionsVector.size(); i++)
+	for (int i = 0; i < this->connections.size(); i++)
 	{
-		cout << i + 1 << ") " << this->connectionsVector[i]->getName() << endl;
+		cout << i + 1 << ") " << this->connections[i]->getName() << endl;
 	}
 }

@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bandit.cpp" />
     <ClCompile Include="DefenceItem.cpp" />
     <ClCompile Include="EdibleItem.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -139,7 +138,6 @@
     <ClCompile Include="WeaponItem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bandit.h" />
     <ClInclude Include="DefenceItem.h" />
     <ClInclude Include="EdibleItem.h" />
     <ClInclude Include="Inventory.h" />

@@ -9,6 +9,7 @@ private:
 	int health;
 	bool alive;
 	string name;
+	//Inventory inventory; //Player's inventory, can hold items the player has collected
 
 public:
 	Player();

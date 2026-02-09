@@ -14,7 +14,9 @@ private:
 	string description;
 	string flavorText;
 	string entryText;
-	vector <Location*> connectionsVector;
+	//Tree structure of locations, with each location having a vector of pointers to other locations
+	//Made with a vector of pointers
+	vector <Location*> connections;
 
 public:
 	Location();

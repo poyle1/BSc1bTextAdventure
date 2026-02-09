@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <windows.h>
+
 #include "Location.h"
 #include "Item.h"
 #include "EdibleItem.h"
 #include "WeaponItem.h"
 #include "DefenceItem.h"
-#include <windows.h>
 #include "Inventory.h"
 #include "Player.h"
 #include "BasicEnemy.h"
-#include "Bandit.h"
 
 using namespace std;
 
@@ -47,7 +47,10 @@ void enterLocation(Location* nloc);
 int main()
 {
 	// Maximize console window on start
-	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+
+	gameIntro();
+	titleScreen();
 
 	Location loc1("Forest Path", "A winding path flows through pine, oak, and fir. At the end lies a stone wall, leading to the church courtyard.");
 	Location loc2("Church Courtyard", "The courtyard is littered with heaps of tree debris. Broken headstones jut from the ground at odd angles.");
@@ -70,80 +73,7 @@ int main()
 	loc2.addConnection(&loc3);
 	loc3.addConnection(&loc2);
 
-	//A vector of item pointers designated by the asterisk (*)
-	//Contents are addresses of items, indicated by the ampersand (&)
-	//vector<Item*> inventoryVec = { &rustSword, &woodShield, &apple, &healingHerb };
-
-	//for (int i = 0; i < inventoryVec.size(); i++) {
-	//	cout << inventoryVec[i]->toString() << endl << endl;
-	//}
-
-	Inventory playerInventory;
-
-	Item brick("Brick", 0);
-	WeaponItem rustSword("Rusty Sword", 15, 5);
-	DefenceItem woodShield("Wooden Shield", 10, 3);
-	EdibleItem apple("Apple", 3, 1);
-	EdibleItem healingHerb("Healing Herb", 6, 2);
-
-	playerInventory.addItem(rustSword);
-	playerInventory.addItem(woodShield);
-	playerInventory.addItem(apple);
-	playerInventory.addItem(brick);
-
-	playerInventory.outputInventory();
-	cout << "Total Inventory Value: " << playerInventory.getTotalValue() << " gold." << endl;
-
-	cout << rustSword.getValue () << endl;
-
-	Item testItem("Test Item", 99);
-	WeaponItem* testWeapon = new WeaponItem("Test Weapon", 150, 25);
-
-	
-
-
-
-	system("pause");
-	
-
 	Location* pCurrentLocation = &loc1;
-
-	//gameIntro();
-	//titleScreen();
-
-
-	Player player1 = Player("Adventurer");
-	Bandit bandit1 = Bandit("Forest Bandit");
-	
-	//todo:
-	//while player is alive:
-	//get user input between attack or heal
-	//if heal, heal,
-	//if attack, damage bandit
-	//updare bandit object
-	//repeat until one is dead
-
-	while (player1.isAlive()) {
-		cout << "Player Health: " << player1.getHealth() << endl;
-		cout << "Bandit Health: " << bandit1.getHealth() << endl;
-		cout << "Enter 1 to attack, or 2 to heal: ";
-		int userInput2;
-		cin >> userInput2;
-		if (userInput2 == 1) {
-			bandit1.damage(30);
-			cout << "You attack the bandit for 30 damage!" << endl;
-		}
-		else if (userInput2 == 2) {
-			player1.heal(20);
-			cout << "You heal yourself for 20 health!" << endl;
-		}
-		else {
-			cout << "Invalid input. Please enter 1 or 2." << endl;
-			continue;
-		}
-	}
-
-
 
 	while (true)
 	{
