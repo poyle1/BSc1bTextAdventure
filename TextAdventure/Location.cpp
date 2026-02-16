@@ -1,29 +1,25 @@
 #include "Location.h"
 #include <iostream>
 
-
 Location::Location()
 {
 	this->name = "Empty Location";
 	this->description = "This location is empty.";
-	this->connections = {};
-
-
 	this->flavorText = "";
+	this->entryText = "";
+	this->returnText = "";
+	this->connections = {};
+	this->visited = false;
+	this->locked = false;	
 }
-//syntax for constructor with parameters
-//Location::Location(string parameter1, int parameter2, bool parameter3) : Otherclass(parameter1)
-//{
-// //this->memberVariable1 = parameter1;
-//}
 
-
-//Parameters: Name, Description, 
-Location::Location(string nName, string nDesc)
+Location::Location(string nName, string nDesc, bool nLocked) : Location()
 {
-	name = nName;
-	description = nDesc;
+    this->name = nName;
+    this->description = nDesc;
+    this->locked = nLocked;
 }
+
 
 string Location::getName()
 {
@@ -96,4 +92,22 @@ void Location::outputConnections()
 	{
 		cout << i + 1 << ") " << this->connections[i]->getName() << endl;
 	}
+}
+
+string Location::getDisplayName()
+{
+	if (locked)
+		return this->name + " [Locked]";
+	else
+		return this->name;
+}
+
+bool Location::isLocked()
+{
+	return this->locked;
+}
+
+void Location::setLocked(bool state)
+{
+	this->locked = state;
 }

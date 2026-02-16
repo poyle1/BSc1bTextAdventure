@@ -1,12 +1,8 @@
 #pragma once
 #include <vector>
 #include <string>
-
 using namespace std;
 
-//Syntax for inheritance
-//#include "Location.h"
-//class location: public Location
 class Location
 {
 private:
@@ -14,35 +10,34 @@ private:
 	string description;
 	string flavorText;
 	string entryText;
-	//Tree structure of locations, with each location having a vector of pointers to other locations
-	//Made with a vector of pointers
-	vector <Location*> connections;
+	string returnText;
+	vector <Location*> connections; //Tree structure of locations using a vector of pointers
+	bool visited;
+	bool locked;
 
 public:
 	Location();
-	Location(string nName, string nDesc);
-
+	Location(string nName, string nDescription, bool nLocked = false);
+	//
 	string getName();
-	void setName(string nName);
 	string getDescription();
-	void setDescription(string nDesc);
 	string getFlavorText();
-	void setFlavorText(string nFlavorText);
 	string getEntryText();
+	//
+	void setName(string nName);
+	void setDescription(string nDesc);
+	void setFlavorText(string nFlavorText);
 	void setEntryText(string nEntryText);
 
 	vector<Location*> getConnections(); //vector<Card> getHand();
 	int getNumConnections(); ////int getHandSize();
-	
-
 	Location* getConnection(int index); //Card getCard(int index);
-
 	void addConnection(Location* nLocation); //void addCard(Card new_card);
 	void removeConnection(int index); //void removeCard(int index);
-
 	void outputConnections(); //void outputHand();
 
-
-	
+	string getDisplayName();
+	bool isLocked();
+	void setLocked(bool state);	
 };
 
