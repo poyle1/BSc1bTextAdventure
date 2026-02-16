@@ -54,31 +54,20 @@ int main()
 	gameIntro();
 	titleScreen();
 
-	Location loc1("Forest Path", "A winding path flows through pine, oak, and fir. At the end lies a stone wall, leading to the church courtyard.");
-	Location loc2("Church Courtyard", "The courtyard is littered with heaps of tree debris. Broken headstones jut from the ground at odd angles.");
-	Location loc3("Ruined Church", "The church is in ruins, with collapsed walls and a crumbling roof. It is almost silent apart from the gentle tapping of branches on what remains of the stained glass windows.");
 	
-	loc1.setFlavorText("The church courtyard lies ahead of you, past a crumbling stone wall.\n");
-	loc1.setEntryText(".\n");
-	//loc1.setReturnText("You return to the forest path; wind and birdsong flow around you.\nYou still have secrets to uncover.\n");
-	
-	loc2.setFlavorText("The ruined church looms ahead; its silhouette reminds you of shards of broken glass.\n");
-	loc2.setEntryText("You enter the church courtyard, stepping over fallen branches and leaves.\n There is a stillness in the air, broken only by the ebb and flow of rustling trees.\n");
-	//loc2.setReturnText("There is a moment of stillness as you return to the courtyard, as if the trees were waiting for you.\n");
-	
-	loc3.setFlavorText("Debris litters the floor; sunlight streams through gaps in the roof, lading on the alter at the end of the hall.\n");
-	loc3.setEntryText("You push open what is left of the door and step into the ruined church.\nSticks and loose bricks litter the floor. At the end of the hall you see an alter, mostly intact.\n");
-	//loc3.setReturnText("Parts of the door flake aways as you push it open again, stepping back into the church.\n");
+	Location livingRoom("Living Room", false);
+	Location hallWay("Hallway", false);
+	Location bedroom("Bedroom", true);
 
-	loc1.addConnection(&loc2);
-	loc2.addConnection(&loc1);
-	loc2.addConnection(&loc3);
-	loc3.addConnection(&loc2);
+	livingRoom.addConnection(&hallWay);
+	hallWay.addConnection(&livingRoom);
+	hallWay.addConnection(&bedroom);
+	bedroom.addConnection(&hallWay);
 
 	
 
 
-	Location* pCurrentLocation = &loc1;
+	Location* pCurrentLocation = &livingRoom;
 
 	while (true)
 	{
@@ -89,7 +78,6 @@ int main()
 		//Ascii art & line breaks are 100 characters wide
 		cout << "====================================================================================================\n";
 		cout << "Current location: " << pCurrentLocation->getName() << "\n";
-		cout << pCurrentLocation->getDescription() << "\n";
 		cout << "====================================================================================================\n";
 		asciiArt(*pCurrentLocation);
 		cout << "====================================================================================================\n";
@@ -110,14 +98,8 @@ int main()
 		int selectedIndex = userInput - 1;
 		cout << endl;
 
-		//Input 0 check - displays flavor text for the current location
-		if (userInput == 0) {
-			cout << pCurrentLocation->getFlavorText() << endl;
-			pauseAndFlush();
-			continue;
-		}
 		//Invalid input check
-		if (selectedIndex < 0 || selectedIndex >= pCurrentLocation->getNumConnections()) {
+		if (selectedIndex < 1 || selectedIndex >= pCurrentLocation->getNumConnections()) {
 			cout << "Invalid input. Please enter a number to travel to a listed location." << endl;
 			pauseAndFlush();
 			continue;
@@ -219,7 +201,7 @@ void pauseAndWipe()
 }
 
 void asciiArt(Location& currentLocation) {
-	if (currentLocation.getName() == "Forest Path") {
+	if (currentLocation.getName() == "Living Room") {
 		cout << "                                                             \n"
 "                                                             \n"
 "           .................................:::...           \n"
@@ -256,7 +238,7 @@ void asciiArt(Location& currentLocation) {
 //
 void enterLocation(Location* loc)
 {
-	cout << loc->getEntryText();
+	cout << "You have entered the " << loc->getName() << "." << endl;
 	pauseAndFlush();
 }
 

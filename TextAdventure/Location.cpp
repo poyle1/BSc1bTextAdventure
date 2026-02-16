@@ -4,58 +4,21 @@
 Location::Location()
 {
 	this->name = "Empty Location";
-	this->description = "This location is empty.";
-	this->flavorText = "";
-	this->entryText = "";
-	this->returnText = "";
 	this->connections = {};
-	this->visited = false;
-	this->locked = false;	
 }
 
-Location::Location(string nName, string nDesc, bool nLocked) : Location()
+Location::Location(string nName, bool keyReq) : Location()
 {
     this->name = nName;
-    this->description = nDesc;
-    this->locked = nLocked;
+	this->keyRequired = keyReq;
 }
-
 
 string Location::getName()
 {
-	return this->name;
-}
-void Location::setName(string nName)
-{
-	this->name = nName;
-}
-string Location::getDescription()
-{
-	return this->description;
-}
-void Location::setDescription(string nDesc)
-{
-	this->description = nDesc;
-}
-
-string Location::getFlavorText()
-{
-	return this->flavorText;
-}
-
-void Location::setFlavorText(string nFlavorText)
-{
-	this->flavorText = nFlavorText;
-}
-
-string Location::getEntryText()
-{
-	return this->entryText;
-}
-
-void Location::setEntryText(string nEntryText)
-{
-	this->entryText = nEntryText;
+	if (keyRequired)
+		return this->name + " [Locked]";
+	else
+		return this->name;
 }
 
 //Returns the entire vector of connections
@@ -71,6 +34,7 @@ int Location::getNumConnections()
 }
 
 //Returns a specific connection from the vector based on index
+//Used to set the location pointer based on user input
 Location* Location::getConnection(int index)
 {
 	return this->connections[index];
@@ -92,22 +56,4 @@ void Location::outputConnections()
 	{
 		cout << i + 1 << ") " << this->connections[i]->getName() << endl;
 	}
-}
-
-string Location::getDisplayName()
-{
-	if (locked)
-		return this->name + " [Locked]";
-	else
-		return this->name;
-}
-
-bool Location::isLocked()
-{
-	return this->locked;
-}
-
-void Location::setLocked(bool state)
-{
-	this->locked = state;
 }

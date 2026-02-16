@@ -1,43 +1,40 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Item.h"
 using namespace std;
 
 class Location
 {
 private:
 	string name;
-	string description;
-	string flavorText;
-	string entryText;
-	string returnText;
+	bool keyRequired;
 	vector <Location*> connections; //Tree structure of locations using a vector of pointers
-	bool visited;
-	bool locked;
+	vector<Item*> items; //Vector of pointers to items in the location
 
 public:
 	Location();
-	Location(string nName, string nDescription, bool nLocked = false);
-	//
-	string getName();
-	string getDescription();
-	string getFlavorText();
-	string getEntryText();
-	//
-	void setName(string nName);
-	void setDescription(string nDesc);
-	void setFlavorText(string nFlavorText);
-	void setEntryText(string nEntryText);
+	Location(string nName, bool keyReq);
 
-	vector<Location*> getConnections(); //vector<Card> getHand();
-	int getNumConnections(); ////int getHandSize();
+	string getName();
+
+	bool isLocked();
+	void unlock();
+
+	bool hasItems();
+	vector<Item*> getItems();
+	void addItem(Item* nItem);
+	void removeItem();
+
+	vector<Location*> getConnections(); //Gets the vector of connections, used for outputting the list of available locations to the player
+	int getNumConnections(); //Gets the number of connections, used for error checking user input when selecting a location to move to
 	Location* getConnection(int index); //Card getCard(int index);
 	void addConnection(Location* nLocation); //void addCard(Card new_card);
 	void removeConnection(int index); //void removeCard(int index);
 	void outputConnections(); //void outputHand();
 
-	string getDisplayName();
-	bool isLocked();
-	void setLocked(bool state);	
+	
+	
+
 };
 
