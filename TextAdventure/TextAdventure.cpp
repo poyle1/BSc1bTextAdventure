@@ -21,61 +21,34 @@ void pauseAndFlush();
 void pauseAndWipe();
 void asciiArt(Location& pCurrentLocation);
 void enterLocation(Location* nloc);
-
-//TO ADD
-//A bool in the Location class to check if visited
-// 
-//A function to output text when returning to a previously visited location
-//use the bool to check if visited
-//If visited, output different text
-//
-//Add player class (Compare to player class from previous project)
-//Expand item class (Items are equivalent to cards from previous project)
-//Incorporate items to player class
-//Incorporate items into locations
-//Expand Monster class
-//Incorporate monsters into locations
-//Incorporate combat system between player and monsters
-//Monsters drop items when defeated, feeding into player inventory via player class
-//Inventory system as a vector in the player class (equivalent to a players deck of cards from previous project)
-//
-//Current location text should greater reflect the current location, instead of what is around it
-//
-//MOSCOW METHOD
-//
-//Read CVS file to load locations, items, monsters.
-
+int getValidIntInput(int min, int max);
 
 int main()
 {
-	// Maximize console window on start
-	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	//Maximize console window on start
+	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
-	gameIntro();
-	titleScreen();
+	//gameIntro();
+	//titleScreen();
 
 	
 	Location livingRoom("Living Room", false);
 	Location hallWay("Hallway", false);
 	Location bedroom("Bedroom", true);
+	livingRoom.setInspectText("This is the living room.");
+	hallWay.setInspectText("This is the hallway.");
+	bedroom.setInspectText("This is the bedroom.");
 
 	livingRoom.addConnection(&hallWay);
 	hallWay.addConnection(&livingRoom);
 	hallWay.addConnection(&bedroom);
 	bedroom.addConnection(&hallWay);
 
-	
-
-
 	Location* pCurrentLocation = &livingRoom;
 
 	while (true)
 	{
 		system("cls");
-
-
-
-		//Ascii art & line breaks are 100 characters wide
 		cout << "====================================================================================================\n";
 		cout << "Current location: " << pCurrentLocation->getName() << "\n";
 		cout << "====================================================================================================\n";
@@ -88,26 +61,28 @@ int main()
 		pCurrentLocation->outputConnections();
 		cout << "====================================================================================================\n\n";
 
-		//User Input is recieved and stored
-		//Selected index is user input - 1 to match vector index
-		//Having 2 variables has clearer distinction instead of sharing one variable
-		//Also allows for easier error checking
-		int userInput;
-		cout << "Input: ";
-		cin >> userInput;
-		int selectedIndex = userInput - 1;
+		int userInput = getValidIntInput(0, pCurrentLocation->getNumConnections());
 		cout << endl;
 
-		//Invalid input check
-		if (selectedIndex < 1 || selectedIndex >= pCurrentLocation->getNumConnections()) {
-			cout << "Invalid input. Please enter a number to travel to a listed location." << endl;
+		//Investigate current location
+		if (userInput == 0)
+		{
+			cout << pCurrentLocation->getInspectText() << endl;
 			pauseAndFlush();
 			continue;
 		}
-		//Move to selected location
-		//Another if statement is not needed here due to prior error checking
-		//Selected index will always be valid at this point
-		pCurrentLocation = pCurrentLocation->getConnection(selectedIndex);
+
+		//Pointer to the location selected by the user, used to change the current location pointer
+		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
+
+		if (chosenLocation->isLocked())
+		{
+			cout << "The door is locked and you cannot open it!" << endl;
+			pauseAndFlush();
+			continue;
+		}
+
+		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);
 	}
 
@@ -220,17 +195,10 @@ void asciiArt(Location& currentLocation) {
 "                                                             " << endl;
 	}
 	else if (currentLocation.getName() == "Church Courtyard") {
-		cout << "\".....................................=%+++++++++++++++++++++++++++++++++++++++++++%@#++++++++*%%%*+++++\\n\"\n"
-			"\".....................................=%++++++++++++++++++++++++++++++++++++++++++@%++++++++++++*%%*++++\\n\"\n"
-			"\"-------------------------------------------------------------------------------------------------------\"" << endl;
+		cout << "" << endl;
 	}
 	else if (currentLocation.getName() == "Ruined Church") {
-		cout << "---------@*......@@-......@@----------------------------------------------+@=........%@........@@------\n"
-			"---------@*......:@=......@@-----------------------------------------------@@.........@+.......@@------\n"
-			"--------%@@@@@@@@@@@@@@@@@@@=----------------------------------------------%@.........@+.......-@*-----\n"
-			"--------%@.......:@=......@@-----------------------------------------------%@...:-----@*---..--+@*-----\n"
-			"----------------------------------=#*----@@###################%@=--------------------------------------\n"
-			"-----------------------------------------@@###################%@=--------------------------------------" << endl;
+		cout << "" << endl;
 	}
 }
 
@@ -242,3 +210,24 @@ void enterLocation(Location* loc)
 	pauseAndFlush();
 }
 
+int getValidIntInput(int min, int max)
+{
+	int userInput;
+
+	while (true)
+	{
+		cout << "Input: ";
+		cin >> userInput;
+
+		if (!cin.fail() && userInput >= min && userInput <= max)
+		{
+			return userInput;
+		}
+		else
+		{
+			cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << endl;
+			cin.clear(); // Clear the error flag
+			cin.ignore(1000, '\n'); // Discard invalid input
+		}
+	}
+}

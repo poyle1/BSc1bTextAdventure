@@ -14,4 +14,3 @@ public:
 	void inspectItem() override;
 	string toString() override;
 };
-

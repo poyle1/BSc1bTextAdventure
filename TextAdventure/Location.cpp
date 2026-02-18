@@ -21,6 +21,36 @@ string Location::getName()
 		return this->name;
 }
 
+string Location::getInspectText()
+{
+	return this->inspectText;
+}
+
+void Location::setInspectText(string nText)
+{
+	this->inspectText = nText;
+}
+
+bool Location::isLocked()
+{
+	return this->keyRequired;
+}
+
+void Location::unlock()
+{
+	this->keyRequired = false;
+}
+
+vector<Item*> Location::getItems()
+{
+	return this->items;
+}
+
+void Location::addItem(Item* nItem)
+{
+
+}
+
 //Returns the entire vector of connections
 vector<Location*> Location::getConnections()
 {
@@ -43,11 +73,6 @@ Location* Location::getConnection(int index)
 void Location::addConnection(Location* nlocation)
 {
 	this->connections.push_back(nlocation);
-}
-
-void Location::removeConnection(int index)
-{
-	this->connections.erase(this->connections.begin() + index);
 }
 
 void Location::outputConnections()
