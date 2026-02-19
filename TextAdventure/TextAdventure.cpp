@@ -26,7 +26,8 @@ int getValidIntInput(int min, int max);
 int main()
 {
 	//Maximize console window on start
-	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
+	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
 	//gameIntro();
 	//titleScreen();
@@ -44,13 +45,33 @@ int main()
 	hallWay.addConnection(&bedroom);
 	bedroom.addConnection(&hallWay);
 
+	Item bedroomKey("Bedroom Key");
+	Item sugar("Sugar");
+	livingRoom.addItem(&bedroomKey);
+	livingRoom.addItem(&sugar);
+
+
 	Location* pCurrentLocation = &livingRoom;
+
+	vector<Item*> playerInventory = {};
 
 	while (true)
 	{
 		system("cls");
 		cout << "====================================================================================================\n";
 		cout << "Current location: " << pCurrentLocation->getName() << "\n";
+		if (pCurrentLocation->hasItems()) {
+			cout << "There may be items in this room." << endl;
+		}
+		else {
+			cout << "There are no items in this room." << endl;
+		}
+		cout << "====================================================================================================\n";
+		cout << "Collected Items: ";
+		for (Item* i : playerInventory) {
+			cout << "-" << i->getName() << " ";
+		}
+		cout << endl;
 		cout << "====================================================================================================\n";
 		asciiArt(*pCurrentLocation);
 		cout << "====================================================================================================\n";
@@ -64,10 +85,25 @@ int main()
 		int userInput = getValidIntInput(0, pCurrentLocation->getNumConnections());
 		cout << endl;
 
+
 		//Investigate current location
 		if (userInput == 0)
 		{
 			cout << pCurrentLocation->getInspectText() << endl;
+			pauseAndFlush();
+
+			if (pCurrentLocation->hasItems()) 
+			{
+				cout << endl;
+				cout << "You search the room and collect:" << endl;
+
+				for (Item* i : pCurrentLocation->getItems()) 
+				{
+					cout << "-" << i->getName() << endl;
+					playerInventory.push_back(i);
+				}
+				pCurrentLocation->removeItems();
+			}
 			pauseAndFlush();
 			continue;
 		}
@@ -77,9 +113,16 @@ int main()
 
 		if (chosenLocation->isLocked())
 		{
+			if (chosenLocation->getName() == "Bedroom" && find(playerInventory.begin(), playerInventory.end(), &bedroomKey) != playerInventory.end())
+			{
+				cout << "You use the Bedroom Key to unlock the door." << endl;
+				chosenLocation->unlock();
+				pauseAndFlush();
+				break;
+			}
 			cout << "The door is locked and you cannot open it!" << endl;
 			pauseAndFlush();
-			continue;
+			continue; //restart the loop without changing location
 		}
 
 		pCurrentLocation = chosenLocation;
@@ -203,7 +246,6 @@ void asciiArt(Location& currentLocation) {
 }
 
 // Displays the entry text of the location when the player enters it
-//
 void enterLocation(Location* loc)
 {
 	cout << "You have entered the " << loc->getName() << "." << endl;

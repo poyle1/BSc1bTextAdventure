@@ -11,6 +11,6 @@ public:
 	DefenceItem(string nName, int nValue, int nDefenceStat);
 	
 	int getDefenceStat();
-	void inspectItem() override;
-	string toString() override;
+	//void inspectItem() override;
+	//string toString() override;
 };

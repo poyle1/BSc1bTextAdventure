@@ -3,8 +3,9 @@
 
 Location::Location()
 {
-	this->name = "Empty Location";
-	this->connections = {};
+this->name = "Empty Location";
+this->keyRequired = false; // Initialize keyRequired to avoid the warning
+this->connections = {};
 }
 
 Location::Location(string nName, bool keyReq) : Location()
@@ -41,14 +42,24 @@ void Location::unlock()
 	this->keyRequired = false;
 }
 
-vector<Item*> Location::getItems()
+bool Location::hasItems()
+{
+	return this->items.size();
+}
+
+vector<Item*>& Location::getItems()
 {
 	return this->items;
 }
 
 void Location::addItem(Item* nItem)
 {
+	this->items.push_back(nItem);
+}
 
+void Location::removeItems()
+{
+	this->items.clear();
 }
 
 //Returns the entire vector of connections

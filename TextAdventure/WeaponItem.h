@@ -6,12 +6,12 @@ private:
 	int damageStat;
 public:
 	WeaponItem();
-	WeaponItem(string nName, int nValue, int nDamageStat);
+	//WeaponItem(string nName, int nValue, int nDamageStat);
 
 	int getDamageStat();
 
-	void inspectItem() override;
-	string toString() override;
+	//void inspectItem() override;
+	//string toString() override;
 
 };
 

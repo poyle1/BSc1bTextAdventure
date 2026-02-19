@@ -17,6 +17,6 @@ public:
 
 	int getStamRestored();
 
-	void inspectItem() override;
-	string toString() override;
+	//void inspectItem() override;
+	//string toString() override;
 };

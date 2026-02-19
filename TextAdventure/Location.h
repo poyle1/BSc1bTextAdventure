@@ -24,9 +24,10 @@ public:
 	bool isLocked();
 	void unlock();
 
-	vector<Item*> getItems();
+	bool hasItems();
+	vector<Item*>& getItems();
 	void addItem(Item* nItem);
-	void removeItem();
+	void removeItems();
 
 	vector<Location*> getConnections(); //Gets the vector of connections, used for outputting the list of available locations to the player
 	int getNumConnections(); //Gets the number of connections, used for  checking user input when selecting a location to move to
