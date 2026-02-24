@@ -6,10 +6,14 @@ class Item
 {
 protected:
 	string name;
+	string description;
+	bool isKey;
+	string unlockID;
 
 public:
 	Item();
-	Item(string nName);
+	Item(string nName, string nDescription, bool nIsKey = false, string nUnlockID = "");
 
 	string getName();
+	string getDescription();
 };

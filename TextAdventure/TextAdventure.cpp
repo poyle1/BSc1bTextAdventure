@@ -26,10 +26,12 @@ int main()
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	//gameIntro();
-	//titleScreen();
+	gameIntro();
+	titleScreen();
+	//Load ascii from files
 
-	
+
+	//To do: add to a dedicated class function
 	Location livingRoom("Living Room", false);
 	Location hallWay("Hallway", false);
 	Location bedroom("Bedroom", true);
@@ -54,16 +56,29 @@ int main()
 	hallWay.addConnection(&frontGarden);
 	hallWay.addConnection(&backGarden);
 	hallWay.addConnection(&bathroom1);
+	frontGarden.addConnection(&hallWay);
+	frontGarden.addConnection(&backGarden);
+	frontGarden.addConnection(&garage);
+	backGarden.addConnection(&hallWay);
+	backGarden.addConnection(&frontGarden);
+	backGarden.addConnection(&shed);
+	backGarden.addConnection(&garage);
+	shed.addConnection(&backGarden);
 	bedroom.addConnection(&hallWay);
 	bedroom.addConnection(&bathroom2);
+	bathroom1.addConnection(&hallWay);
 	bathroom2.addConnection(&bedroom);
 	kitchen.addConnection(&livingRoom);
 	kitchen.addConnection(&hallWay);
 	kitchen.addConnection(&garage);
+	garage.addConnection(&kitchen);
+	garage.addConnection(&backGarden);
+	garage.addConnection(&frontGarden);
 
-	Item bedroomKey("Bedroom Key");
-	Item sugar("Sugar");
-	Item testItem("Test Item");
+
+	Item bedroomKey("Bedroom Key", "", true, "Bedroom");
+	Item sugar("Sugar", "", false, "");
+	Item testItem("Test Item", "debugging.", false, "");
 	livingRoom.addItem(&bedroomKey);
 	livingRoom.addItem(&sugar);
 
@@ -129,6 +144,14 @@ int main()
 
 		if (chosenLocation->isLocked())
 		{
+			/*
+			if (chosenLocation->unlock(playerInventory)) {
+				cout << "Door unlocked" << endl;
+			}
+			else {
+				cout << "The door is locked - you cannot open it!" << endl;
+			}
+			*/
 			vector<Item*>::iterator i;
 
 			for (i = playerInventory.begin(); i != playerInventory.end(); ++i)
@@ -150,9 +173,14 @@ int main()
 			
 			continue; //Restarts the loop without changing location if no key is found.
 		}
+		
+
+
 
 		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);
+
+
 	}
 
 }
