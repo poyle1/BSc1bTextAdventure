@@ -12,6 +12,7 @@ private:
 	bool keyRequired;
 	vector <Location*> connections; //Tree structure of locations using a vector of pointers
 	vector<Item*> items; //Vector of pointers to items in the location
+	string 
 
 public:
 	Location();
