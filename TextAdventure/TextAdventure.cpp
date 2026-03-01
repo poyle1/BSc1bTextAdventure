@@ -22,27 +22,29 @@ int getValidIntInput(int min, int max);
 
 int main()
 {
-	//Maximize console window on start
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	gameIntro();
-	titleScreen();
-	//Load ascii from files
+	//gameIntro();
+	//titleScreen();
+	
+	Location livingRoom("Living Room", false, "");
+	Location hallWay("Hallway", false, "");
+	Location bedroom("Bedroom", true, "1");
+	Location kitchen("Kitchen", true, "2");
+	Location bathroom1("Bathroom", false, "");
+	Location bathroom2("En Suite Bathroom", false, "");
+	Location frontGarden("Front Garden", false, "");
+	Location backGarden("Back Garden", false, "");
+	Location shed("Shed", false, "");
+	Location garage("Garage", true, "3");
 
-
-	//To do: add to a dedicated class function
-	Location livingRoom("Living Room", false);
-	Location hallWay("Hallway", false);
-	Location bedroom("Bedroom", true);
-	Location kitchen("Kitchen", true);
-	Location bathroom1("Bathroom", false);
-	Location bathroom2("En Suite Bathroom", false);
-	Location frontGarden("Front Garden", false);
-	Location backGarden("Back Garden", false);
-	Location shed("Shed", false);
-	Location garage("Garage", true);
-
+	Item bedroomKey("Bedroom Key", "", true, "1");
+	Item kitchenKey("Kitchen Key", "", true, "2");
+	Item sugar("Sugar", "", false, "");
+	Item testItem("Test Item", "debugging.", false, "");
+	livingRoom.addItem(&bedroomKey);
+	livingRoom.addItem(&sugar);
 
 	livingRoom.setInspectText("This is the living room.");
 	hallWay.setInspectText("This is the hallway.");
@@ -74,15 +76,8 @@ int main()
 	garage.addConnection(&kitchen);
 	garage.addConnection(&backGarden);
 	garage.addConnection(&frontGarden);
-
-
-	Item bedroomKey("Bedroom Key", "", true, "Bedroom");
-	Item sugar("Sugar", "", false, "");
-	Item testItem("Test Item", "debugging.", false, "");
-	livingRoom.addItem(&bedroomKey);
-	livingRoom.addItem(&sugar);
-
-
+	
+	//Starting location
 	Location* pCurrentLocation = &livingRoom;
 
 	vector<Item*> playerInventory = {};
@@ -119,7 +114,6 @@ int main()
 		int userInput = getValidIntInput(0, pCurrentLocation->getNumConnections());
 		cout << endl;
 
-
 		//Investigate current location
 		if (userInput == 0)
 		{
@@ -138,51 +132,24 @@ int main()
 			pauseAndFlush();
 			continue; //Restarts the loop without changing location after investigating.
 		}
-
-		//Pointer to the location selected by the user, used to change the current location pointer
+		//Using a new pointer for better checks and debugging
 		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
 
 		if (chosenLocation->isLocked())
 		{
-			/*
-			if (chosenLocation->unlock(playerInventory)) {
-				cout << "Door unlocked" << endl;
+			if (chosenLocation->unlocked(playerInventory)) {
+				pCurrentLocation = chosenLocation;
+				enterLocation(pCurrentLocation);
 			}
 			else {
 				cout << "The door is locked - you cannot open it!" << endl;
+				pauseAndFlush();
 			}
-			*/
-			vector<Item*>::iterator i;
-
-			for (i = playerInventory.begin(); i != playerInventory.end(); ++i)
-			{
-				if ((*i)->getName() == "Bedroom Key")
-				{ 
-					chosenLocation->unlock();
-					cout << "You use the Key to unlock the door." << endl;
-					pCurrentLocation = chosenLocation;
-					enterLocation(pCurrentLocation);
-					break; //Stop searching inventory once the key is found
-				}
-				if (i == playerInventory.end() - 1) //
-				{ 
-					cout << "The door is locked - you cannot open it!" << endl;
-					pauseAndFlush();
-				}
-			}
-			
 			continue; //Restarts the loop without changing location if no key is found.
 		}
-		
-
-
-
 		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);
-
-
 	}
-
 }
 void gameIntro()
 {
@@ -302,7 +269,6 @@ void asciiArt(Location& currentLocation) {
 // Displays the entry text of the location when the player enters it
 void enterLocation(Location* loc)
 {
-	cout << endl;
 	cout << "You have entered the " << loc->getName() << "." << endl;
 	pauseAndFlush();
 }

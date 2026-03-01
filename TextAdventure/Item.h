@@ -8,12 +8,13 @@ protected:
 	string name;
 	string description;
 	bool isKey;
-	string unlockID;
+	string keyID;
 
 public:
 	Item();
-	Item(string nName, string nDescription, bool nIsKey = false, string nUnlockID = "");
+	Item(string nName, string nDescription, bool nIsKey = false, string nKeyID = "");
 
 	string getName();
 	string getDescription();
+	string getUnlockID();
 };

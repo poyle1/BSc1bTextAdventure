@@ -6,12 +6,15 @@ Location::Location()
 this->name = "Empty Location";
 this->keyRequired = false; // Initialize keyRequired to avoid the warning
 this->connections = {};
+this->doorID = "";
 }
 
-Location::Location(string nName, bool keyReq) : Location()
+Location::Location(string nName, bool keyReq, string nDoorID) : Location()
 {
     this->name = nName;
 	this->keyRequired = keyReq;
+	this->connections = {};
+	this->doorID = nDoorID;
 }
 
 string Location::getName()
@@ -37,9 +40,28 @@ bool Location::isLocked()
 	return this->keyRequired;
 }
 
-void Location::unlock()
+//Cycles through the player's inventory - if an item matches the doorID it returns true.
+bool Location::unlocked(vector<Item*> playerInventory)
 {
-	this->keyRequired = false;
+	vector<Item*>::iterator i;
+	for (i = playerInventory.begin(); i != playerInventory.end(); ++i)
+	{
+		if ((*i)->getUnlockID() == this->doorID)
+		{
+			this->keyRequired = false;
+			cout << "You use the " << (*i)->getName() << " to unlock the door." << endl;
+			return true;
+		}
+		else if (i == playerInventory.end() - 1)
+		{
+			return false;
+		}
+	}
+}
+
+string Location::getDoorID()
+{
+	return this->doorID;
 }
 
 bool Location::hasItems()

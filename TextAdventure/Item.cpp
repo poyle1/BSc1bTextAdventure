@@ -6,15 +6,15 @@ Item::Item()
 	this->name = "An item";
 	this->description = "This is an item.";
 	this->isKey = false;
-	this->unlockID = "";
+	this->keyID = "";
 }
 
-Item::Item(string nName, string nDescription, bool nIsKey, string nUnlockID)
+Item::Item(string nName, string nDescription, bool nIsKey, string nKeyID)
 {
 	this->name = nName;
 	this->description = nDescription;
 	this->isKey = nIsKey;
-	this->unlockID = nUnlockID;
+	this->keyID = nKeyID;
 }
 
 string Item::getName()
@@ -25,4 +25,9 @@ string Item::getName()
 string Item::getDescription()
 {
 	return this->description;
+}
+
+string Item::getUnlockID()
+{
+	return this->keyID;
 }

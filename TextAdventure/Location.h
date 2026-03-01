@@ -10,20 +10,23 @@ private:
 	string name;
 	string inspectText;
 	bool keyRequired;
+	string doorID; //ID for the door to this location, used to check if the player has the correct key to unlock it
 	vector <Location*> connections; //Tree structure of locations using a vector of pointers
 	vector<Item*> items; //Vector of pointers to items in the location
-	string 
+	
 
 public:
 	Location();
-	Location(string nName, bool keyReq);
+	Location(string nName, bool keyReq, string nDoorID);
 
 	string getName();
 	string getInspectText();
 	void setInspectText(string nText);
 
 	bool isLocked();
-	void unlock();
+	bool unlocked(vector <Item*> playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
+	string getDoorID();
+
 
 	bool hasItems();
 	vector<Item*>& getItems();
@@ -35,9 +38,5 @@ public:
 	Location* getConnection(int index); //Card getCard(int index);
 	void addConnection(Location* nLocation); //void addCard(Card new_card);
 	void outputConnections(); //void outputHand();
-
-	
-	
-
 };
 
