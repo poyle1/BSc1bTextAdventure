@@ -40,6 +40,11 @@ bool Location::isLocked()
 	return this->keyRequired;
 }
 
+bool Location::isLocked(int connectionIndex)
+{
+	return false;
+}
+
 //Cycles through the player's inventory - if an item matches the doorID it returns true.
 bool Location::unlocked(vector<Item*> playerInventory)
 {

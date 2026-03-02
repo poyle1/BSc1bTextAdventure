@@ -12,6 +12,9 @@ private:
 	bool keyRequired;
 	string doorID; //ID for the door to this location, used to check if the player has the correct key to unlock it
 	vector <Location*> connections; //Tree structure of locations using a vector of pointers
+	//connectionLockedFlags {false, true}
+
+
 	vector<Item*> items; //Vector of pointers to items in the location
 	
 
@@ -23,7 +26,7 @@ public:
 	string getInspectText();
 	void setInspectText(string nText);
 
-	bool isLocked();
+	bool isLocked(int connectionIndex);
 	bool unlocked(vector <Item*> playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
 	string getDoorID();
 

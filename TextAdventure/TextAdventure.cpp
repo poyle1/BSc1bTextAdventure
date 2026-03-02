@@ -8,6 +8,7 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "BasicEnemy.h"
+#include "FreeFunctions.h"
 
 using namespace std;
 
@@ -18,7 +19,6 @@ void pauseAndFlush();
 void pauseAndWipe();
 void asciiArt(Location& pCurrentLocation);
 void enterLocation(Location* nloc);
-int getValidIntInput(int min, int max);
 
 int main()
 {
@@ -37,7 +37,12 @@ int main()
 	Location frontGarden("Front Garden", false, "");
 	Location backGarden("Back Garden", false, "");
 	Location shed("Shed", false, "");
+
+	//Whats the difference between the syntax of these constructions?
+	//Look at creation of items, locations, players, etc from files, similar to ascii.
 	Location garage("Garage", true, "3");
+	Location testLocation = Location("Test Location", true, "4");
+
 
 	Item bedroomKey("Bedroom Key", "", true, "1");
 	Item kitchenKey("Kitchen Key", "", true, "2");
@@ -132,8 +137,11 @@ int main()
 			pauseAndFlush();
 			continue; //Restarts the loop without changing location after investigating.
 		}
-		//Using a new pointer for better checks and debugging
+		//A new location pointer based on user input
 		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
+		if (pCurrentLocation->isLocked(userInput - 1)) {
+
+		}
 
 		if (chosenLocation->isLocked())
 		{
@@ -271,27 +279,4 @@ void enterLocation(Location* loc)
 {
 	cout << "You have entered the " << loc->getName() << "." << endl;
 	pauseAndFlush();
-}
-
-// Gets a valid integer input from the user within the specified range
-int getValidIntInput(int min, int max)
-{
-	int userInput;
-
-	while (true)
-	{
-		cout << "Input: ";
-		cin >> userInput;
-
-		if (!cin.fail() && userInput >= min && userInput <= max)
-		{
-			return userInput;
-		}
-		else
-		{
-			cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << endl;
-			cin.clear(); // Clear the error flag
-			cin.ignore(1000, '\n'); // Discard invalid input
-		}
-	}
 }

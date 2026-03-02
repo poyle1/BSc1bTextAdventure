@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FreeFunctions.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Location.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="TextAdventure.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FreeFunctions.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Location.h" />
