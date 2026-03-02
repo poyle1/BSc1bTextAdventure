@@ -130,6 +130,7 @@
     <ClCompile Include="FreeFunctions.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="BasicEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="FreeFunctions.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="BasicEnemy.h" />
     <ClInclude Include="Player.h" />

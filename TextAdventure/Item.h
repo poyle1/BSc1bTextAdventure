@@ -7,14 +7,13 @@ class Item
 protected:
 	string name;
 	string description;
-	bool isKey;
-	string keyID;
-
+	
 public:
 	Item();
-	Item(string nName, string nDescription, bool nIsKey = false, string nKeyID = "");
+	Item(string nName, string nDescription);
 
 	string getName();
 	string getDescription();
-	string getUnlockID();
+
+	virtual string toString();
 };

@@ -1,20 +1,17 @@
 #include "Item.h"
 #include <string>
+#include "Key.h"
 
 Item::Item()
 {
 	this->name = "An item";
 	this->description = "This is an item.";
-	this->isKey = false;
-	this->keyID = "";
 }
 
-Item::Item(string nName, string nDescription, bool nIsKey, string nKeyID)
+Item::Item(string nName, string nDescription)
 {
 	this->name = nName;
 	this->description = nDescription;
-	this->isKey = nIsKey;
-	this->keyID = nKeyID;
 }
 
 string Item::getName()
@@ -27,7 +24,7 @@ string Item::getDescription()
 	return this->description;
 }
 
-string Item::getUnlockID()
+string Item::toString()
 {
-	return this->keyID;
+	return this->name + "." + this->description;
 }

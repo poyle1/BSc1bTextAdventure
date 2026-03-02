@@ -5,6 +5,7 @@
 
 #include "Location.h"
 #include "Item.h"
+#include "Key.h"
 #include "Inventory.h"
 #include "Player.h"
 #include "BasicEnemy.h"
@@ -44,10 +45,10 @@ int main()
 	Location testLocation = Location("Test Location", true, "4");
 
 
-	Item bedroomKey("Bedroom Key", "", true, "1");
-	Item kitchenKey("Kitchen Key", "", true, "2");
-	Item sugar("Sugar", "", false, "");
-	Item testItem("Test Item", "debugging.", false, "");
+	Key bedroomKey("Bedroom Key", "", true, "1");
+	Key kitchenKey("Kitchen Key", "", true, "2");
+	Item sugar("Sugar", "A lovely bag of sugar.");
+	Item testItem("Test Item", "debugging.");
 	livingRoom.addItem(&bedroomKey);
 	livingRoom.addItem(&sugar);
 
@@ -140,7 +141,7 @@ int main()
 		//A new location pointer based on user input
 		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
 		if (pCurrentLocation->isLocked(userInput - 1)) {
-
+			
 		}
 
 		if (chosenLocation->isLocked())
