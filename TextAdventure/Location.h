@@ -4,42 +4,49 @@
 #include "Item.h"
 using namespace std;
 
+class Location; //Forward declaration
+
+struct Door
+{
+	Location* targetLocation;
+	bool locked;
+	string requiredKeyID;
+};
+
 class Location
 {
 private:
+	//attributes
 	string name;
 	string inspectText;
-	bool keyRequired;
-	string doorID; //ID for the door to this location, used to check if the player has the correct key to unlock it
-	vector <Location*> connections; //Tree structure of locations using a vector of pointers
-	//connectionLockedFlags {false, true}
-
 
 	vector<Item*> items; //Vector of pointers to items in the location
-	
+	vector<Door> doors; //Tracks where doors lead to, and if they are locked.
 
 public:
+	//Constructors
 	Location();
-	Location(string nName, bool keyReq, string nDoorID);
+	Location(string nName);
 
+	//Door logic
+	void addDoor(Location* targetLoc, bool locked, string keyID);
+	bool isLocked(int index); //Checks if a specific connection is locked, used to check if the player can move to a location before moving there
+	bool unlockDoor(int index, const vector <Item*>& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
+
+	//Getters and setters
 	string getName();
 	string getInspectText();
 	void setInspectText(string nText);
 
-	bool isLocked(int connectionIndex);
-	bool unlocked(vector <Item*> playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
-	string getDoorID();
-
-
+	//Items
 	bool hasItems();
 	vector<Item*>& getItems();
 	void addItem(Item* nItem);
 	void removeItems();
 
-	vector<Location*> getConnections(); //Gets the vector of connections, used for outputting the list of available locations to the player
-	int getNumConnections(); //Gets the number of connections, used for  checking user input when selecting a location to move to
-	Location* getConnection(int index); //Card getCard(int index);
-	void addConnection(Location* nLocation); //void addCard(Card new_card);
-	void outputConnections(); //void outputHand();
+	//Connection Logic
+	//RENAME THESE TO DOORS
+	int getNumConnections(); //Used to check user input when selecting a location to move to
+	Location* getConnection(int index); //Used to get the connecting location based on user input
+	void outputConnections();
 };
-

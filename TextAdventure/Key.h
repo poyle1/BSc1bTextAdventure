@@ -10,8 +10,8 @@ private:
 public:
 	Key();
 	Key(string nName, string nDescription, bool nIsKey, string nKeyID);
-	string getKeyID();
 
 	string toString() override;
+	string getKeyID() override;
 };
 

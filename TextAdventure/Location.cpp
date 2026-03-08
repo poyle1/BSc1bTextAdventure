@@ -1,27 +1,56 @@
 #include "Location.h"
 #include <iostream>
 
+///Constructors
 Location::Location()
 {
-this->name = "Empty Location";
-this->keyRequired = false; // Initialize keyRequired to avoid the warning
-this->connections = {};
-this->doorID = "";
+	this->name = "A location";
 }
 
-Location::Location(string nName, bool keyReq, string nDoorID) : Location()
+Location::Location(string nName)
 {
     this->name = nName;
-	this->keyRequired = keyReq;
-	this->connections = {};
-	this->doorID = nDoorID;
 }
 
+//Door logic
+void Location::addDoor(Location* targetLoc, bool locked, string keyID)
+{
+	Door newDoor;
+	newDoor.targetLocation = targetLoc;
+	newDoor.locked = locked;
+	newDoor.requiredKeyID = keyID;
+	this->doors.push_back(newDoor);
+}
+
+bool Location::isLocked(int index)
+{
+	if (index >= 0 && index < this->doors.size())
+	{
+		return this->doors[index].locked;
+	}
+	return false; //safety check
+}
+
+bool Location::unlockDoor(int index, const vector<Item*>& playerInventory)
+{
+	if (index < 0 || index >= this->doors.size()) {
+		return false; //Invalid index
+	}
+	for (Item* item : playerInventory)
+	{
+		if (item->getKeyID() == this->doors[index].requiredKeyID)
+		{
+			this->doors[index].locked = false;
+			cout << "You use the " << item->getName() << " to unlock the door." << endl;
+			return true;
+		}
+	}
+	return false; //No matching key found in inventory
+}
+
+//Getters and setters
 string Location::getName()
 {
-	if (keyRequired)
-		return this->name + " [Locked]";
-	else
 		return this->name;
 }
 
@@ -35,43 +64,14 @@ void Location::setInspectText(string nText)
 	this->inspectText = nText;
 }
 
-bool Location::isLocked()
-{
-	return this->keyRequired;
-}
-
-bool Location::isLocked(int connectionIndex)
-{
-	return false;
-}
-
-//Cycles through the player's inventory - if an item matches the doorID it returns true.
-bool Location::unlocked(vector<Item*> playerInventory)
-{
-	vector<Item*>::iterator i;
-	for (i = playerInventory.begin(); i != playerInventory.end(); ++i)
-	{
-		if ((*i)->getUnlockID() == this->doorID)
-		{
-			this->keyRequired = false;
-			cout << "You use the " << (*i)->getName() << " to unlock the door." << endl;
-			return true;
-		}
-		else if (i == playerInventory.end() - 1)
-		{
-			return false;
-		}
-	}
-}
-
-string Location::getDoorID()
-{
-	return this->doorID;
-}
-
+//Items
 bool Location::hasItems()
 {
-	return this->items.size();
+	if (this->items.empty())
+	{
+		return false;
+	}
+	return true;
 }
 
 vector<Item*>& Location::getItems()
@@ -89,34 +89,29 @@ void Location::removeItems()
 	this->items.clear();
 }
 
-//Returns the entire vector of connections
-vector<Location*> Location::getConnections()
-{
-	return this->connections;
-}
-
-//Returns the number of connections in the vector
+//Connection Logic
 int Location::getNumConnections()
 {
-	return this->connections.size();
+	return this->doors.size();
 }
 
-//Returns a specific connection from the vector based on index
-//Used to set the location pointer based on user input
 Location* Location::getConnection(int index)
 {
-	return this->connections[index];
-}
-
-void Location::addConnection(Location* nlocation)
-{
-	this->connections.push_back(nlocation);
+	if (index >= 0 && index < this->doors.size()) 
+	{
+		return this->doors[index].targetLocation; //Returns the target location of the door at the specified index
+	}
+	return nullptr; //safety check
 }
 
 void Location::outputConnections()
 {
-	for (int i = 0; i < this->connections.size(); i++)
+	for (int i = 0; i < this->doors.size(); i++)
 	{
-		cout << i + 1 << ") " << this->connections[i]->getName() << endl;
+		cout << i + 1 << ") " << doors[i].targetLocation->getName();
+		if (doors[i].locked) {
+			cout << " [LOCKED]";
+		}
+		cout << endl;
 	}
 }

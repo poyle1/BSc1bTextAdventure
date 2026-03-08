@@ -16,4 +16,5 @@ public:
 	string getDescription();
 
 	virtual string toString();
+	virtual string getKeyID();
 };

@@ -29,20 +29,17 @@ int main()
 	//gameIntro();
 	//titleScreen();
 	
-	Location livingRoom("Living Room", false, "");
-	Location hallWay("Hallway", false, "");
-	Location bedroom("Bedroom", true, "1");
-	Location kitchen("Kitchen", true, "2");
-	Location bathroom1("Bathroom", false, "");
-	Location bathroom2("En Suite Bathroom", false, "");
-	Location frontGarden("Front Garden", false, "");
-	Location backGarden("Back Garden", false, "");
-	Location shed("Shed", false, "");
+	Location livingRoom("Living Room");
+	Location hallWay("Hallway");
+	Location bedroom("Bedroom");
+	Location kitchen("Kitchen");
+	Location bathroom1("Bathroom");
+	Location bathroom2("En Suite Bathroom");
+	Location frontGarden("Front Garden");
+	Location backGarden("Back Garden");
+	Location shed("Shed");
 
-	//Whats the difference between the syntax of these constructions?
 	//Look at creation of items, locations, players, etc from files, similar to ascii.
-	Location garage("Garage", true, "3");
-	Location testLocation = Location("Test Location", true, "4");
 
 
 	Key bedroomKey("Bedroom Key", "", true, "1");
@@ -56,32 +53,40 @@ int main()
 	hallWay.setInspectText("This is the hallway.");
 	bedroom.setInspectText("This is the bedroom.");
 
-	livingRoom.addConnection(&hallWay);
-	livingRoom.addConnection(&kitchen);
-	hallWay.addConnection(&livingRoom);
-	hallWay.addConnection(&bedroom);
-	hallWay.addConnection(&kitchen);
-	hallWay.addConnection(&frontGarden);
-	hallWay.addConnection(&backGarden);
-	hallWay.addConnection(&bathroom1);
-	frontGarden.addConnection(&hallWay);
-	frontGarden.addConnection(&backGarden);
-	frontGarden.addConnection(&garage);
-	backGarden.addConnection(&hallWay);
-	backGarden.addConnection(&frontGarden);
-	backGarden.addConnection(&shed);
-	backGarden.addConnection(&garage);
-	shed.addConnection(&backGarden);
-	bedroom.addConnection(&hallWay);
-	bedroom.addConnection(&bathroom2);
-	bathroom1.addConnection(&hallWay);
-	bathroom2.addConnection(&bedroom);
-	kitchen.addConnection(&livingRoom);
-	kitchen.addConnection(&hallWay);
-	kitchen.addConnection(&garage);
-	garage.addConnection(&kitchen);
-	garage.addConnection(&backGarden);
-	garage.addConnection(&frontGarden);
+	livingRoom.addDoor(&hallWay, false, "");
+	livingRoom.addDoor(&kitchen, true, "2");
+	hallWay.addDoor(&livingRoom, false, "");
+	hallWay.addDoor(&bedroom, true, "1");
+	hallWay.addDoor(&kitchen, false, "");
+	kitchen.addDoor(&livingRoom, false, "");
+	
+
+	//livingRoom.addConnection(&hallWay, false, "");
+	//livingRoom.addConnection(&kitchen, true, "2");
+	//hallWay.addConnection(&livingRoom);
+	//hallWay.addConnection(&bedroom);
+	//hallWay.addConnection(&kitchen);
+	//hallWay.addConnection(&frontGarden);
+	//hallWay.addConnection(&backGarden);
+	//hallWay.addConnection(&bathroom1);
+	//frontGarden.addConnection(&hallWay);
+	//frontGarden.addConnection(&backGarden);
+	//frontGarden.addConnection(&garage);
+	//backGarden.addConnection(&hallWay);
+	//backGarden.addConnection(&frontGarden);
+	//backGarden.addConnection(&shed);
+	//backGarden.addConnection(&garage);
+	//shed.addConnection(&backGarden);
+	//bedroom.addConnection(&hallWay);
+	//bedroom.addConnection(&bathroom2);
+	//bathroom1.addConnection(&hallWay);
+	//bathroom2.addConnection(&bedroom);
+	//kitchen.addConnection(&livingRoom);
+	//kitchen.addConnection(&hallWay);
+	//kitchen.addConnection(&garage);
+	//garage.addConnection(&kitchen);
+	//garage.addConnection(&backGarden);
+	//garage.addConnection(&frontGarden);
 	
 	//Starting location
 	Location* pCurrentLocation = &livingRoom;
@@ -140,21 +145,14 @@ int main()
 		}
 		//A new location pointer based on user input
 		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
-		if (pCurrentLocation->isLocked(userInput - 1)) {
-			
-		}
 
-		if (chosenLocation->isLocked())
+		if (pCurrentLocation->isLocked(userInput - 1))
 		{
-			if (chosenLocation->unlocked(playerInventory)) {
-				pCurrentLocation = chosenLocation;
-				enterLocation(pCurrentLocation);
-			}
-			else {
+			if (!pCurrentLocation->unlockDoor(userInput - 1, playerInventory)) {
 				cout << "The door is locked - you cannot open it!" << endl;
 				pauseAndFlush();
+				continue; //Restarts the loop without changing location after failed attempt to unlock.
 			}
-			continue; //Restarts the loop without changing location if no key is found.
 		}
 		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);

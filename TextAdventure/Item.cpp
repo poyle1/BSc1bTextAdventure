@@ -28,3 +28,9 @@ string Item::toString()
 {
 	return this->name + "." + this->description;
 }
+
+string Item::getKeyID()
+{
+	return "";
+}
+
