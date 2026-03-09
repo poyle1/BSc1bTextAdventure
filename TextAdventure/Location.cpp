@@ -34,14 +34,14 @@ bool Location::isLocked(int index)
 bool Location::unlockDoor(int index, const vector<Item*>& playerInventory)
 {
 	if (index < 0 || index >= this->doors.size()) {
-		return false; //Invalid index
+		return false; //Invalid index safety check
 	}
-	for (Item* item : playerInventory)
+	for (Item* i : playerInventory)
 	{
-		if (item->getKeyID() == this->doors[index].requiredKeyID)
+		if (i->getKeyID() == this->doors[index].requiredKeyID)
 		{
 			this->doors[index].locked = false;
-			cout << "You use the " << item->getName() << " to unlock the door." << endl;
+			cout << "You use the " << i->getName() << " to unlock the door." << endl;
 			return true;
 		}
 	}
@@ -67,7 +67,7 @@ void Location::setInspectText(string nText)
 //Items
 bool Location::hasItems()
 {
-	if (this->items.empty())
+	if (this->locItems.empty())
 	{
 		return false;
 	}
@@ -76,26 +76,26 @@ bool Location::hasItems()
 
 vector<Item*>& Location::getItems()
 {
-	return this->items;
+	return this->locItems;
 }
 
 void Location::addItem(Item* nItem)
 {
-	this->items.push_back(nItem);
+	this->locItems.push_back(nItem);
 }
 
 void Location::removeItems()
 {
-	this->items.clear();
+	this->locItems.clear();
 }
 
-//Connection Logic
-int Location::getNumConnections()
+//Door/connection Logic
+int Location::getNumDoors()
 {
 	return this->doors.size();
 }
 
-Location* Location::getConnection(int index)
+Location* Location::getDoor(int index)
 {
 	if (index >= 0 && index < this->doors.size()) 
 	{
@@ -104,8 +104,8 @@ Location* Location::getConnection(int index)
 	return nullptr; //safety check
 }
 
-void Location::outputConnections()
-{
+void Location::outputDoors() //Outputs the target location of each door relative to the current location.
+{							 //Used to display a full list of available locations that the player can travel to.
 	for (int i = 0; i < this->doors.size(); i++)
 	{
 		cout << i + 1 << ") " << doors[i].targetLocation->getName();
@@ -114,4 +114,20 @@ void Location::outputConnections()
 		}
 		cout << endl;
 	}
+}
+
+bool Location::allItemsCollected(int totalIng, const vector<Item*>& playerInventory)
+{
+	if (totalIng >= 5)
+	{
+		return true; //If the player has all the ingredients, return true
+	}
+	for (Item* i : playerInventory)
+	{
+		if (i->isIngredient())
+		{
+			totalIng += 1;
+		}
+	}
+	return false; //If the player does not have all the ingredients, return false
 }

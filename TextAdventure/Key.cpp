@@ -1,5 +1,6 @@
 #include <string>
 #include "Key.h"
+#include "Item.h"
 
 Key::Key()
 {
@@ -7,9 +8,10 @@ Key::Key()
 	this->description = "This is a key.";
 	this->isKey = false;
 	this->keyID = "";
+	this->isIngredient;
 }
 
-Key::Key(string nName, string nDescription, bool nIsKey, string nKeyID) : Item(nName, nDescription)
+Key::Key(string nName, string nDescription, bool nIsKey, string nKeyID) : Item(nName, nDescription, false)
 {
 	this->isKey = nIsKey;
 	this->keyID = nKeyID;

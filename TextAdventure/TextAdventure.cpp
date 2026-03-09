@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "BasicEnemy.h"
 #include "FreeFunctions.h"
+#include <stack>
 
 using namespace std;
 
@@ -21,8 +22,30 @@ void pauseAndWipe();
 void asciiArt(Location& pCurrentLocation);
 void enterLocation(Location* nloc);
 
+stack<Item*> winningStack;
+
 int main()
 {
+	Item sugar("Sugar", "", true);
+	Item milk("Milk", "", true);
+	Item tea("Tea bag", "", true);
+	Item mug("Mug", "", true);
+	Item water("Water", "", true);
+
+	winningStack.push(&mug);
+	winningStack.push(&tea);
+	winningStack.push(&sugar);
+	winningStack.push(&water);
+	winningStack.push(&milk);
+
+
+
+
+
+
+
+
+
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
@@ -44,8 +67,8 @@ int main()
 
 	Key bedroomKey("Bedroom Key", "", true, "1");
 	Key kitchenKey("Kitchen Key", "", true, "2");
-	Item sugar("Sugar", "A lovely bag of sugar.");
-	Item testItem("Test Item", "debugging.");
+	Item sugar("Sugar", "A lovely bag of sugar.", true);
+	Item testItem("Test Item", "debugging.", false);
 	livingRoom.addItem(&bedroomKey);
 	livingRoom.addItem(&sugar);
 
@@ -59,6 +82,7 @@ int main()
 	hallWay.addDoor(&bedroom, true, "1");
 	hallWay.addDoor(&kitchen, false, "");
 	kitchen.addDoor(&livingRoom, false, "");
+	bedroom.addDoor(&hallWay, false, "");
 	
 
 	//livingRoom.addConnection(&hallWay, false, "");
@@ -93,7 +117,7 @@ int main()
 
 	vector<Item*> playerInventory = {};
 
-	playerInventory.push_back(&testItem);
+	//playerInventory.push_back(&testItem);
 
 	while (true)
 	{
@@ -119,11 +143,13 @@ int main()
 		cout << "Or enter '0' to learn more about your current location.\n\n";
 		
 		cout << "Available Locations:" << "\n";
-		pCurrentLocation->outputConnections();
+		pCurrentLocation->outputDoors();
 		cout << "====================================================================================================\n\n";
 
-		int userInput = getValidIntInput(0, pCurrentLocation->getNumConnections());
+		int userInput = getValidIntInput(0, pCurrentLocation->getNumDoors());
 		cout << endl;
+
+		if (pCurrentLocation->getName() == "Kitchen" && )
 
 		//Investigate current location
 		if (userInput == 0)
@@ -144,7 +170,7 @@ int main()
 			continue; //Restarts the loop without changing location after investigating.
 		}
 		//A new location pointer based on user input
-		Location* chosenLocation = pCurrentLocation->getConnection(userInput - 1);
+		Location* chosenLocation = pCurrentLocation->getDoor(userInput - 1);
 
 		if (pCurrentLocation->isLocked(userInput - 1))
 		{

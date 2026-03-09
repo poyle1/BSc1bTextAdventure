@@ -6,12 +6,19 @@ Item::Item()
 {
 	this->name = "An item";
 	this->description = "This is an item.";
+	this->ingredient = false;
 }
 
-Item::Item(string nName, string nDescription)
+Item::Item(string nName, string nDescription, bool isIng)
 {
 	this->name = nName;
 	this->description = nDescription;
+	this->ingredient = isIng;
+}
+
+bool Item::isIngredient()
+{
+	return this->ingredient;
 }
 
 string Item::getName()

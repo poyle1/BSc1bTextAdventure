@@ -7,10 +7,12 @@ class Item
 protected:
 	string name;
 	string description;
+	bool ingredient;
 	
 public:
 	Item();
-	Item(string nName, string nDescription);
+	Item(string nName, string nDescription, bool isIng);
+	bool isIngredient();
 
 	string getName();
 	string getDescription();

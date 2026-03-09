@@ -8,9 +8,9 @@ class Location; //Forward declaration
 
 struct Door
 {
-	Location* targetLocation;
-	bool locked;
-	string requiredKeyID;
+	Location* targetLocation = nullptr;
+	bool locked = false;
+	string requiredKeyID = "";
 };
 
 class Location
@@ -19,9 +19,9 @@ private:
 	//attributes
 	string name;
 	string inspectText;
-
-	vector<Item*> items; //Vector of pointers to items in the location
-	vector<Door> doors; //Tracks where doors lead to, and if they are locked.
+	
+	vector<Item*> locItems; //Vector of pointers to items in the location
+	vector<Door> doors; //Each location has a list of doors, 
 
 public:
 	//Constructors
@@ -44,9 +44,11 @@ public:
 	void addItem(Item* nItem);
 	void removeItems();
 
-	//Connection Logic
+	//Door/Connection Logic
 	//RENAME THESE TO DOORS
-	int getNumConnections(); //Used to check user input when selecting a location to move to
-	Location* getConnection(int index); //Used to get the connecting location based on user input
-	void outputConnections();
+	int getNumDoors(); //Used to check user input when selecting a location to move to
+	Location* getDoor(int index); //Used to get the connecting location based on user input
+	void outputDoors();
+
+	bool allItemsCollected(int totalIng, const vector <Item*>& playerInventory);
 };
