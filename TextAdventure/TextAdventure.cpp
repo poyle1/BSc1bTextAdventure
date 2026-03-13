@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #include "Location.h"
+#include "EventRoom.h"
 #include "Item.h"
 #include "Key.h"
 #include "Inventory.h"
@@ -17,8 +18,6 @@ using namespace std;
 void gameIntro();
 void acsii1();
 void titleScreen();
-void pauseAndFlush();
-void pauseAndWipe();
 void asciiArt(Location& pCurrentLocation);
 void enterLocation(Location* nloc);
 
@@ -38,14 +37,6 @@ int main()
 	winningStack.push(&water);
 	winningStack.push(&milk);
 
-
-
-
-
-
-
-
-
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
@@ -55,7 +46,7 @@ int main()
 	Location livingRoom("Living Room");
 	Location hallWay("Hallway");
 	Location bedroom("Bedroom");
-	Location kitchen("Kitchen");
+	EventRoom kitchen("Kitchen", "Make a cup of tea");
 	Location bathroom1("Bathroom");
 	Location bathroom2("En Suite Bathroom");
 	Location frontGarden("Front Garden");
@@ -64,10 +55,8 @@ int main()
 
 	//Look at creation of items, locations, players, etc from files, similar to ascii.
 
-
 	Key bedroomKey("Bedroom Key", "", true, "1");
 	Key kitchenKey("Kitchen Key", "", true, "2");
-	Item sugar("Sugar", "A lovely bag of sugar.", true);
 	Item testItem("Test Item", "debugging.", false);
 	livingRoom.addItem(&bedroomKey);
 	livingRoom.addItem(&sugar);
@@ -84,102 +73,85 @@ int main()
 	kitchen.addDoor(&livingRoom, false, "");
 	bedroom.addDoor(&hallWay, false, "");
 	
-
-	//livingRoom.addConnection(&hallWay, false, "");
-	//livingRoom.addConnection(&kitchen, true, "2");
-	//hallWay.addConnection(&livingRoom);
-	//hallWay.addConnection(&bedroom);
-	//hallWay.addConnection(&kitchen);
-	//hallWay.addConnection(&frontGarden);
-	//hallWay.addConnection(&backGarden);
-	//hallWay.addConnection(&bathroom1);
-	//frontGarden.addConnection(&hallWay);
-	//frontGarden.addConnection(&backGarden);
-	//frontGarden.addConnection(&garage);
-	//backGarden.addConnection(&hallWay);
-	//backGarden.addConnection(&frontGarden);
-	//backGarden.addConnection(&shed);
-	//backGarden.addConnection(&garage);
-	//shed.addConnection(&backGarden);
-	//bedroom.addConnection(&hallWay);
-	//bedroom.addConnection(&bathroom2);
-	//bathroom1.addConnection(&hallWay);
-	//bathroom2.addConnection(&bedroom);
-	//kitchen.addConnection(&livingRoom);
-	//kitchen.addConnection(&hallWay);
-	//kitchen.addConnection(&garage);
-	//garage.addConnection(&kitchen);
-	//garage.addConnection(&backGarden);
-	//garage.addConnection(&frontGarden);
-	
 	//Starting location
 	Location* pCurrentLocation = &livingRoom;
-
 	vector<Item*> playerInventory = {};
+	int collectedIng = 0;
 
-	//playerInventory.push_back(&testItem);
-
+	//Main Game Loop//
 	while (true)
 	{
+		//Investigate option will always output as the next option after the last available room
+		//Followed by the start event option if present
+		int numDoors = pCurrentLocation->getNumDoors();
+		int investigateRoomOption = numDoors + 1;
+		int startEventOption = numDoors + 2;
+
+		int maxValidInput = investigateRoomOption;
+		if (pCurrentLocation->canStartEvent())
+		{
+			maxValidInput = startEventOption; // if event room, option to use
+		}
+
+		//Current Room Info//
 		system("cls");
 		cout << "====================================================================================================\n";
 		cout << "Current location: " << pCurrentLocation->getName() << "\n";
-		if (pCurrentLocation->hasItems()) {
-			cout << "There may be items in this room." << endl;
-		}
-		else {
-			cout << "There are no items in this room." << endl;
-		}
+		pCurrentLocation->itemCheck();
 		cout << "====================================================================================================\n";
 		cout << "Collected Items: ";
 		for (Item* i : playerInventory) {
 			cout << "-" << i->getName() << " ";
 		}
 		cout << endl;
+		cout << "Total Ingredients: " << collectedIng;
+		cout << endl;
 		cout << "====================================================================================================\n";
 		asciiArt(*pCurrentLocation);
 		cout << "====================================================================================================\n";
-		cout << "Enter a number to go to a location:\n";
-		cout << "Or enter '0' to learn more about your current location.\n\n";
-		
-		cout << "Available Locations:" << "\n";
+		cout << "Available Actions:" << "\n";
 		pCurrentLocation->outputDoors();
-		cout << "====================================================================================================\n\n";
+		cout << investigateRoomOption << ") Investigate the room" << endl;
+		if (pCurrentLocation->canStartEvent())
+		{
+			cout << startEventOption << ") " << pCurrentLocation->getEventPrompt();
+		}
+		cout << endl;
+		cout << "====================================================================================================\n";
+		cout << "Enter a character to complete an action:\n\n";
 
-		int userInput = getValidIntInput(0, pCurrentLocation->getNumDoors());
+		//User Input//
+		int userInput = getValidIntInput(1, maxValidInput);
 		cout << endl;
 
-		if (pCurrentLocation->getName() == "Kitchen" && )
-
-		//Investigate current location
-		if (userInput == 0)
+		//Investigate Current Location//
+		if (userInput == investigateRoomOption)
 		{
-			cout << pCurrentLocation->getInspectText() << endl;
-			if (pCurrentLocation->hasItems()) 
-			{
-				cout << endl;
-				cout << "You search the room and collect:" << endl;
-				for (Item* i : pCurrentLocation->getItems()) 
-				{
-					cout << "-" << i->getName() << endl;
-					playerInventory.push_back(i);
-				}
-				pCurrentLocation->removeItems();
-			}
+			pCurrentLocation->investigateRoom(collectedIng, playerInventory);
 			pauseAndFlush();
-			continue; //Restarts the loop without changing location after investigating.
+			continue;
 		}
-		//A new location pointer based on user input
-		Location* chosenLocation = pCurrentLocation->getDoor(userInput - 1);
 
-		if (pCurrentLocation->isLocked(userInput - 1))
+		if (pCurrentLocation->canStartEvent() && userInput == startEventOption)
 		{
-			if (!pCurrentLocation->unlockDoor(userInput - 1, playerInventory)) {
+			pCurrentLocation->startEvent();
+			pauseAndFlush();
+			continue;
+		}
+
+		int doorIndex = userInput - 1;
+		Location* chosenLocation = pCurrentLocation->getDoor(doorIndex);
+		
+		//Locked Door Check//
+		if (pCurrentLocation->isLocked(doorIndex))
+		{
+			if (!pCurrentLocation->unlockDoor(doorIndex, playerInventory)) {
 				cout << "The door is locked - you cannot open it!" << endl;
 				pauseAndFlush();
-				continue; //Restarts the loop without changing location after failed attempt to unlock.
+				continue; 
 			}
 		}
+		//Enter Chosen Location//
 		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);
 	}
@@ -256,20 +228,6 @@ void titleScreen()
 "+----------------------------------------------------------------------------------+" << endl << endl;
 	system("pause");
 	cout << endl;
-}
-
-// Pauses the program and waits for user input before continuing
-void pauseAndFlush()
-{
-	cout << endl;
-	system("pause");
-}
-
-void pauseAndWipe()
-{
-	cout << endl;
-	system("pause");
-	system("cls");
 }
 
 void asciiArt(Location& currentLocation) {

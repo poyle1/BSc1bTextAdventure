@@ -1,7 +1,6 @@
 #pragma once
 #include "Item.h"
-class Key :
-    public Item
+class Key : public Item
 {
 private:
 	bool isKey;

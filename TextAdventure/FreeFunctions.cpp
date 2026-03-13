@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+// Ensures that user input is valid between two given int values
 int getValidIntInput(int min, int max)
 {
 	int userInput;
@@ -22,4 +23,19 @@ int getValidIntInput(int min, int max)
 			cin.ignore(1000, '\n'); // Discard invalid input
 		}
 	}
+}
+
+// Pauses the program and waits for user input before continuing
+void pauseAndFlush()
+{
+	cout << endl;
+	system("pause");
+}
+
+//Pauses the program, then clears the screen output
+void pauseAndWipe()
+{
+	cout << endl;
+	system("pause");
+	system("cls");
 }

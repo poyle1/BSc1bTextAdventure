@@ -1,5 +1,6 @@
 #include "Location.h"
 #include <iostream>
+#include <vector>
 
 ///Constructors
 Location::Location()
@@ -31,18 +32,19 @@ bool Location::isLocked(int index)
 	return false; //safety check
 }
 
-bool Location::unlockDoor(int index, const vector<Item*>& playerInventory)
+bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
 {
 	if (index < 0 || index >= this->doors.size()) {
 		return false; //Invalid index safety check
 	}
-	for (Item* i : playerInventory)
+	for (int i = 0; i < playerInventory.size(); i++)
 	{
-		if (i->getKeyID() == this->doors[index].requiredKeyID)
+		if (playerInventory[i]->getKeyID() == this->doors[index].requiredKeyID)
 		{
 			this->doors[index].locked = false;
-			cout << "You use the " << i->getName() << " to unlock the door." << endl;
-			return true;
+			cout << "You use the " << playerInventory[i]->getName() << " to unlock the door." << endl;
+			playerInventory.erase(playerInventory.begin() + i);
+			return true; //Exit loop
 		}
 	}
 	return false; //No matching key found in inventory
@@ -51,7 +53,7 @@ bool Location::unlockDoor(int index, const vector<Item*>& playerInventory)
 //Getters and setters
 string Location::getName()
 {
-		return this->name;
+	return this->name;
 }
 
 string Location::getInspectText()
@@ -74,6 +76,18 @@ bool Location::hasItems()
 	return true;
 }
 
+void Location::itemCheck()
+{
+	if (this->locItems.empty())
+	{
+		cout << "There are no items in this room." << endl;
+	}
+	else
+	{
+		cout << "There may be items in this room." << endl;
+	}
+}
+
 vector<Item*>& Location::getItems()
 {
 	return this->locItems;
@@ -87,6 +101,29 @@ void Location::addItem(Item* nItem)
 void Location::removeItems()
 {
 	this->locItems.clear();
+}
+
+void Location::investigateRoom(int& collectedIng, vector<Item*>& playerInventory)
+{
+	cout << this->getInspectText() << endl;
+	if (!this->hasItems())
+	{
+		cout << "There doesn't seem to be anything useful in here." << endl;
+	}
+	else
+	{
+		cout << "You look around and grab: " << endl;
+		for (Item* i : this->locItems)
+		{
+			cout << "-" << i->getName() << endl;
+			playerInventory.push_back(i);
+			if (i->isIngredient())
+			{
+				collectedIng += 1;
+			}
+		}
+		this->removeItems();
+	}
 }
 
 //Door/connection Logic
@@ -108,7 +145,7 @@ void Location::outputDoors() //Outputs the target location of each door relative
 {							 //Used to display a full list of available locations that the player can travel to.
 	for (int i = 0; i < this->doors.size(); i++)
 	{
-		cout << i + 1 << ") " << doors[i].targetLocation->getName();
+		cout << i + 1 << ") Enter the: " << doors[i].targetLocation->getName();
 		if (doors[i].locked) {
 			cout << " [LOCKED]";
 		}
@@ -116,7 +153,7 @@ void Location::outputDoors() //Outputs the target location of each door relative
 	}
 }
 
-bool Location::allItemsCollected(int totalIng, const vector<Item*>& playerInventory)
+bool Location::allItemsCollected(int totalIng,  vector<Item*>& playerInventory)
 {
 	if (totalIng >= 5)
 	{
@@ -130,4 +167,20 @@ bool Location::allItemsCollected(int totalIng, const vector<Item*>& playerInvent
 		}
 	}
 	return false; //If the player does not have all the ingredients, return false
+}
+
+//Event logic
+bool Location::canStartEvent()
+{
+	return false;
+}
+
+string Location::getEventPrompt()
+{
+	return string("");
+}
+
+void Location::startEvent()
+{
+	return;
 }

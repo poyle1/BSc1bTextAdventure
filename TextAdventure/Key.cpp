@@ -8,7 +8,7 @@ Key::Key()
 	this->description = "This is a key.";
 	this->isKey = false;
 	this->keyID = "";
-	this->isIngredient;
+	this->ingredient = false;
 }
 
 Key::Key(string nName, string nDescription, bool nIsKey, string nKeyID) : Item(nName, nDescription, false)
