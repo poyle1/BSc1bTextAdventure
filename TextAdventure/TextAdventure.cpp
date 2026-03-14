@@ -2,7 +2,9 @@
 #include <string>
 #include <vector>
 #include <windows.h>
+#include <stack>
 
+#include "Utility.h"
 #include "Location.h"
 #include "EventRoom.h"
 #include "Item.h"
@@ -10,10 +12,10 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "BasicEnemy.h"
-#include "FreeFunctions.h"
-#include <stack>
+#include "Text.h"
 
 using namespace std;
+using namespace Utility;
 
 void gameIntro();
 void acsii1();
@@ -40,8 +42,8 @@ int main()
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	//gameIntro();
-	//titleScreen();
+	gameIntro();
+	titleScreen();
 	
 	Location livingRoom("Living Room");
 	Location hallWay("Hallway");
@@ -155,111 +157,4 @@ int main()
 		pCurrentLocation = chosenLocation;
 		enterLocation(pCurrentLocation);
 	}
-}
-void gameIntro()
-{
-	acsii1();
-	cout << "\"Hello!\"" << endl;
-	cout << "\"Thank you for popping round.\"" << endl << endl;
-	pauseAndWipe();
-	acsii1();
-	cout << "\"I get very lonely sometimes...\"" << endl << endl;
-	pauseAndWipe();
-	acsii1();
-	cout << "\"Would you like me to tell you a story?\"" << endl << endl;
-	pauseAndWipe();
-	acsii1();
-	cout << "\"Its about history!\"" << endl << endl;
-	pauseAndWipe();
-	acsii1();
-	cout << "\"Lost history...\"" << endl << endl;
-	pauseAndWipe();
-	acsii1();
-	cout << "\"But first, can you make me a cup of tea?\"" << endl << endl;
-	system("pause");
-}
-
-void acsii1() {
-	cout << "                                                           \n"
-		"   .:::.                   .:::..                          \n"
-		"   -++++-                  -+++=.                          \n"
-		"   -+++++----------=========+++=.                          \n"
-		"   -+++++=...........      -+++=.                          \n"
-		"   -++++==.                -++++...:+@@@@@%+..             \n"
-		"   -++++==-::::::::::::::::-+++*%@@@*-:...:+@@*.           \n"
-		"   -+++++=::::::::::::::::-*%@@*-:.         .-@@=          \n"
-		"   -+++++=.            .+@@#.        -@-  -@-  .%@-        \n"
-		"   -+++++:            :@@%.              .     .@@         \n"
-		"   -+++++:   .:=*@@@###**-       :.     (====)  *@         \n"
-		"   -+++++: .-@@@-             #@@@@%-.          *@         \n"
-		"   -+++++. =@@+.             .%@%..+@@%-.      -@%         \n"
-		"   -++++-.*@@*.              .@@%    :+%@@@@@@@@#:         \n"
-		"   -++++-+@@+                .@@@-                         \n"
-		"   -++++@@@=.                 .*@#.                        \n"
-		"   -++++@@@.                 .  .%@+.                      \n"
-		"   -++++%@@*.                 .    -#@%=..                 \n"
-		"   -+++-=*%@@#:     +##%%%%%%%#***=.  .-@@#.               \n"
-		"   -+++: .:=#%@@#+-.  :*@@@*.    .=@@%- .+@@+.             \n"
-		"   -+++:     .++*%@@@#:. :@@@:     .%@@:. -@@-             \n"
-		"   -+++:     .+++++-#@@:  %@@:      :#@@= .@@:             \n"
-		"   -+++:     .+++++-+@@: =@@*        =@@= :@@:             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= :@%.             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= -@%.             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= =@%.             \n"
-		"   -+++:     .+++++-%@@: +@@-        =@@= =@#.             \n"
-		"   .....     .+++++-%@%. :@@#        =@@= -@#.             \n"
-		"             .+++++-%@%: .@@@.       .@@#.:@@-             \n"
-		"             .+++++-+@@:  *@@@@@@@#+..%@%.:%@@@@@%*-..     \n"
-		"             .+++++--@@%.       .=@@%.=@@*--::::+%@@@.     \n"
-		"             .-----: .-++++++++++++:. .-=========-.        \n"
-		"                                                           " << endl;
-}
-
-void titleScreen()
-{
-	system("cls");
-	cout << "+----------------------------------------------------------------------------------+\n"
-"|    __  __ _ _ _       ___      ___               ____                            |\n"
-"|   |  \\/  (_) | | __  ( _ )    / _ \\ _ __   ___  / ___| _   _  __ _  __ _ _ __    |\n"
-"|   | |\\/| | | | |/ /  / _ \\/\\ | | | | '_ \\ / _ \\ \\___ \\| | | |/ _` |/ _` | '__|   |\n"
-"|   | |  | | | |   <  | (_>  < | |_| | | | |  __/  ___) | |_| | (_| | (_| | |      |\n"
-"|   |_|  |_|_|_|_|\\_\\  \\___/\\/  \\___/|_| |_|\\___| |____/ \\__,_|\\__, |\\__,_|_|      |\n"
-"|                                                              |___/               |\n"
-"+----------------------------------------------------------------------------------+" << endl << endl;
-	system("pause");
-	cout << endl;
-}
-
-void asciiArt(Location& currentLocation) {
-	if (currentLocation.getName() == "Living Room") {
-		cout << "                                                             \n"
-"                                                             \n"
-"           .................................:::...           \n"
-"         ...+***********************@******##*****=.         \n"
-"         .========+****#**###*******%***#**+=======.         \n"
-"      .-+##=====+++****#*+****##****%*****++++=+==##+-.      \n"
-"     .=***#*==+++++******++++*******%+++**+++++==*#***+.     \n"
-"     .=++*##=+++++++#**********************##*+++##***=.     \n"
-"     .=+++*#*#***********************%************#+++=.     \n"
-"     .=+++*+************+************#++**********#+++=.     \n"
-"     ..#%%%%%%%%%%%%%%%%%######%%%%%%%%%%%%%%%%#####*+.      \n"
-"      .***************************+*++++++++++++++++++.      \n"
-"      .+%*....:::::::::::::::::::::::::::::::......*%+.      \n"
-"       .:.                                        ..:.       \n"
-"                                                             \n"
-"                                                             " << endl;
-	}
-	else if (currentLocation.getName() == "Church Courtyard") {
-		cout << "" << endl;
-	}
-	else if (currentLocation.getName() == "Ruined Church") {
-		cout << "" << endl;
-	}
-}
-
-// Displays the entry text of the location when the player enters it
-void enterLocation(Location* loc)
-{
-	cout << "You have entered the " << loc->getName() << "." << endl;
-	pauseAndFlush();
 }

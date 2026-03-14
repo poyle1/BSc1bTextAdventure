@@ -1,6 +1,8 @@
 #include "Location.h"
+#include "Utility.h"
 #include <iostream>
 #include <vector>
+using namespace Utility;
 
 ///Constructors
 Location::Location()
@@ -151,6 +153,13 @@ void Location::outputDoors() //Outputs the target location of each door relative
 		}
 		cout << endl;
 	}
+}
+
+// Displays the entry text of the location when the player enters it
+void enterLocation(Location* loc)
+{
+	cout << "You have entered the " << loc->getName() << "." << endl;
+	pauseAndFlush();
 }
 
 bool Location::allItemsCollected(int totalIng,  vector<Item*>& playerInventory)

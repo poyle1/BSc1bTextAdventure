@@ -51,6 +51,7 @@ public:
 	int getNumDoors(); //Used to check user input when selecting a location to move to
 	Location* getDoor(int index); //Used to get the connecting location based on user input
 	void outputDoors();
+	void enterLocation(Location* loc);
 
 	bool allItemsCollected(int totalIng,  vector <Item*>& playerInventory);
 
