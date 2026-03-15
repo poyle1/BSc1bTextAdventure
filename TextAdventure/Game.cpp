@@ -1,6 +1,9 @@
 #include "Game.h"
 #include "Text.h"
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 #include "Utility.h"
 
 using namespace std;
@@ -44,3 +47,41 @@ void Game::displayRules()
 	system("cls");
 	ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
 }
+
+void Game::loadWorld(string filename)
+{
+	ifstream locationFile(filename); 
+
+	if (!locationFile.is_open()) {
+		cout << "Error, could not find file " << filename << endl;
+		return;
+	}
+
+	string row;
+	stringstream rowstream;
+
+	getline(locationFile, row); // skips header of csv
+	
+	while (getline(locationFile, row))
+	{
+		rowstream = stringstream(row); //Convert each row to a stringstream
+		string name;
+
+		getline(rowstream, name, ',');
+		//getline(rowstream, description, ',');
+
+		Location tempLocation = Location(name);
+		worldMap.push_back(tempLocation);
+	}
+	locationFile.close();
+}
+
+void Game::outputWorld()
+{
+	for (Location l : worldMap)
+	{
+		cout << l.getName() << endl;
+	}
+}
+
+

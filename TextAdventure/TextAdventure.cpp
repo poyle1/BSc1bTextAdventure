@@ -25,6 +25,10 @@ int main()
 	Text text;
 	Game game;
 
+	game.loadWorld("./Data/locationAssets.csv");
+	game.outputWorld();
+
+	system("pause");
 	
 	Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);

@@ -2,12 +2,16 @@
 #include "Text.h"
 class Game
 {
+private:
+	vector<Location> worldMap;
+	Text ui;
+	bool isRunning = true;
 public:
 	void run();
 	void mainMenu();
 	void displayRules();
-private:
-	Text ui;
-	bool isRunning;
+
+	void loadWorld(string filename);
+	void outputWorld();
 };
 

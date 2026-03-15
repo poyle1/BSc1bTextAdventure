@@ -20,7 +20,7 @@ void Text::printArt(string artName)
 		if (artLine == searchTag)
 		{
 			found = true;
-			continue; //Skips the arts searchTag if found
+			continue; //Skips the line where the searchTag is found
 		}
 		if (found)
 		{
