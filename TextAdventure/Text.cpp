@@ -1,109 +1,58 @@
 #include "Text.h"
 #include "Utility.h"
+#include <iostream> //cout
+#include <fstream> // ifstream and ofstream
+#include <string> // getline
 
 using namespace Utility;
 using namespace std;
 
-
-void ascii1()
+void Text::printArt(string artName)
 {
-	 cout << "                                                           \n"
-		"   .:::.                   .:::..                          \n"
-		"   -++++-                  -+++=.                          \n"
-		"   -+++++----------=========+++=.                          \n"
-		"   -+++++=...........      -+++=.                          \n"
-		"   -++++==.                -++++...:+@@@@@%+..             \n"
-		"   -++++==-::::::::::::::::-+++*%@@@*-:...:+@@*.           \n"
-		"   -+++++=::::::::::::::::-*%@@*-:.         .-@@=          \n"
-		"   -+++++=.            .+@@#.        -@-  -@-  .%@-        \n"
-		"   -+++++:            :@@%.              .     .@@         \n"
-		"   -+++++:   .:=*@@@###**-       :.     (====)  *@         \n"
-		"   -+++++: .-@@@-             #@@@@%-.          *@         \n"
-		"   -+++++. =@@+.             .%@%..+@@%-.      -@%         \n"
-		"   -++++-.*@@*.              .@@%    :+%@@@@@@@@#:         \n"
-		"   -++++-+@@+                .@@@-                         \n"
-		"   -++++@@@=.                 .*@#.                        \n"
-		"   -++++@@@.                 .  .%@+.                      \n"
-		"   -++++%@@*.                 .    -#@%=..                 \n"
-		"   -+++-=*%@@#:     +##%%%%%%%#***=.  .-@@#.               \n"
-		"   -+++: .:=#%@@#+-.  :*@@@*.    .=@@%- .+@@+.             \n"
-		"   -+++:     .++*%@@@#:. :@@@:     .%@@:. -@@-             \n"
-		"   -+++:     .+++++-#@@:  %@@:      :#@@= .@@:             \n"
-		"   -+++:     .+++++-+@@: =@@*        =@@= :@@:             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= :@%.             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= -@%.             \n"
-		"   -+++:     .+++++-+@@: +@@-        =@@= =@%.             \n"
-		"   -+++:     .+++++-%@@: +@@-        =@@= =@#.             \n"
-		"   .....     .+++++-%@%. :@@#        =@@= -@#.             \n"
-		"             .+++++-%@%: .@@@.       .@@#.:@@-             \n"
-		"             .+++++-+@@:  *@@@@@@@#+..%@%.:%@@@@@%*-..     \n"
-		"             .+++++--@@%.       .=@@%.=@@*--::::+%@@@.     \n"
-		"             .-----: .-++++++++++++:. .-=========-.        \n"
-		"                                                           " << endl;
+	ifstream artFile("./Data/asciiAssets.txt");
+	string artLine;
+	bool found = false;
 
+	string searchTag = "[" + artName + "]";
+
+	while (getline(artFile, artLine))
+	{
+		if (artLine == searchTag)
+		{
+			found = true;
+			continue; //Skips the arts searchTag if found
+		}
+		if (found)
+		{
+			if (artLine.size() > 0 && artLine[0] == '[')
+			{
+				break; //Stops printing if the next search tag is hit
+			}
+			cout << artLine << endl;
+		}
+	}
+	if (!found) {
+		cout << "Art[" << artName << "] not found." << endl;
+	}
+	artFile.close();
 }
 
-void gameIntro()
-{
-	ascii1();
-	cout << "\"Hello!\"" << endl;
-	cout << "\"Thank you for popping round.\"" << endl << endl;
-	pauseAndWipe();
-	ascii1();
-	cout << "\"I get very lonely sometimes...\"" << endl << endl;
-	pauseAndWipe();
-	ascii1();
-	cout << "\"Would you like me to tell you a story?\"" << endl << endl;
-	pauseAndWipe();
-	ascii1();
-	cout << "\"Its about history!\"" << endl << endl;
-	pauseAndWipe();
-	ascii1();
-	cout << "\"Lost history...\"" << endl << endl;
-	pauseAndWipe();
-	ascii1();
-	cout << "\"But first, can you make me a cup of tea?\"" << endl << endl;
-	system("pause");
-}
-
-void titleScreen()
+void Text::printDialogue(string artName, string dialogue)
 {
 	system("cls");
-	cout << "+----------------------------------------------------------------------------------+\n"
-		"|    __  __ _ _ _       ___      ___               ____                            |\n"
-		"|   |  \\/  (_) | | __  ( _ )    / _ \\ _ __   ___  / ___| _   _  __ _  __ _ _ __    |\n"
-		"|   | |\\/| | | | |/ /  / _ \\/\\ | | | | '_ \\ / _ \\ \\___ \\| | | |/ _` |/ _` | '__|   |\n"
-		"|   | |  | | | |   <  | (_>  < | |_| | | | |  __/  ___) | |_| | (_| | (_| | |      |\n"
-		"|   |_|  |_|_|_|_|\\_\\  \\___/\\/  \\___/|_| |_|\\___| |____/ \\__,_|\\__, |\\__,_|_|      |\n"
-		"|                                                              |___/               |\n"
-		"+----------------------------------------------------------------------------------+" << endl << endl;
+	printArt(artName); //Draw ASCII art
+	cout << dialogue << endl << endl; //Print dialogue
 	system("pause");
-	cout << endl;
 }
 
-void asciiArt(Location& currentLocation) {
-	if (currentLocation.getName() == "Living Room") {
-		cout << "                                                             \n"
-			"                                                             \n"
-			"           .................................:::...           \n"
-			"         ...+***********************@******##*****=.         \n"
-			"         .========+****#**###*******%***#**+=======.         \n"
-			"      .-+##=====+++****#*+****##****%*****++++=+==##+-.      \n"
-			"     .=***#*==+++++******++++*******%+++**+++++==*#***+.     \n"
-			"     .=++*##=+++++++#**********************##*+++##***=.     \n"
-			"     .=+++*#*#***********************%************#+++=.     \n"
-			"     .=+++*+************+************#++**********#+++=.     \n"
-			"     ..#%%%%%%%%%%%%%%%%%######%%%%%%%%%%%%%%%%#####*+.      \n"
-			"      .***************************+*++++++++++++++++++.      \n"
-			"      .+%*....:::::::::::::::::::::::::::::::......*%+.      \n"
-			"       .:.                                        ..:.       \n"
-			"                                                             \n"
-			"                                                             " << endl;
-	}
-	else if (currentLocation.getName() == "Church Courtyard") {
-		cout << "" << endl;
-	}
-	else if (currentLocation.getName() == "Ruined Church") {
-		cout << "" << endl;
-	}
+void Text::gameIntro()
+{
+	printDialogue("INTRO", "\"Hello!\"");
+	printDialogue("INTRO", "\"Thank you for popping round.\"");
+	printDialogue("INTRO", "\"I get very lonely sometimes...\"");
+	printDialogue("INTRO", "\"...\"");
+	printDialogue("INTRO", "\"Would you like me to tell you a story?\"");
+	printDialogue("INTRO", "\"Its about history!\"");
+	printDialogue("INTRO", "\"Lost history...\"");
+	printDialogue("INTRO", "\"But first, can you make me a cup of tea?\"");
 }

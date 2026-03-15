@@ -9,9 +9,7 @@ private:
 	
 	
 public:
-
-	void ascii1();
+	void printArt(string artName);
+	void printDialogue(string artName, string dialogue);
 	void gameIntro();
-	void titleScreen();
-	void asciiArt(Location& currentLocation);
 };

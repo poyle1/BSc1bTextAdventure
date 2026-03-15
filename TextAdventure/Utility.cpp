@@ -7,12 +7,10 @@ namespace Utility {
     int getValidIntInput(int min, int max)
     {
         int userInput;
-
         while (true)
         {
             cout << "Input: ";
             cin >> userInput;
-
             if (!cin.fail() && userInput >= min && userInput <= max)
             {
                 return userInput;

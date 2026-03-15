@@ -156,9 +156,9 @@ void Location::outputDoors() //Outputs the target location of each door relative
 }
 
 // Displays the entry text of the location when the player enters it
-void enterLocation(Location* loc)
+void Location::enterLocation()
 {
-	cout << "You have entered the " << loc->getName() << "." << endl;
+	cout << "You have entered the " << this->getName() << "." << endl;
 	pauseAndFlush();
 }
 

@@ -1,9 +1,9 @@
-#include <iostream>
-#include <string>
+#include <iostream> //cout
+#include <fstream> // ifstream and ofstream
+#include <string> // getline
 #include <vector>
 #include <windows.h>
 #include <stack>
-
 #include "Utility.h"
 #include "Location.h"
 #include "EventRoom.h"
@@ -13,20 +13,19 @@
 #include "Player.h"
 #include "BasicEnemy.h"
 #include "Text.h"
+#include "Game.h"
 
 using namespace std;
 using namespace Utility;
-
-void gameIntro();
-void acsii1();
-void titleScreen();
-void asciiArt(Location& pCurrentLocation);
-void enterLocation(Location* nloc);
 
 stack<Item*> winningStack;
 
 int main()
 {
+	Text text;
+	Game game;
+
+	
 	Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
 	Item tea("Tea bag", "", true);
@@ -42,8 +41,8 @@ int main()
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	gameIntro();
-	titleScreen();
+	game.mainMenu();
+
 	
 	Location livingRoom("Living Room");
 	Location hallWay("Hallway");
@@ -74,11 +73,14 @@ int main()
 	hallWay.addDoor(&kitchen, false, "");
 	kitchen.addDoor(&livingRoom, false, "");
 	bedroom.addDoor(&hallWay, false, "");
+
+	
 	
 	//Starting location
 	Location* pCurrentLocation = &livingRoom;
 	vector<Item*> playerInventory = {};
 	int collectedIng = 0;
+
 
 	//Main Game Loop//
 	while (true)
@@ -109,7 +111,7 @@ int main()
 		cout << "Total Ingredients: " << collectedIng;
 		cout << endl;
 		cout << "====================================================================================================\n";
-		asciiArt(*pCurrentLocation);
+		text.printArt(pCurrentLocation->getName());
 		cout << "====================================================================================================\n";
 		cout << "Available Actions:" << "\n";
 		pCurrentLocation->outputDoors();
@@ -155,6 +157,6 @@ int main()
 		}
 		//Enter Chosen Location//
 		pCurrentLocation = chosenLocation;
-		enterLocation(pCurrentLocation);
+		pCurrentLocation->enterLocation();
 	}
 }
