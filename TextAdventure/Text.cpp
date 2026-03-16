@@ -31,7 +31,8 @@ void Text::printArt(string artName)
 			cout << artLine << endl;
 		}
 	}
-	if (!found) {
+	if (!found) 
+	{
 		cout << "Art[" << artName << "] not found." << endl;
 	}
 	artFile.close();

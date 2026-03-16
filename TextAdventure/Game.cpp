@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Text.h"
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -11,7 +9,8 @@ using namespace Utility;
 
 void Game::mainMenu() 
 {
-	while (isRunning) {
+	while (isRunning) 
+	{
 		system("cls");
 		cout << "====================================================================================================\n";
 		ui.printArt("TITLESCREEN");
@@ -26,11 +25,13 @@ void Game::mainMenu()
 		int userInput = getValidIntInput(1, 3);
 		cout << endl;
 
-		if (userInput == 1) {
+		if (userInput == 1) 
+		{
 			ui.gameIntro();
 			break;
 		}
-		else if (userInput == 2) {
+		else if (userInput == 2) 
+		{
 			displayRules();
 		}
 		else if (userInput == 3)
@@ -52,7 +53,8 @@ void Game::loadWorld(string filename)
 {
 	ifstream locationFile(filename); 
 
-	if (!locationFile.is_open()) {
+	if (!locationFile.is_open()) 
+	{
 		cout << "Error, could not find file " << filename << endl;
 		return;
 	}
@@ -84,4 +86,7 @@ void Game::outputWorld()
 	}
 }
 
-
+void Game::setStartLoc()
+{
+	newLoc = this->worldMap[0];
+}

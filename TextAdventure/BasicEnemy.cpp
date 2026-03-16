@@ -1,4 +1,5 @@
 #include "BasicEnemy.h"
+using namespace std;
 
 BasicEnemy::BasicEnemy()
 {

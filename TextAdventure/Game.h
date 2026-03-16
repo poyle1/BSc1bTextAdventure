@@ -1,11 +1,16 @@
 #pragma once
 #include "Text.h"
+#include <iostream>
+#include "Location.h"
+#include <vector>
+
 class Game
 {
 private:
 	vector<Location> worldMap;
 	Text ui;
 	bool isRunning = true;
+
 public:
 	void run();
 	void mainMenu();
@@ -13,5 +18,7 @@ public:
 
 	void loadWorld(string filename);
 	void outputWorld();
-};
 
+	void setStartLoc();
+	Location* getLocation(int index);
+};

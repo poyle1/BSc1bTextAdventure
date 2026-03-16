@@ -1,19 +1,18 @@
 #pragma once
 #include <iostream>
-using namespace std;
 
 class BasicEnemy
 {
 protected:
-	string name;
+	std::string name;
 	int health;
 	bool alive;
 
 public:
 	BasicEnemy();
-	BasicEnemy(string nName);
+	BasicEnemy(std::string nName);
 
-	string getName();
+	std::string getName();
 	int getHealth();
 	void damage(int toDamage);
 	void heal(int healBy);

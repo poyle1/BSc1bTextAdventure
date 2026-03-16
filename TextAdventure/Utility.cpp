@@ -3,7 +3,8 @@
 
 using namespace std;
 
-namespace Utility {
+namespace Utility 
+{
     int getValidIntInput(int min, int max)
     {
         int userInput;
