@@ -7,13 +7,25 @@
 using namespace std;
 using namespace Utility;
 
-void Game::mainMenu() 
+Game::Game()
 {
-	while (isRunning) 
+	m_isRunning = true;
+	m_currentLocation = nullptr;
+}
+
+Game::Game(bool nRunning, Location* nStartLocation)
+{
+	m_isRunning = nRunning;
+	m_currentLocation = nStartLocation;
+}
+
+void Game::mainMenu()
+{
+	while (m_isRunning) 
 	{
 		system("cls");
 		cout << "====================================================================================================\n";
-		ui.printArt("TITLESCREEN");
+		m_ui.printArt("TITLESCREEN");
 		cout << "====================================================================================================\n";
 		cout << "Enter '1' to start a new game.\n";
 		cout << "Enter '2' to display the rules.\n";
@@ -27,7 +39,7 @@ void Game::mainMenu()
 
 		if (userInput == 1) 
 		{
-			ui.gameIntro();
+			m_ui.gameIntro();
 			break;
 		}
 		else if (userInput == 2) 
@@ -46,14 +58,14 @@ void Game::mainMenu()
 void Game::displayRules()
 {
 	system("cls");
-	ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
+	m_ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
 }
 
 void Game::loadWorld(string filename)
 {
-	ifstream locationFile(filename); 
+	ifstream locationFile(filename);
 
-	if (!locationFile.is_open()) 
+	if (!locationFile.is_open())
 	{
 		cout << "Error, could not find file " << filename << endl;
 		return;
@@ -63,7 +75,7 @@ void Game::loadWorld(string filename)
 	stringstream rowstream;
 
 	getline(locationFile, row); // skips header of csv
-	
+
 	while (getline(locationFile, row))
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
@@ -73,20 +85,31 @@ void Game::loadWorld(string filename)
 		//getline(rowstream, description, ',');
 
 		Location tempLocation = Location(name);
-		worldMap.push_back(tempLocation);
+		m_worldMap.push_back(tempLocation);
 	}
 	locationFile.close();
+	if (!m_worldMap.empty())
+	{
+		m_currentLocation = &m_worldMap.front();
+	}
 }
 
 void Game::outputWorld()
 {
-	for (Location l : worldMap)
+	for (Location& l : m_worldMap)
 	{
 		cout << l.getName() << endl;
 	}
 }
 
-void Game::setStartLoc()
+Location* Game::getCurrentLocation()
 {
-	newLoc = this->worldMap[0];
+	return m_currentLocation;
 }
+
+void Game::setCurrentLocation(Location* newLoc)
+{
+	m_currentLocation = newLoc;
+}
+
+

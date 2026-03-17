@@ -7,11 +7,15 @@
 class Game
 {
 private:
-	vector<Location> worldMap;
-	Text ui;
-	bool isRunning = true;
+	std::vector<Location> m_worldMap;
+	Text m_ui;
+	bool m_isRunning = true;
+	Location* m_currentLocation;
 
 public:
+	Game();
+	Game(bool nRunning, Location* nStartLocation = nullptr);
+
 	void run();
 	void mainMenu();
 	void displayRules();
@@ -19,6 +23,6 @@ public:
 	void loadWorld(string filename);
 	void outputWorld();
 
-	void setStartLoc();
-	Location* getLocation(int index);
+	Location* getCurrentLocation();
+	void setCurrentLocation(Location* newLoc);
 };

@@ -30,11 +30,8 @@ int main()
 
 	Text text;
 	Game game;
-
 	game.loadWorld("./Data/locationAssets.csv");
-	game.outputWorld();
-
-	system("pause");
+	
 	
 	Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
@@ -105,7 +102,8 @@ int main()
 	
 	//Starting location
 //	Location* pCurrentLocation = &livingRoom;
-	Location* pCurrentLocation = game.getLocation("start");
+	//Location* pCurrentLocation = game.getLocation("start");
+	
 	
 	
 
@@ -116,12 +114,14 @@ int main()
 	{
 		//Investigate option will always output as the next option after the last available room
 		//Followed by the start event option if present
-		int numDoors = pCurrentLocation->getNumDoors();
+
+		int numDoors = game.getCurrentLocation()->getNumDoors();
+		//int numDoors = pCurrentLocation->getNumDoors();
 		int investigateRoomOption = numDoors + 1;
 		int startEventOption = numDoors + 2;
 
 		int maxValidInput = investigateRoomOption;
-		if (pCurrentLocation->canStartEvent())
+		if (game.getCurrentLocation()->canStartEvent())
 		{
 			maxValidInput = startEventOption; // if event room, option to use
 		}
@@ -129,8 +129,8 @@ int main()
 		//Current Room Info//
 		system("cls");
 		cout << "====================================================================================================\n";
-		cout << "Current location: " << pCurrentLocation->getName() << "\n";
-		pCurrentLocation->itemCheck();
+		cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
+		game.getCurrentLocation()->itemCheck();
 		cout << "====================================================================================================\n";
 		cout << "Collected Items: ";
 		for (Item* i : playerInventory) 
@@ -141,14 +141,14 @@ int main()
 		cout << "Total Ingredients: " << collectedIng;
 		cout << endl;
 		cout << "====================================================================================================\n";
-		text.printArt(pCurrentLocation->getName());
+		text.printArt(game.getCurrentLocation()->getName());
 		cout << "====================================================================================================\n";
 		cout << "Available Actions:" << "\n";
-		pCurrentLocation->outputDoors();
+		game.getCurrentLocation()->outputDoors();
 		cout << investigateRoomOption << ") Investigate the room" << endl;
-		if (pCurrentLocation->canStartEvent())
+		if (game.getCurrentLocation()->canStartEvent())
 		{
-			cout << startEventOption << ") " << pCurrentLocation->getEventPrompt();
+			cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
 		}
 		cout << endl;
 		cout << "====================================================================================================\n";
@@ -161,32 +161,32 @@ int main()
 		//Investigate Current Location//
 		if (userInput == investigateRoomOption)
 		{
-			pCurrentLocation->investigateRoom(collectedIng, playerInventory);
+			game.getCurrentLocation()->investigateRoom(collectedIng, playerInventory);
 			pauseAndFlush();
 			continue;
 		}
 
-		if (pCurrentLocation->canStartEvent() && userInput == startEventOption)
+		if (game.getCurrentLocation()->canStartEvent() && userInput == startEventOption)
 		{
-			pCurrentLocation->startEvent();
+			game.getCurrentLocation()->startEvent();
 			pauseAndFlush();
 			continue;
 		}
 
 		int doorIndex = userInput - 1;
-		Location* chosenLocation = pCurrentLocation->getDoor(doorIndex);
+		Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
 		
 		//Locked Door Check//
-		if (pCurrentLocation->isLocked(doorIndex))
+		if (game.getCurrentLocation()->isLocked(doorIndex))
 		{
-			if (!pCurrentLocation->unlockDoor(doorIndex, playerInventory)) {
+			if (!game.getCurrentLocation()->unlockDoor(doorIndex, playerInventory)) {
 				cout << "The door is locked - you cannot open it!" << endl;
 				pauseAndFlush();
 				continue; 
 			}
 		}
 		//Enter Chosen Location//
-		pCurrentLocation = chosenLocation;
-		pCurrentLocation->enterLocation();
+		game.setCurrentLocation(chosenLocation);
+		game.getCurrentLocation()->enterLocation();
 	}
 }
