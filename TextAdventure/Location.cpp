@@ -7,12 +7,13 @@ using namespace Utility;
 ///Constructors
 Location::Location()
 {
-	this->name = "A location";
+	m_name = "A location";
 }
 
-Location::Location(string nName)
+Location::Location(int nIndex, string nName)
 {
-    this->name = nName;
+	m_index = nIndex;
+	m_name = nName;
 }
 
 //Door logic
@@ -22,28 +23,28 @@ void Location::addDoor(Location* targetLoc, bool locked, string keyID)
 	newDoor.targetLocation = targetLoc;
 	newDoor.locked = locked;
 	newDoor.requiredKeyID = keyID;
-	this->doors.push_back(newDoor);
+	m_doors.push_back(newDoor);
 }
 
 bool Location::isLocked(int index)
 {
-	if (index >= 0 && index < this->doors.size())
+	if (index >= 0 && index < m_doors.size())
 	{
-		return this->doors[index].locked;
+		return m_doors[index].locked;
 	}
 	return false; //safety check
 }
 
 bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
 {
-	if (index < 0 || index >= this->doors.size()) {
+	if (index < 0 || index >= m_doors.size()) {
 		return false; //Invalid index safety check
 	}
 	for (int i = 0; i < playerInventory.size(); i++)
 	{
-		if (playerInventory[i]->getKeyID() == this->doors[index].requiredKeyID)
+		if (playerInventory[i]->getKeyID() == m_doors[index].requiredKeyID)
 		{
-			this->doors[index].locked = false;
+			m_doors[index].locked = false;
 			cout << "You use the " << playerInventory[i]->getName() << " to unlock the door." << endl;
 			playerInventory.erase(playerInventory.begin() + i);
 			return true; //Exit loop
@@ -55,23 +56,41 @@ bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
 //Getters and setters
 string Location::getName()
 {
-	return this->name;
+	return m_name;
 }
 
 string Location::getInspectText()
 {
-	return this->inspectText;
+	return m_inspectText;
 }
 
 void Location::setInspectText(string nText)
 {
-	this->inspectText = nText;
+	m_inspectText = nText;
 }
+
+int Location::getIndex()
+{
+	if (!m_index) {
+		return NULL;
+	}
+	return m_index;
+}
+
+//void Location::outputIndex()
+//{
+//	if (!m_index) {
+//		return;
+//	}
+//	cout << m_index;
+//}
+
+
 
 //Items
 bool Location::hasItems()
 {
-	if (this->locItems.empty())
+	if (m_locItems.empty())
 	{
 		return false;
 	}
@@ -80,7 +99,7 @@ bool Location::hasItems()
 
 void Location::itemCheck()
 {
-	if (this->locItems.empty())
+	if (m_locItems.empty())
 	{
 		cout << "There are no items in this room." << endl;
 	}
@@ -92,30 +111,30 @@ void Location::itemCheck()
 
 vector<Item*>& Location::getItems()
 {
-	return this->locItems;
+	return m_locItems;
 }
 
 void Location::addItem(Item* nItem)
 {
-	this->locItems.push_back(nItem);
+	m_locItems.push_back(nItem);
 }
 
 void Location::removeItems()
 {
-	this->locItems.clear();
+	m_locItems.clear();
 }
 
 void Location::investigateRoom(int& collectedIng, vector<Item*>& playerInventory)
 {
-	cout << this->getInspectText() << endl;
-	if (!this->hasItems())
+	cout << getInspectText() << endl;
+	if (!hasItems())
 	{
 		cout << "There doesn't seem to be anything useful in here." << endl;
 	}
 	else
 	{
 		cout << "You look around and grab: " << endl;
-		for (Item* i : this->locItems)
+		for (Item* i : m_locItems)
 		{
 			cout << "-" << i->getName() << endl;
 			playerInventory.push_back(i);
@@ -124,31 +143,31 @@ void Location::investigateRoom(int& collectedIng, vector<Item*>& playerInventory
 				collectedIng += 1;
 			}
 		}
-		this->removeItems();
+		removeItems();
 	}
 }
 
 //Door/connection Logic
 int Location::getNumDoors()
 {
-	return this->doors.size();
+	return m_doors.size();
 }
 
 Location* Location::getDoor(int index)
 {
-	if (index >= 0 && index < this->doors.size()) 
+	if (index >= 0 && index < m_doors.size())
 	{
-		return this->doors[index].targetLocation; //Returns the target location of the door at the specified index
+		return m_doors[index].targetLocation; //Returns the target location of the door at the specified index
 	}
 	return nullptr; //safety check
 }
 
 void Location::outputDoors() //Outputs the target location of each door relative to the current location.
 {							 //Used to display a full list of available locations that the player can travel to.
-	for (int i = 0; i < this->doors.size(); i++)
+	for (int i = 0; i < m_doors.size(); i++)
 	{
-		cout << i + 1 << ") Enter the: " << doors[i].targetLocation->getName();
-		if (doors[i].locked) {
+		cout << i + 1 << ") Enter the: " << m_doors[i].targetLocation->getName();
+		if (m_doors[i].locked) {
 			cout << " [LOCKED]";
 		}
 		cout << endl;
@@ -158,7 +177,7 @@ void Location::outputDoors() //Outputs the target location of each door relative
 // Displays the entry text of the location when the player enters it
 void Location::enterLocation()
 {
-	cout << "You have entered the " << this->getName() << "." << endl;
+	cout << "You have entered the " << getName() << "." << endl;
 	pauseAndFlush();
 }
 

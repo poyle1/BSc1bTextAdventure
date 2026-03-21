@@ -16,17 +16,18 @@ class Location
 {
 protected:
 	//attributes
-	std::string name;
-	std::string inspectText;
+	int m_index;
+	std::string m_name;
+	std::string m_inspectText;
 	
-	vector<Item*> locItems; //Vector of pointers to items in the location
-	vector<Door> doors; //Each location has a list of doors, 
+	vector<Item*> m_locItems; //Vector of pointers to items in the location
+	vector<Door> m_doors; //Each location has a list of doors, 
 
 
 public:
 	//Constructors
 	Location();
-	Location(string nName);
+	Location(int nIndex, string nName);
 
 	//Door logic
 	void addDoor(Location* targetLoc, bool locked, std::string keyID);
@@ -37,6 +38,8 @@ public:
 	std::string getName();
 	std::string getInspectText();
 	void setInspectText(std::string nText);
+	int getIndex();
+	//void outputIndex();
 
 	//Items
 	bool hasItems();

@@ -32,7 +32,10 @@ int main()
 	Game game;
 	game.loadWorld("./Data/locationAssets.csv");
 	
-	
+	game.outputWorld();
+	cout << game.getCurrentLocation()->getIndex() << endl;
+	system("pause");
+
 	Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
 	Item tea("Tea bag", "", true);
@@ -68,7 +71,7 @@ int main()
 
 
 
-	Location livingRoom("Living Room");
+	Location livingRoom(0,"Living Room");
 	//Location hallWay("Hallway");
 	//Location bedroom("Bedroom");
 	//EventRoom kitchen("Kitchen", "Make a cup of tea");

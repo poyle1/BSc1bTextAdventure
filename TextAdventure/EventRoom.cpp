@@ -6,7 +6,7 @@ EventRoom::EventRoom()
 	this->eventPrompt = "Start the event.";
 	this->eventCompleted = false;
 }
-EventRoom::EventRoom(string nName, string nEventPrompt) : Location(nName)
+EventRoom::EventRoom(int nIndex, string nName, string nEventPrompt) : Location(nIndex, nName)
 {
 	this->eventPrompt = nEventPrompt;
 	this->eventCompleted = false;

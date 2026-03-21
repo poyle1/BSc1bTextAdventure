@@ -11,7 +11,7 @@ private:
 public:
     // Constructors
     EventRoom();
-    EventRoom(string nName, string nEventPrompt);
+    EventRoom(int nIndex, string nName, string nEventPrompt);
 
     // Event Logic
     virtual bool canStartEvent();

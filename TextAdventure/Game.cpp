@@ -79,12 +79,13 @@ void Game::loadWorld(string filename)
 	while (getline(locationFile, row))
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
-		string name;
+		string index, name;
 
+		getline(rowstream, index, ',');
 		getline(rowstream, name, ',');
-		//getline(rowstream, description, ',');
+		
 
-		Location tempLocation = Location(name);
+		Location tempLocation = Location(stoi(index), name);
 		m_worldMap.push_back(tempLocation);
 	}
 	locationFile.close();
@@ -98,7 +99,7 @@ void Game::outputWorld()
 {
 	for (Location& l : m_worldMap)
 	{
-		cout << l.getName() << endl;
+		cout << l.getIndex() << l.getName() << endl;
 	}
 }
 
