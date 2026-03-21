@@ -7,22 +7,23 @@ using namespace Utility;
 ///Constructors
 Location::Location()
 {
+	m_index = NULL;
 	m_name = "A location";
 }
 
-Location::Location(int nIndex, string nName)
+Location::Location(const int nIndex, string nName)
 {
 	m_index = nIndex;
 	m_name = nName;
 }
 
 //Door logic
-void Location::addDoor(Location* targetLoc, bool locked, string keyID)
+void Location::addDoor(Location* nDestination, bool nLocked, string nKeyID)
 {
 	Door newDoor;
-	newDoor.targetLocation = targetLoc;
-	newDoor.locked = locked;
-	newDoor.requiredKeyID = keyID;
+	newDoor.destination = nDestination;
+	newDoor.locked = nLocked;
+	newDoor.requiredKeyID = nKeyID;
 	m_doors.push_back(newDoor);
 }
 
@@ -54,12 +55,12 @@ bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
 }
 
 //Getters and setters
-string Location::getName()
+string Location::getName() const
 {
 	return m_name;
 }
 
-string Location::getInspectText()
+string Location::getInspectText() const
 {
 	return m_inspectText;
 }
@@ -69,23 +70,13 @@ void Location::setInspectText(string nText)
 	m_inspectText = nText;
 }
 
-int Location::getIndex()
+int Location::getIndex() const
 {
 	if (!m_index) {
 		return NULL;
 	}
 	return m_index;
 }
-
-//void Location::outputIndex()
-//{
-//	if (!m_index) {
-//		return;
-//	}
-//	cout << m_index;
-//}
-
-
 
 //Items
 bool Location::hasItems()
@@ -157,7 +148,7 @@ Location* Location::getDoor(int index)
 {
 	if (index >= 0 && index < m_doors.size())
 	{
-		return m_doors[index].targetLocation; //Returns the target location of the door at the specified index
+		return m_doors[index].destination; //Returns the target location of the door at the specified index
 	}
 	return nullptr; //safety check
 }
@@ -166,7 +157,7 @@ void Location::outputDoors() //Outputs the target location of each door relative
 {							 //Used to display a full list of available locations that the player can travel to.
 	for (int i = 0; i < m_doors.size(); i++)
 	{
-		cout << i + 1 << ") Enter the: " << m_doors[i].targetLocation->getName();
+		cout << i + 1 << ") Enter the: " << m_doors[i].destination->getName();
 		if (m_doors[i].locked) {
 			cout << " [LOCKED]";
 		}

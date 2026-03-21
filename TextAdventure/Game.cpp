@@ -103,6 +103,43 @@ void Game::outputWorld()
 	}
 }
 
+void Game::loadDoors(string filename)
+{
+	ifstream locationFile(filename);
+
+	if (!locationFile.is_open())
+	{
+		cout << "Error, could not find file " << filename << endl;
+		return;
+	}
+
+	string row;
+	stringstream rowstream;
+
+	getline(locationFile, row); // skips header of csv
+
+	while (getline(locationFile, row))
+	{
+		rowstream = stringstream(row); //Convert each row to a stringstream
+		string indexOrigin, IndexDestination, isLocked, requiredKeyID;
+
+		getline(rowstream, indexOrigin, ',');
+		getline(rowstream, IndexDestination, ',');
+		getline(rowstream, isLocked, ',');
+		getline(rowstream, requiredKeyID, ',');
+
+		m_worldMap[stoi(indexOrigin)].addDoor
+		Location tempLocation = Location(stoi(index), name);
+		m_worldMap.push_back(tempLocation);
+	}
+	locationFile.close();
+	if (!m_worldMap.empty())
+	{
+		m_currentLocation = &m_worldMap.front();
+	}
+}
+
+
 Location* Game::getCurrentLocation()
 {
 	return m_currentLocation;

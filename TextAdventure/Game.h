@@ -22,6 +22,7 @@ public:
 
 	void loadWorld(string filename);
 	void outputWorld();
+	void loadDoors(string filename);
 
 	Location* getCurrentLocation();
 	void setCurrentLocation(Location* newLoc);

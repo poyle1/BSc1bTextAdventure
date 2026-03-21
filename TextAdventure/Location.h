@@ -7,7 +7,7 @@ class Location; //Forward declaration
 
 struct Door
 {
-	Location* targetLocation = nullptr;
+	Location* destination = nullptr;
 	bool locked = false;
 	std::string requiredKeyID = "";
 };
@@ -27,7 +27,7 @@ protected:
 public:
 	//Constructors
 	Location();
-	Location(int nIndex, string nName);
+	Location(const int nIndex, string nName);
 
 	//Door logic
 	void addDoor(Location* targetLoc, bool locked, std::string keyID);
@@ -35,11 +35,10 @@ public:
 	bool unlockDoor(int index, vector <Item*>& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
 
 	//Getters and setters
-	std::string getName();
-	std::string getInspectText();
+	std::string getName() const;
+	std::string getInspectText() const;
 	void setInspectText(std::string nText);
-	int getIndex();
-	//void outputIndex();
+	int getIndex() const;
 
 	//Items
 	bool hasItems();
