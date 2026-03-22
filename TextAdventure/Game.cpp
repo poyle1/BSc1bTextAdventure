@@ -121,22 +121,21 @@ void Game::loadDoors(string filename)
 	while (getline(locationFile, row))
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
-		string indexOrigin, IndexDestination, isLocked, requiredKeyID;
+		string indexOrigin, indexDestination, isLocked, doorID, destinationName;
 
 		getline(rowstream, indexOrigin, ',');
-		getline(rowstream, IndexDestination, ',');
+		getline(rowstream, indexDestination, ',');
 		getline(rowstream, isLocked, ',');
-		getline(rowstream, requiredKeyID, ',');
+		getline(rowstream, doorID, ',');
+		getline(rowstream, destinationName, ',');
 
-		m_worldMap[stoi(indexOrigin)].addDoor
-		Location tempLocation = Location(stoi(index), name);
-		m_worldMap.push_back(tempLocation);
+		int origin = stoi(indexOrigin);
+		int dest = stoi(indexDestination);
+		bool locked = (isLocked == "true"); //String to bool
+
+		m_worldMap[origin].addDoor(dest, locked, doorID, destinationName);
 	}
 	locationFile.close();
-	if (!m_worldMap.empty())
-	{
-		m_currentLocation = &m_worldMap.front();
-	}
 }
 
 
@@ -151,3 +150,17 @@ void Game::setCurrentLocation(Location* newLoc)
 }
 
 
+void Game::movePlayer(int nextLocationIndex)
+{
+	if (nextLocationIndex >= 0 && nextLocationIndex < m_worldMap.size())
+	{
+		m_currentLocation = &m_worldMap[nextLocationIndex]; //Sets the current location to the mem address of
+		//the selected location (stored in the worldmap vec)
+		m_currentLocation->enterLocation();
+	}
+	else
+	{
+		cout << "Error: Destination " << nextLocationIndex << " doesn not exist." << endl;
+		system("pause");
+	}
+}
