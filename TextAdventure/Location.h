@@ -16,7 +16,7 @@ class Location
 {
 protected:
 	//attributes
-	int m_index;
+	int m_index; //Used to compare locations to doors and keys
 	std::string m_name;
 	std::string m_inspectText;
 	
@@ -38,7 +38,7 @@ public:
 	std::string getName() const;
 	std::string getInspectText() const;
 	void setInspectText(std::string nText);
-	int getIndex() const;
+	int getIndex() const; //gets the index number of the selected location
 
 	//Items
 	bool hasItems();

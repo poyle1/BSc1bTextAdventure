@@ -61,7 +61,7 @@ void Game::displayRules()
 	m_ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
 }
 
-void Game::loadWorld(string filename)
+void Game::loadLocations(string filename)
 {
 	ifstream locationFile(filename);
 
@@ -83,6 +83,7 @@ void Game::loadWorld(string filename)
 
 		getline(rowstream, index, ',');
 		getline(rowstream, name, ',');
+
 		
 
 		Location tempLocation = Location(stoi(index), name);
@@ -92,14 +93,6 @@ void Game::loadWorld(string filename)
 	if (!m_worldMap.empty())
 	{
 		m_currentLocation = &m_worldMap.front();
-	}
-}
-
-void Game::outputWorld()
-{
-	for (Location& l : m_worldMap)
-	{
-		cout << l.getIndex() << l.getName() << endl;
 	}
 }
 
@@ -127,16 +120,58 @@ void Game::loadDoors(string filename)
 		getline(rowstream, indexDestination, ',');
 		getline(rowstream, isLocked, ',');
 		getline(rowstream, doorID, ',');
-		getline(rowstream, destinationName, ',');
+		//getline(rowstream, destinationName, ',');
 
-		int origin = stoi(indexOrigin);
-		int dest = stoi(indexDestination);
+		//int origin = stoi(indexOrigin);
+		Location* origin = &m_worldMap[stoi(indexOrigin)];
+		Location* dest = &m_worldMap[stoi(indexDestination)];
 		bool locked = (isLocked == "true"); //String to bool
 
-		m_worldMap[origin].addDoor(dest, locked, doorID, destinationName);
+		origin->addDoor(dest, locked, doorID);
 	}
 	locationFile.close();
 }
+
+void Game::loadItems(string filename)
+{
+	ifstream locationFile(filename);
+
+	if (!locationFile.is_open())
+	{
+		cout << "Error, could not find file " << filename << endl;
+		return;
+	}
+
+	string row;
+	stringstream rowstream;
+
+	getline(locationFile, row); // skips header of csv
+
+	while (getline(locationFile, row))
+	{
+		rowstream = stringstream(row); //Convert each row to a stringstream
+		string indexOrigin, indexDestination, isLocked, doorID, destinationName;
+
+		getline(rowstream, indexOrigin, ',');
+		getline(rowstream, indexDestination, ',');
+		getline(rowstream, isLocked, ',');
+		getline(rowstream, doorID, ',');
+		//getline(rowstream, destinationName, ',');
+
+		//int origin = stoi(indexOrigin);
+		Location* origin = &m_worldMap[stoi(indexOrigin)];
+		Location* dest = &m_worldMap[stoi(indexDestination)];
+		bool locked = (isLocked == "true"); //String to bool
+
+		origin->addDoor(dest, locked, doorID);
+	}
+	locationFile.close();
+}
+
+//void Game::loadWorld(string locFileName, string doorFileName, string itemFileName)
+//{
+//
+//}
 
 
 Location* Game::getCurrentLocation()
@@ -162,5 +197,14 @@ void Game::movePlayer(int nextLocationIndex)
 	{
 		cout << "Error: Destination " << nextLocationIndex << " doesn not exist." << endl;
 		system("pause");
+	}
+}
+
+//debug functions
+void Game::outputWorld()
+{
+	for (Location& l : m_worldMap)
+	{
+		cout << l.getIndex() << l.getName() << endl;
 	}
 }

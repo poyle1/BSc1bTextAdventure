@@ -30,7 +30,8 @@ int main()
 
 	Text text;
 	Game game;
-	game.loadWorld("./Data/locationAssets.csv");
+	game.loadLocations("./Data/locationAssets.csv");
+	game.loadDoors("./Data/doorAssets.csv");
 	
 	game.outputWorld();
 	cout << game.getCurrentLocation()->getIndex() << endl;
@@ -69,18 +70,6 @@ int main()
 
 
 
-
-
-	Location livingRoom(0,"Living Room");
-	//Location hallWay("Hallway");
-	//Location bedroom("Bedroom");
-	//EventRoom kitchen("Kitchen", "Make a cup of tea");
-	//Location bathroom1("Bathroom");
-	//Location bathroom2("En Suite Bathroom");
-	//Location frontGarden("Front Garden");
-	//Location backGarden("Back Garden");
-	//Location shed("Shed");
-
 	//Look at creation of items, locations, players, etc from files, similar to ascii.
 
 	Key bedroomKey("Bedroom Key", "", true, "1");
@@ -88,6 +77,9 @@ int main()
 	Item testItem("Test Item", "debugging.", false);
 	/*livingRoom.addItem(&bedroomKey);
 	livingRoom.addItem(&sugar);*/
+
+
+
 
 	//livingRoom.setInspectText("This is the living room.");
 	//hallWay.setInspectText("This is the hallway.");
@@ -178,6 +170,7 @@ int main()
 
 		int doorIndex = userInput - 1;
 		Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
+
 		
 		//Locked Door Check//
 		if (game.getCurrentLocation()->isLocked(doorIndex))

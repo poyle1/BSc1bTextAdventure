@@ -20,10 +20,15 @@ public:
 	void mainMenu();
 	void displayRules();
 
-	void loadWorld(string filename);
-	void outputWorld();
+	void loadLocations(string filename);
 	void loadDoors(string filename);
+	void loadItems(string filename);
+	//void loadWorld(string locFileName, string doorFileName, string itemFileName);
 
 	Location* getCurrentLocation();
 	void setCurrentLocation(Location* newLoc);
+	void movePlayer(int nextLocationIndex);
+
+	//debug functions
+	void outputWorld();
 };
