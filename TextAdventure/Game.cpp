@@ -116,7 +116,7 @@ void Game::loadDoors(string filename)
 	{
 
 		rowstream = stringstream(row); //Convert each row to a stringstream
-		string indexOrigin, indexDestination, isLocked, doorID, destinationName;
+		string indexOrigin, indexDestination, isLocked, doorID;
 
 		getline(rowstream, indexOrigin, ',');
 		getline(rowstream, indexDestination, ',');
@@ -162,13 +162,15 @@ void Game::loadItems(string filename)
 		bool key = (isKey == "true"); //String to bool
 		bool ingredient = (isIngredient == "true"); //String to bool
 
-		if (key) {
+		if (key) 
+		{
 			getline(rowstream, keyID, ',');
-			Key newKey = Key(name, description, ingredient, keyID);
+			Key newKey = Key(name, description, key, keyID);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
 			pAddTo->addItem(&newKey);
 		}
-		else {
+		else 
+		{
 			Item newItem = Item(name, description, ingredient);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
 			pAddTo->addItem(&newItem);

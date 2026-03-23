@@ -1,11 +1,11 @@
 addTo,name,description,isIngredient,isKey,keyID
-0,Bedroom Key,Opens the door between the hallway and the bedroom,false,true,
+0,Bedroom Key,Opens the door between the hallway and the bedroom,false,true,1
 1,Teabag,A standard issue teabag,true
-2,Living Room Key,Opens the door between the living room and the kitchen,false
+2,Living Room Key,Opens the door between the living room and the kitchen,false,2
 3,Sugar,A bad of sugar,true
 6,Spoon,A simple teaspoon,true
 7,Milk,A bottle of milk,true
 8,Kettle,An electric kettle,true
-8,Kitchen key,Opens the door between the kitchen and garage,false
-8,Shed key,Opens the door to the shed in the back garden,false
-9,Mug,A mug for building tea into,true
+8,Kitchen key,Opens the door between the kitchen and garage,false,true,3
+8,Shed key,Opens the door to the shed in the back garden,false,true,4
+9,Mug,A mug for building tea into,true,

@@ -1,4 +1,4 @@
-indexOrigin, indexDestination, isLocked, doorID, destinationName
+indexOrigin, indexDestination, isLocked, doorID
 0,1,false,0
 0,2,true,1
 1,0,false,0

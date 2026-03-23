@@ -32,13 +32,13 @@ int main()
 	Game game;
 	game.loadLocations("./Data/locationAssets.csv");
 	game.loadDoors("./Data/doorAssets.csv");
-	//game.loadItems("./Data/itemAssets");
+	game.loadItems("./Data/itemAssets.csv");
 	
 	game.outputWorld();
 	cout << game.getCurrentLocation()->getIndex() << endl;
 	system("pause");
 
-	Item sugar("Sugar", "", true);
+	/*Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
 	Item tea("Tea bag", "", true);
 	Item mug("Mug", "", true);
@@ -48,62 +48,10 @@ int main()
 	winningStack.push(&tea);
 	winningStack.push(&sugar);
 	winningStack.push(&water);
-	winningStack.push(&milk);
+	winningStack.push(&milk);*/
 
 	//playerInventory.push_back
-
 	//game.mainMenu();
-
-	
-	//Living Room index 0
-	//hallway room index 1
-
-	//Doors file columns
-	// home room index | destination room index | locked | requiredKeyId
-
-	//while (###) {
-		//For each door read
-		//Create door object
-		//Access desired location object from home room index in vector
-		//...
-		//...
-	//}
-
-
-
-	//Look at creation of items, locations, players, etc from files, similar to ascii.
-
-	Key bedroomKey("Bedroom Key", "", true, "1");
-	Key kitchenKey("Kitchen Key", "", true, "2");
-	Item testItem("Test Item", "debugging.", false);
-	/*livingRoom.addItem(&bedroomKey);
-	livingRoom.addItem(&sugar);*/
-
-
-
-
-	//livingRoom.setInspectText("This is the living room.");
-	//hallWay.setInspectText("This is the hallway.");
-	//bedroom.setInspectText("This is the bedroom.");
-
-	//livingRoom.addDoor(&hallWay, false, "");
-	//livingRoom.addDoor(&kitchen, true, "2");
-	//hallWay.addDoor(&livingRoom, false, "");
-	//hallWay.addDoor(&bedroom, true, "1");
-	//hallWay.addDoor(&kitchen, false, "");
-	//kitchen.addDoor(&livingRoom, false, "");
-	//bedroom.addDoor(&hallWay, false, "");
-
-	
-	
-	//Starting location
-//	Location* pCurrentLocation = &livingRoom;
-	//Location* pCurrentLocation = game.getLocation("start");
-	
-	
-	
-
-	
 
 	//Main Game Loop//
 	while (true)

@@ -47,6 +47,7 @@ public:
 	void addItem(Item* nItem);
 	void removeItems();
 	void investigateRoom(int& collectedIng, vector<Item*>& playerInventory);
+	void 
 
 	//Door/Connection Logic
 	int getNumDoors(); //Used to check user input when selecting a location to move to

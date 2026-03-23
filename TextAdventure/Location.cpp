@@ -117,7 +117,7 @@ void Location::removeItems()
 
 void Location::investigateRoom(int& collectedIng, vector<Item*>& playerInventory)
 {
-	cout << getInspectText() << endl;
+	//cout << getInspectText() << endl;
 	if (!hasItems())
 	{
 		cout << "There doesn't seem to be anything useful in here." << endl;
