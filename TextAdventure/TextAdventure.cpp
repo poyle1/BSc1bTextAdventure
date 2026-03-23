@@ -32,6 +32,7 @@ int main()
 	Game game;
 	game.loadLocations("./Data/locationAssets.csv");
 	game.loadDoors("./Data/doorAssets.csv");
+	//game.loadItems("./Data/itemAssets");
 	
 	game.outputWorld();
 	cout << game.getCurrentLocation()->getIndex() << endl;

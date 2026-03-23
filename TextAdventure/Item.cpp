@@ -4,36 +4,46 @@
 
 Item::Item()
 {
-	this->name = "An item";
-	this->description = "This is an item.";
-	this->ingredient = false;
+	m_name = "An item";
+	m_description = "This is an item.";
+	m_ingredient = false;
 }
 
 Item::Item(string nName, string nDescription, bool isIng)
 {
-	this->name = nName;
-	this->description = nDescription;
-	this->ingredient = isIng;
+	m_name = nName;
+	m_description = nDescription;
+	m_ingredient = isIng;
 }
 
 bool Item::isIngredient()
 {
-	return this->ingredient;
+	return m_ingredient;
 }
 
 string Item::getName()
 {
-	return this->name;
+	return m_name;
 }
 
 string Item::getDescription()
 {
-	return this->description;
+	return m_description;
+}
+
+void Item::setName(string nName)
+{
+	m_name = nName;
+}
+
+void Item::setDescription(string nDesc)
+{
+	m_description = nDesc;
 }
 
 string Item::toString()
 {
-	return this->name + "." + this->description;
+	return m_name + "." + m_description;
 }
 
 string Item::getKeyID()

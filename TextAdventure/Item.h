@@ -5,9 +5,9 @@ using namespace std;
 class Item
 {
 protected:
-	string name;
-	string description;
-	bool ingredient;
+	string m_name;
+	string m_description;
+	bool m_ingredient;
 	
 public:
 	Item();
@@ -16,6 +16,8 @@ public:
 
 	string getName();
 	string getDescription();
+	void setName(string nName);
+	void setDescription(string nDesc);
 
 	virtual string toString();
 	virtual string getKeyID();

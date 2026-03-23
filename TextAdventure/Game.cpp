@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include "Utility.h"
+#include "Key.h"
 
 using namespace std;
 using namespace Utility;
@@ -113,6 +114,7 @@ void Game::loadDoors(string filename)
 
 	while (getline(locationFile, row))
 	{
+
 		rowstream = stringstream(row); //Convert each row to a stringstream
 		string indexOrigin, indexDestination, isLocked, doorID, destinationName;
 
@@ -120,9 +122,7 @@ void Game::loadDoors(string filename)
 		getline(rowstream, indexDestination, ',');
 		getline(rowstream, isLocked, ',');
 		getline(rowstream, doorID, ',');
-		//getline(rowstream, destinationName, ',');
-
-		//int origin = stoi(indexOrigin);
+	
 		Location* origin = &m_worldMap[stoi(indexOrigin)];
 		Location* dest = &m_worldMap[stoi(indexDestination)];
 		bool locked = (isLocked == "true"); //String to bool
@@ -150,20 +150,29 @@ void Game::loadItems(string filename)
 	while (getline(locationFile, row))
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
-		string indexOrigin, indexDestination, isLocked, doorID, destinationName;
 
-		getline(rowstream, indexOrigin, ',');
-		getline(rowstream, indexDestination, ',');
-		getline(rowstream, isLocked, ',');
-		getline(rowstream, doorID, ',');
-		//getline(rowstream, destinationName, ',');
+		string addTo, name, description, isIngredient, isKey, keyID;
 
-		//int origin = stoi(indexOrigin);
-		Location* origin = &m_worldMap[stoi(indexOrigin)];
-		Location* dest = &m_worldMap[stoi(indexDestination)];
-		bool locked = (isLocked == "true"); //String to bool
+		getline(rowstream, addTo, ',');
+		getline(rowstream, name, ',');
+		getline(rowstream, description, ',');
+		getline(rowstream, isIngredient, ',');
+		getline(rowstream, isKey, ',');
+		
+		bool key = (isKey == "true"); //String to bool
+		bool ingredient = (isIngredient == "true"); //String to bool
 
-		origin->addDoor(dest, locked, doorID);
+		if (key) {
+			getline(rowstream, keyID, ',');
+			Key newKey = Key(name, description, ingredient, keyID);
+			Location* pAddTo = &m_worldMap[stoi(addTo)];
+			pAddTo->addItem(&newKey);
+		}
+		else {
+			Item newItem = Item(name, description, ingredient);
+			Location* pAddTo = &m_worldMap[stoi(addTo)];
+			pAddTo->addItem(&newItem);
+		}
 	}
 	locationFile.close();
 }

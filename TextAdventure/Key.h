@@ -3,8 +3,8 @@
 class Key : public Item
 {
 private:
-	bool isKey;
-	string keyID;
+	bool m_isKey;
+	string m_keyID;
 
 public:
 	Key();
