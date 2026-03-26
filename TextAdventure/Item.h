@@ -7,12 +7,12 @@ class Item
 protected:
 	string m_name;
 	string m_description;
-	bool m_ingredient;
+	bool m_questItem;
 	
 public:
 	Item();
-	Item(string nName, string nDescription, bool isIng);
-	bool isIngredient();
+	Item(string nName, string nDescription, bool isQuest);
+	bool isQuestItem();
 
 	string getName();
 	string getDescription();

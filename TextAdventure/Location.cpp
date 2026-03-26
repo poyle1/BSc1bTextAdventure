@@ -1,5 +1,6 @@
 #include "Location.h"
 #include "Utility.h"
+#include "Inventory.h"
 #include <iostream>
 #include <vector>
 using namespace Utility;
@@ -11,14 +12,14 @@ Location::Location()
 	m_name = "A location";
 }
 
-Location::Location(const int nIndex, string nName)
+Location::Location(const int nIndex, std::string nName)
 {
 	m_index = nIndex;
 	m_name = nName;
 }
 
 //Door logic
-void Location::addDoor(Location* nDestination, bool nLocked, string nKeyID)
+void Location::addDoor(Location* nDestination, bool nLocked, std::string nKeyID)
 {
 	Door newDoor;
 	newDoor.destination = nDestination;
@@ -36,7 +37,7 @@ bool Location::isLocked(int index)
 	return false; //safety check
 }
 
-bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
+bool Location::unlockDoor(int index, std::vector<Item*>& playerInventory)
 {
 	if (index < 0 || index >= m_doors.size()) {
 		return false; //Invalid index safety check
@@ -55,17 +56,17 @@ bool Location::unlockDoor(int index, vector<Item*>& playerInventory)
 }
 
 //Getters and setters
-string Location::getName() const
+std::string Location::getName() const
 {
 	return m_name;
 }
 
-string Location::getInspectText() const
+std::string Location::getInspectText() const
 {
 	return m_inspectText;
 }
 
-void Location::setInspectText(string nText)
+void Location::setInspectText(std::string nText)
 {
 	m_inspectText = nText;
 }
@@ -73,7 +74,7 @@ void Location::setInspectText(string nText)
 int Location::getIndex() const
 {
 	if (!m_index) {
-		return NULL;
+		return -1;
 	}
 	return m_index;
 }
@@ -100,7 +101,7 @@ void Location::itemCheck()
 	}
 }
 
-vector<Item*>& Location::getItems()
+std::vector<Item*>& Location::getItems()
 {
 	return m_locItems;
 }
@@ -115,27 +116,21 @@ void Location::removeItems()
 	m_locItems.clear();
 }
 
-void Location::investigateRoom(int& collectedIng, vector<Item*>& playerInventory)
+void Location::investigateRoom(int& collectedIng, Inventory& playerInventory)
 {
 	//cout << getInspectText() << endl;
 	if (!hasItems())
 	{
-		cout << "There doesn't seem to be anything useful in here." << endl;
+		std::cout << "There doesn't seem to be anything useful in here." << std::endl;
+		return;
 	}
-	else
+	std::cout << "You look around and grab: " << std::endl;
+	for (Item* i : m_locItems)
 	{
-		cout << "You look around and grab: " << endl;
-		for (Item* i : m_locItems)
-		{
-			cout << "-" << i->getName() << endl;
-			playerInventory.push_back(i);
-			if (i->isIngredient())
-			{
-				collectedIng += 1;
-			}
-		}
-		removeItems();
+		std::cout << "-" << i->getName() << std::endl;
+		playerInventory.addItem(i);
 	}
+	removeItems();
 }
 
 //Door/connection Logic
@@ -172,20 +167,21 @@ void Location::enterLocation()
 	pauseAndFlush();
 }
 
-bool Location::allItemsCollected(int totalIng,  vector<Item*>& playerInventory)
+bool Location::allItemsCollected(int totalIng, std::vector<Item*>& playerInventory)
 {
-	if (totalIng >= 5)
-	{
-		return true; //If the player has all the ingredients, return true
-	}
 	for (Item* i : playerInventory)
 	{
-		if (i->isIngredient())
+		if (i->isQuestItem())
 		{
 			totalIng += 1;
 		}
 	}
-	return false; //If the player does not have all the ingredients, return false
+	if (totalIng >= 5)
+	{
+		return true; //If the player has all the quest items, return true
+	}
+	
+	return false; //If the player does not have all the quest items, return false
 }
 
 //Event logic
@@ -194,9 +190,9 @@ bool Location::canStartEvent()
 	return false;
 }
 
-string Location::getEventPrompt()
+std::string Location::getEventPrompt()
 {
-	return string("");
+	return std::string("");
 }
 
 void Location::startEvent()

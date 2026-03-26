@@ -1,45 +1,61 @@
-//#include "Inventory.h"
-//
-//Inventory::Inventory()
-//{
-//	//empty constructor
-//}
-//
-//void Inventory::addItem(Item& nItem)
-//{
-//	this->inventoryVec.push_back(&nItem);
-//}
-//
-//void Inventory::removeItem(int index)
-//{
-//	this->inventoryVec.erase(this->inventoryVec.begin() + index);
-//}
-//
-//int Inventory::getSize()
-//{
-//	return this->inventoryVec.size();
-//}
-//
-//Item* Inventory::getItem(int index)
-//{
-//	if (index < 0 || index >= this->inventoryVec.size()) {
-//		return nullptr; // Return null pointer for safety check
-//	}
-//	return this->inventoryVec[index];
-//}
-//
-//int Inventory::getTotalValue()
-//{
-//	int total = 0;
-//	for (int i = 0; i < this->inventoryVec.size(); i++) {
-//		total += this->inventoryVec[i]->getValue();
-//	}
-//	return total;
-//}
-//
-//void Inventory::outputInventory()
-//{
-//	for (int i = 0; i < this->inventoryVec.size(); i++) {
-//		cout << this->inventoryVec[i]->toString() << endl;
-//	}
-//}
+#include "Inventory.h"
+#include "Item.h"
+#include <vector>
+#include <iostream>
+
+//Constructors
+
+Inventory::Inventory()
+{
+	m_collectedQuestItems = 0;
+}
+
+//m_items modifiers
+
+void Inventory::addItem(Item* nItem)
+{
+	m_items.push_back(nItem);
+	if (nItem->isQuestItem())
+	{
+		m_collectedQuestItems++;
+	}
+}
+
+void Inventory::removeItem(int index)
+{
+	if (index < 0 || index >= m_items.size()) {
+		return; // Safety check
+	}
+	m_items.erase(m_items.begin() + index);
+}
+
+void Inventory::clear()
+{
+	m_items.clear();
+}
+
+Item* Inventory::getItem(int index)
+{
+	if (index < 0 || index >= m_items.size()) {
+		return nullptr; // Safety check
+	}
+	return m_items[index];
+}
+
+int Inventory::getSize()
+{
+	return m_items.size();
+}
+
+void Inventory::outputInventory()
+{
+	if (m_items.empty())
+	{
+		std::cout << "You have no items." << std::endl;
+		return;
+	}
+	for (int i = 0; i < m_items.size(); i++)
+	{
+		std::cout << m_items[i]->toString() << std::endl;
+	}
+}

@@ -20,19 +20,19 @@ protected:
 	std::string m_name;
 	std::string m_inspectText;
 	
-	vector<Item*> m_locItems; //Vector of pointers to items in the location
-	vector<Door> m_doors; //Each location has a list of doors, 
+	Inventory m_locItems;
+	std::vector<Door> m_doors; //Each location has a list of doors, 
 
 
 public:
 	//Constructors
 	Location();
-	Location(const int nIndex, string nName);
+	Location(const int nIndex, std::string nName);
 
 	//Door logic
 	void addDoor(Location* targetLoc, bool locked, std::string keyID);
 	bool isLocked(int index); //Checks if a specific connection is locked, used to check if the player can move to a location before moving there
-	bool unlockDoor(int index, vector <Item*>& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
+	bool unlockDoor(int index, std::vector <Item*>& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
 
 	//Getters and setters
 	std::string getName() const;
@@ -43,11 +43,10 @@ public:
 	//Items
 	bool hasItems();
 	void itemCheck();
-	vector<Item*>& getItems();
+	std::vector<Item*>& getItems();
 	void addItem(Item* nItem);
 	void removeItems();
-	void investigateRoom(int& collectedIng, vector<Item*>& playerInventory);
-	void 
+	void investigateRoom(int& collectedIng, Inventory& playerInventory);
 
 	//Door/Connection Logic
 	int getNumDoors(); //Used to check user input when selecting a location to move to
@@ -55,7 +54,7 @@ public:
 	void outputDoors();
 	void enterLocation();
 
-	bool allItemsCollected(int totalIng,  vector <Item*>& playerInventory);
+	bool allItemsCollected(int totalIng, std::vector <Item*>& playerInventory);
 
 	//Event logic
 	virtual bool canStartEvent();

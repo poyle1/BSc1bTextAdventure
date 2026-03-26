@@ -6,19 +6,19 @@ Item::Item()
 {
 	m_name = "An item";
 	m_description = "This is an item.";
-	m_ingredient = false;
+	m_questItem = false;
 }
 
-Item::Item(string nName, string nDescription, bool isIng)
+Item::Item(string nName, string nDescription, bool isQuest)
 {
 	m_name = nName;
 	m_description = nDescription;
-	m_ingredient = isIng;
+	m_questItem = isQuest;
 }
 
-bool Item::isIngredient()
+bool Item::isQuestItem()
 {
-	return m_ingredient;
+	return m_questItem;
 }
 
 string Item::getName()

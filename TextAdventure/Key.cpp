@@ -8,7 +8,7 @@ Key::Key()
 	m_description = "This is a key.";
 	m_isKey = false;
 	m_keyID = "";
-	m_ingredient = false;
+	m_questItem = false;
 }
 
 Key::Key(string nName, string nDescription, bool nIsKey, string nKeyID) : Item(nName, nDescription, false)

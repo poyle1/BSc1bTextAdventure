@@ -151,16 +151,16 @@ void Game::loadItems(string filename)
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
 
-		string addTo, name, description, isIngredient, isKey, keyID;
+		string addTo, name, description, isQuestItem, isKey, keyID;
 
 		getline(rowstream, addTo, ',');
 		getline(rowstream, name, ',');
 		getline(rowstream, description, ',');
-		getline(rowstream, isIngredient, ',');
+		getline(rowstream, isQuestItem, ',');
 		getline(rowstream, isKey, ',');
 		
 		bool key = (isKey == "true"); //String to bool
-		bool ingredient = (isIngredient == "true"); //String to bool
+		bool questItem = (isQuestItem == "true"); //String to bool
 
 		if (key) 
 		{
@@ -171,7 +171,7 @@ void Game::loadItems(string filename)
 		}
 		else 
 		{
-			Item newItem = Item(name, description, ingredient);
+			Item newItem = Item(name, description, questItem);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
 			pAddTo->addItem(&newItem);
 		}
