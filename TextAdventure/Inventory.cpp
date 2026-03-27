@@ -42,20 +42,42 @@ Item* Inventory::getItem(int index)
 	return m_items[index];
 }
 
+std::vector<Item*>& Inventory::getItems()
+{
+	return m_items;
+}
+
 int Inventory::getSize()
 {
 	return m_items.size();
+}
+
+bool Inventory::isEmpty()
+{
+	if (m_items.empty())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void Inventory::outputInventory()
 {
 	if (m_items.empty())
 	{
-		std::cout << "You have no items." << std::endl;
+		std::cout << "None." << std::endl;
 		return;
 	}
 	for (int i = 0; i < m_items.size(); i++)
 	{
-		std::cout << m_items[i]->toString() << std::endl;
+		std::cout << m_items[i]->getName() << std::endl;
 	}
+}
+
+int Inventory::getQuestItemTotal()
+{
+	return m_collectedQuestItems;
 }

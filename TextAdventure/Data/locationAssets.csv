@@ -1,11 +1,11 @@
-Index, Name
-0,Living Room
-1,Hallway
-2,Kitchen
-3,Bedroom
-4,En suite
-5,Bathroom
-6,Back Garden
-7,Front Garden
-8,Garage
-9,Shed
+Index,Name,isEventRoom
+0,Living Room,false
+1,Hallway,false
+2,Kitchen,ture
+3,Bedroom,false
+4,En suite,false
+5,Bathroom,false
+6,Back Garden,false
+7,Front Garden,false
+8,Garage,false
+9,Shed,false

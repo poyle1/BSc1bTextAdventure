@@ -1,4 +1,4 @@
-addTo,name,description,isIngredient,isKey,keyID
+addTo,name,description,isQuestItem,isKey,keyID
 0,Bedroom Key,Opens the door between the hallway and the bedroom,false,true,1
 1,Teabag,A standard issue teabag,true
 2,Living Room Key,Opens the door between the living room and the kitchen,false,2

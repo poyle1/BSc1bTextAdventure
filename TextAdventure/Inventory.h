@@ -23,7 +23,11 @@ public:
 
 	
 	Item* getItem(int index); //Returns pointer to Item at specified index
+	std::vector<Item*>& getItems();
 	int getSize();
+	bool isEmpty();
 
 	void outputInventory();
+
+	int getQuestItemTotal();
 };

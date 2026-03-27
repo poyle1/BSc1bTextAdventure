@@ -80,15 +80,22 @@ void Game::loadLocations(string filename)
 	while (getline(locationFile, row))
 	{
 		rowstream = stringstream(row); //Convert each row to a stringstream
-		string index, name;
+		string index, name, isEventRoom;
 
 		getline(rowstream, index, ',');
 		getline(rowstream, name, ',');
+		getline(rowstream, isEventRoom, ',');
 
-		
+		bool eventRoom = (isEventRoom == "true");
+
+		if (eventRoom)
+		{
+
+		}
 
 		Location tempLocation = Location(stoi(index), name);
 		m_worldMap.push_back(tempLocation);
+		
 	}
 	locationFile.close();
 	if (!m_worldMap.empty())
@@ -165,24 +172,26 @@ void Game::loadItems(string filename)
 		if (key) 
 		{
 			getline(rowstream, keyID, ',');
-			Key newKey = Key(name, description, key, keyID);
+			Key* newKey = new Key(name, description, key, keyID);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
-			pAddTo->addItem(&newKey);
+			pAddTo->addItemToLoc(newKey);
 		}
 		else 
 		{
-			Item newItem = Item(name, description, questItem);
+			Item* newItem = new Item(name, description, questItem);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
-			pAddTo->addItem(&newItem);
+			pAddTo->addItemToLoc(newItem);
 		}
 	}
 	locationFile.close();
 }
 
-//void Game::loadWorld(string locFileName, string doorFileName, string itemFileName)
-//{
-//
-//}
+void Game::loadWorld(string locFileName, string doorFileName, string itemFileName)
+{
+	loadLocations(locFileName);
+	loadDoors(doorFileName);
+	loadItems(itemFileName);
+}
 
 
 Location* Game::getCurrentLocation()

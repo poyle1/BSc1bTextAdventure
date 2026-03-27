@@ -37,25 +37,48 @@ bool Location::isLocked(int index)
 	return false; //safety check
 }
 
-bool Location::unlockDoor(int index, std::vector<Item*>& playerInventory)
+bool Location::unlockDoor(int index, Inventory& playerInventory)
 {
-	if (index < 0 || index >= m_doors.size()) {
+	if (index < 0 || index >= m_doors.size()) 
+	{
 		return false; //Invalid index safety check
 	}
-	for (int i = 0; i < playerInventory.size(); i++)
+	Door& currentDoor = m_doors[index];
+
+	for (int i = 0; i < playerInventory.getItems().size(); i++)
 	{
-		if (playerInventory[i]->getKeyID() == m_doors[index].requiredKeyID)
+		if (playerInventory.getItem(i)->getKeyID() == m_doors[index].requiredKeyID)
 		{
-			m_doors[index].locked = false;
-			cout << "You use the " << playerInventory[i]->getName() << " to unlock the door." << endl;
-			playerInventory.erase(playerInventory.begin() + i);
+			currentDoor.locked = false;
+			Location* nextRoom = currentDoor.destination;
+			nextRoom->unlockNextDoor(this);
+
+			cout << "You use the " << playerInventory.getItem(i)->getName() << " to unlock the door." << endl;
+			playerInventory.getItems().erase(playerInventory.getItems().begin() + i);
 			return true; //Exit loop
 		}
 	}
 	return false; //No matching key found in inventory
 }
 
+void Location::unlockNextDoor(Location* target)
+{
+	for (auto& door : m_doors)
+	{
+		if (door.destination == target)
+		{
+			door.locked = false;
+		}
+	}
+}
+
+void Location::setLocked(int index, bool nLocked)
+{
+	m_doors[index].locked = nLocked;
+}
+
 //Getters and setters
+
 std::string Location::getName() const
 {
 	return m_name;
@@ -73,25 +96,26 @@ void Location::setInspectText(std::string nText)
 
 int Location::getIndex() const
 {
-	if (!m_index) {
-		return -1;
-	}
 	return m_index;
 }
 
 //Items
-bool Location::hasItems()
+
+bool Location::isEmpty()
 {
-	if (m_locItems.empty())
+	if (m_locItems.isEmpty())
+	{
+		return true;
+	}
+	else
 	{
 		return false;
 	}
-	return true;
 }
 
 void Location::itemCheck()
 {
-	if (m_locItems.empty())
+	if (isEmpty())
 	{
 		cout << "There are no items in this room." << endl;
 	}
@@ -101,14 +125,14 @@ void Location::itemCheck()
 	}
 }
 
-std::vector<Item*>& Location::getItems()
-{
-	return m_locItems;
-}
+//std::vector<Item*>& Location::getItems()
+//{
+//	return m_locItems;
+//}
 
-void Location::addItem(Item* nItem)
+void Location::addItemToLoc(Item* nItem)
 {
-	m_locItems.push_back(nItem);
+	m_locItems.addItem(nItem);
 }
 
 void Location::removeItems()
@@ -116,19 +140,31 @@ void Location::removeItems()
 	m_locItems.clear();
 }
 
-void Location::investigateRoom(int& collectedIng, Inventory& playerInventory)
+void Location::outputItems()
+{
+	for (int i = 0; i < m_locItems.getSize(); i++)
+	{
+		cout << i + 1 << ")" << m_locItems.getItem(i);
+	}
+}
+
+void Location::investigateRoom(Inventory& playerInventory)
 {
 	//cout << getInspectText() << endl;
-	if (!hasItems())
+	if (isEmpty())
 	{
 		std::cout << "There doesn't seem to be anything useful in here." << std::endl;
 		return;
 	}
 	std::cout << "You look around and grab: " << std::endl;
-	for (Item* i : m_locItems)
+	for (Item* item : m_locItems.getItems())
 	{
-		std::cout << "-" << i->getName() << std::endl;
-		playerInventory.addItem(i);
+		if (item == nullptr)
+		{
+			std::cout << "error" << std::endl;
+		}
+		std::cout << "- " << item->getName() << std::endl;
+		playerInventory.addItem(item);
 	}
 	removeItems();
 }

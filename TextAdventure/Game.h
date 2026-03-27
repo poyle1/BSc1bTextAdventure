@@ -23,7 +23,7 @@ public:
 	void loadLocations(string filename);
 	void loadDoors(string filename);
 	void loadItems(string filename);
-	//void loadWorld(string locFileName, string doorFileName, string itemFileName);
+	void loadWorld(string locFileName, string doorFileName, string itemFileName);
 
 	Location* getCurrentLocation();
 	void setCurrentLocation(Location* newLoc);

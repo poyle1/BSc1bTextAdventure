@@ -11,7 +11,6 @@
 #include "Key.h"
 #include "Inventory.h"
 #include "Player.h"
-#include "BasicEnemy.h"
 #include "Text.h"
 #include "Game.h"
 
@@ -20,8 +19,6 @@ using namespace Utility;
 
 stack<Item*> winningStack;
 stack<Item*> playerStack;
-vector<Item*> playerInventory = {};
-int collectedIng = 0;
 
 int main()
 {
@@ -30,13 +27,13 @@ int main()
 
 	Text text;
 	Game game;
-	game.loadLocations("./Data/locationAssets.csv");
-	game.loadDoors("./Data/doorAssets.csv");
-	game.loadItems("./Data/itemAssets.csv");
+	Inventory playerInventory;
+	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	
-	game.outputWorld();
-	cout << game.getCurrentLocation()->getIndex() << endl;
-	system("pause");
+	//game.outputWorld();
+	//game.getCurrentLocation()->outputItems();
+	//cout << game.getCurrentLocation()->getIndex() << endl;
+	//system("pause");
 
 	/*Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
@@ -60,7 +57,6 @@ int main()
 		//Followed by the start event option if present
 
 		int numDoors = game.getCurrentLocation()->getNumDoors();
-		//int numDoors = pCurrentLocation->getNumDoors();
 		int investigateRoomOption = numDoors + 1;
 		int startEventOption = numDoors + 2;
 
@@ -77,12 +73,9 @@ int main()
 		game.getCurrentLocation()->itemCheck();
 		cout << "====================================================================================================\n";
 		cout << "Collected Items: ";
-		for (Item* i : playerInventory) 
-		{
-			cout << "-" << i->getName() << " ";
-		}
+		playerInventory.outputInventory();
 		cout << endl;
-		cout << "Total Ingredients: " << collectedIng;
+		cout << "Total Ingredients: " << playerInventory.getQuestItemTotal();
 		cout << endl;
 		cout << "====================================================================================================\n";
 		text.printArt(game.getCurrentLocation()->getName());
@@ -105,7 +98,7 @@ int main()
 		//Investigate Current Location//
 		if (userInput == investigateRoomOption)
 		{
-			game.getCurrentLocation()->investigateRoom(collectedIng, playerInventory);
+			game.getCurrentLocation()->investigateRoom(playerInventory);
 			pauseAndFlush();
 			continue;
 		}
