@@ -14,11 +14,12 @@
 #include "Text.h"
 #include "Game.h"
 
-using namespace std;
-using namespace Utility;
+namespace UI = MilkAndSugar::UI;
+namespace World = MilkAndSugar::World;
 
-stack<Item*> winningStack;
-stack<Item*> playerStack;
+
+std::stack<Item*> winningStack;
+std::stack<Item*> playerStack;
 
 int main()
 {
@@ -27,13 +28,21 @@ int main()
 
 	Text text;
 	Game game;
-	Inventory playerInventory;
+	World::Inventory playerInventory;
 	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	
 	//game.outputWorld();
 	//game.getCurrentLocation()->outputItems();
-	//cout << game.getCurrentLocation()->getIndex() << endl;
-	//system("pause");
+	//cout << game.getCurrentLocation()->getIndex() << std::endl;
+
+	std::vector<std::string> test = { "Hello", "World", "Test" };
+
+	for (std::string i : test)
+	{
+		std::cout << i << " ";
+	}
+
+	system("pause");
 
 	/*Item sugar("Sugar", "", true);
 	Item milk("Milk", "", true);
@@ -68,45 +77,45 @@ int main()
 
 		//Current Room Info//
 		system("cls");
-		cout << "====================================================================================================\n";
-		cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
 		game.getCurrentLocation()->itemCheck();
-		cout << "====================================================================================================\n";
-		cout << "Collected Items: ";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Collected Items: ";
 		playerInventory.outputInventory();
-		cout << endl;
-		cout << "Total Ingredients: " << playerInventory.getQuestItemTotal();
-		cout << endl;
-		cout << "====================================================================================================\n";
+		std::cout << std::endl;
+		std::cout << "Total Ingredients: " << playerInventory.getQuestItemTotal();
+		std::cout << std::endl;
+		std::cout << "====================================================================================================\n";
 		text.printArt(game.getCurrentLocation()->getName());
-		cout << "====================================================================================================\n";
-		cout << "Available Actions:" << "\n";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Available Actions:" << "\n";
 		game.getCurrentLocation()->outputDoors();
-		cout << investigateRoomOption << ") Investigate the room" << endl;
+		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
 		if (game.getCurrentLocation()->canStartEvent())
 		{
-			cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
+			std::cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
 		}
-		cout << endl;
-		cout << "====================================================================================================\n";
-		cout << "Enter a character to complete an action:\n\n";
+		std::cout << std::endl;
+		std::cout << "====================================================================================================\n";
+		std::cout << "Enter a character to complete an action:\n\n";
 
 		//User Input//
-		int userInput = getValidIntInput(1, maxValidInput);
-		cout << endl;
+		int userInput = UI::getValidIntInput(1, maxValidInput);
+		std::cout << std::endl;
 
 		//Investigate Current Location//
 		if (userInput == investigateRoomOption)
 		{
 			game.getCurrentLocation()->investigateRoom(playerInventory);
-			pauseAndFlush();
+			UI::pauseAndFlush();
 			continue;
 		}
 
 		if (game.getCurrentLocation()->canStartEvent() && userInput == startEventOption)
 		{
 			game.getCurrentLocation()->startEvent();
-			pauseAndFlush();
+			UI::pauseAndFlush();
 			continue;
 		}
 
@@ -115,11 +124,11 @@ int main()
 
 		
 		//Locked Door Check//
-		if (game.getCurrentLocation()->isLocked(doorIndex))
+		if (game.getCurrentLocation()->isDoorLocked(doorIndex))
 		{
 			if (!game.getCurrentLocation()->unlockDoor(doorIndex, playerInventory)) {
-				cout << "The door is locked - you cannot open it!" << endl;
-				pauseAndFlush();
+				std::cout << "The door is locked - you cannot open it!" << std::endl;
+				UI::pauseAndFlush();
 				continue; 
 			}
 		}

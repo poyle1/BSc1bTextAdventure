@@ -4,13 +4,13 @@ class Key : public Item
 {
 private:
 	bool m_isKey;
-	string m_keyID;
+	std::string m_keyID;
 
 public:
 	Key();
-	Key(string nName, string nDescription, bool nIsKey, string nKeyID);
+	Key(std::string nName, std::string nDescription, bool nIsKey, std::string nKeyID);
 
-	string toString() override;
-	string getKeyID() override;
+	std::string toString() override;
+	std::string getKeyID() override;
 };
 

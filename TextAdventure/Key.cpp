@@ -11,18 +11,18 @@ Key::Key()
 	m_questItem = false;
 }
 
-Key::Key(string nName, string nDescription, bool nIsKey, string nKeyID) : Item(nName, nDescription, false)
+Key::Key(std::string nName, std::string nDescription, bool nIsKey, std::string nKeyID) : Item(nName, nDescription, false)
 {
 	m_isKey = nIsKey;
 	m_keyID = nKeyID;
 }
 
-string Key::getKeyID()
+std::string Key::getKeyID()
 {
 	return m_keyID;
 }
 
-string Key::toString()
+std::string Key::toString()
 {
 	return m_name + "! Maybe it opens the door to the " + m_keyID;
 }

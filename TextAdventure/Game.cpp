@@ -5,8 +5,6 @@
 #include "Utility.h"
 #include "Key.h"
 
-using namespace std;
-using namespace Utility;
 
 Game::Game()
 {
@@ -25,18 +23,18 @@ void Game::mainMenu()
 	while (m_isRunning) 
 	{
 		system("cls");
-		cout << "====================================================================================================\n";
+		std::cout << "====================================================================================================\n";
 		m_ui.printArt("TITLESCREEN");
-		cout << "====================================================================================================\n";
-		cout << "Enter '1' to start a new game.\n";
-		cout << "Enter '2' to display the rules.\n";
-		cout << "Enter '3' to quit the game.\n";
-		cout << "====================================================================================================\n";
-		cout << "Enter: ";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Enter '1' to start a new game.\n";
+		std::cout << "Enter '2' to display the rules.\n";
+		std::cout << "Enter '3' to quit the game.\n";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Enter: ";
 
 		//User Input//
-		int userInput = getValidIntInput(1, 3);
-		cout << endl;
+		int userInput = MilkAndSugar::UI::getValidIntInput(1, 3);
+		std::cout << std::endl;
 
 		if (userInput == 1) 
 		{
@@ -49,8 +47,8 @@ void Game::mainMenu()
 		}
 		else if (userInput == 3)
 		{
-			cout << "Exiting game - Goodbye for now!" << endl;
-			pauseAndFlush();
+			std::cout << "Exiting game - Goodbye for now!" << std::endl;
+			MilkAndSugar::UI::pauseAndFlush();
 			exit(0);
 		}
 	}
@@ -62,25 +60,25 @@ void Game::displayRules()
 	m_ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
 }
 
-void Game::loadLocations(string filename)
+void Game::loadLocations(std::string filename)
 {
-	ifstream locationFile(filename);
+	std::ifstream locationFile(filename);
 
 	if (!locationFile.is_open())
 	{
-		cout << "Error, could not find file " << filename << endl;
+		std::cout << "Error, could not find file " << filename << std::endl;
 		return;
 	}
 
-	string row;
-	stringstream rowstream;
+	std::string row;
+	std::stringstream rowstream;
 
 	getline(locationFile, row); // skips header of csv
 
 	while (getline(locationFile, row))
 	{
-		rowstream = stringstream(row); //Convert each row to a stringstream
-		string index, name, isEventRoom;
+		rowstream = std::stringstream(row); //Convert each row to a stringstream
+		std::string index, name, isEventRoom;
 
 		getline(rowstream, index, ',');
 		getline(rowstream, name, ',');
@@ -104,26 +102,26 @@ void Game::loadLocations(string filename)
 	}
 }
 
-void Game::loadDoors(string filename)
+void Game::loadDoors(std::string filename)
 {
-	ifstream locationFile(filename);
+	std::ifstream locationFile(filename);
 
 	if (!locationFile.is_open())
 	{
-		cout << "Error, could not find file " << filename << endl;
+		std::cout << "Error, could not find file " << filename << std::endl;
 		return;
 	}
 
-	string row;
-	stringstream rowstream;
+	std::string row;
+	std::stringstream rowstream;
 
 	getline(locationFile, row); // skips header of csv
 
 	while (getline(locationFile, row))
 	{
 
-		rowstream = stringstream(row); //Convert each row to a stringstream
-		string indexOrigin, indexDestination, isLocked, doorID;
+		rowstream = std::stringstream(row); //Convert each row to a stringstream
+		std::string indexOrigin, indexDestination, isLocked, doorID;
 
 		getline(rowstream, indexOrigin, ',');
 		getline(rowstream, indexDestination, ',');
@@ -139,26 +137,26 @@ void Game::loadDoors(string filename)
 	locationFile.close();
 }
 
-void Game::loadItems(string filename)
+void Game::loadItems(std::string filename)
 {
-	ifstream locationFile(filename);
+	std::ifstream locationFile(filename);
 
 	if (!locationFile.is_open())
 	{
-		cout << "Error, could not find file " << filename << endl;
+		std::cout << "Error, could not find file " << filename << std::endl;
 		return;
 	}
 
-	string row;
-	stringstream rowstream;
+	std::string row;
+	std::stringstream rowstream;
 
 	getline(locationFile, row); // skips header of csv
 
 	while (getline(locationFile, row))
 	{
-		rowstream = stringstream(row); //Convert each row to a stringstream
+		rowstream = std::stringstream(row); //Convert each row to a stringstream
 
-		string addTo, name, description, isQuestItem, isKey, keyID;
+		std::string addTo, name, description, isQuestItem, isKey, keyID;
 
 		getline(rowstream, addTo, ',');
 		getline(rowstream, name, ',');
@@ -174,19 +172,19 @@ void Game::loadItems(string filename)
 			getline(rowstream, keyID, ',');
 			Key* newKey = new Key(name, description, key, keyID);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
-			pAddTo->addItemToLoc(newKey);
+			pAddTo->getInventory().addItem(newKey);
 		}
 		else 
 		{
 			Item* newItem = new Item(name, description, questItem);
 			Location* pAddTo = &m_worldMap[stoi(addTo)];
-			pAddTo->addItemToLoc(newItem);
+			pAddTo->getInventory().addItem(newItem);
 		}
 	}
 	locationFile.close();
 }
 
-void Game::loadWorld(string locFileName, string doorFileName, string itemFileName)
+void Game::loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName)
 {
 	loadLocations(locFileName);
 	loadDoors(doorFileName);
@@ -215,7 +213,7 @@ void Game::movePlayer(int nextLocationIndex)
 	}
 	else
 	{
-		cout << "Error: Destination " << nextLocationIndex << " doesn not exist." << endl;
+		std::cout << "Error: Destination " << nextLocationIndex << " doesn not exist." << std::endl;
 		system("pause");
 	}
 }
@@ -225,6 +223,6 @@ void Game::outputWorld()
 {
 	for (Location& l : m_worldMap)
 	{
-		cout << l.getIndex() << l.getName() << endl;
+		std::cout << l.getIndex() << l.getName() << std::endl;
 	}
 }

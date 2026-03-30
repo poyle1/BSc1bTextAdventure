@@ -20,10 +20,10 @@ public:
 	void mainMenu();
 	void displayRules();
 
-	void loadLocations(string filename);
-	void loadDoors(string filename);
-	void loadItems(string filename);
-	void loadWorld(string locFileName, string doorFileName, string itemFileName);
+	void loadLocations(std::string filename);
+	void loadDoors(std::string filename);
+	void loadItems(std::string filename);
+	void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName);
 
 	Location* getCurrentLocation();
 	void setCurrentLocation(Location* newLoc);

@@ -1,24 +1,23 @@
 #pragma once
 #include <iostream>
-using namespace std;
 
 class Item
 {
 protected:
-	string m_name;
-	string m_description;
+	std::string m_name;
+	std::string m_description;
 	bool m_questItem;
 	
 public:
 	Item();
-	Item(string nName, string nDescription, bool isQuest);
+	Item(std::string nName, std::string nDescription, bool isQuest);
 	bool isQuestItem();
 
-	string getName();
-	string getDescription();
-	void setName(string nName);
-	void setDescription(string nDesc);
+	std::string getName();
+	std::string getDescription();
+	void setName(std::string nName);
+	void setDescription(std::string nDesc);
 
-	virtual string toString();
-	virtual string getKeyID();
+	virtual std::string toString();
+	virtual std::string getKeyID();
 };

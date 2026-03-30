@@ -9,7 +9,7 @@ private:
 	
 	
 public:
-	void printArt(string artName);
-	void printDialogue(string artName, string dialogue);
+	void printArt(std::string artName);
+	void printDialogue(std::string artName, std::string dialogue);
 	void gameIntro();
 };

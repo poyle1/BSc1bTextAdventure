@@ -1,14 +1,12 @@
 #include "Player.h"
 
-using namespace std;
-
 Player::Player()
 {
 	this->health = 100;
 	this->alive = true;
 }
 
-Player::Player(string nName)
+Player::Player(std::string nName)
 {
 	this->health = 100;
 	this->alive = true;
@@ -33,12 +31,12 @@ void Player::heal(int toHeal)
 	this->health += toHeal;
 }
 
-void Player::setName(string nName)
+void Player::setName(std::string nName)
 {
 	this->name = nName;
 }
 
-string Player::getName()
+std::string Player::getName()
 {
 	return this->name;
 }

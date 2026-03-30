@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Utility
+namespace MilkAndSugar::UI
 {
 	int getValidIntInput(int min, int max);
 	void pauseAndFlush();

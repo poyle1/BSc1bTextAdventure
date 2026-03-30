@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="EventRoom">
-    <Position X="0.5" Y="2.25" Width="1.75" />
+    <Position X="2" Y="8.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AgEAAAAAAAAABAAAAAGAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>EventRoom.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Game" Collapsed="true">
-    <Position X="6" Y="1" Width="1.75" />
+  <Class Name="Game">
+    <Position X="13" Y="0.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>EQAAAgAQAAAAAAAAACCAAABAAAoAMAAggAAEAgAAAAA=</HashCode>
+      <HashCode>EQAAAgAQAAAAAAAAADCAAABAAAoAMAAggAAEAgAAAAA=</HashCode>
       <FileName>Game.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Inventory">
-    <Position X="7.75" Y="1" Width="1.75" />
+    <Position X="6.75" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AFAAAAAASIAAAAAEAACAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AFAAAAAASIAAAAAEAACAAAAAAAAAAAAAAAIAAgAAQBA=</HashCode>
       <FileName>Inventory.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Item" Collapsed="true">
-    <Position X="3.5" Y="1" Width="1.75" />
+  <Class Name="Item">
+    <Position X="4.5" Y="1" Width="1.75" />
     <TypeIdentifier>
       <HashCode>EAAIAAAAAAAgAAIAAAAABCAEAAAgAABAAAAEAABAAAA=</HashCode>
       <FileName>Item.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Key" Collapsed="true">
-    <Position X="3.5" Y="2.25" Width="1.75" />
+  <Class Name="Key">
+    <Position X="4.5" Y="5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAABSAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Key.h</FileName>
@@ -38,26 +38,26 @@
   <Class Name="Location">
     <Position X="0.5" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>EAEEAAAQEhEABJAAAAKEkMgBAASAAAAAAAMEAAAAAAg=</HashCode>
+      <HashCode>EAEEAAAQEhAABJAAAAIEkMhBAASAAQIACAEEAAAAQAg=</HashCode>
       <FileName>Location.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Player" Collapsed="true">
-    <Position X="6" Y="2" Width="1.75" />
+  <Class Name="Player">
+    <Position X="11" Y="0.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAgABAAAAAAAAABAAEAABAIAAEAQEAAAg=</HashCode>
       <FileName>Player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Text">
-    <Position X="7.75" Y="4.5" Width="1.75" />
+    <Position X="11" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Text.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="Door" Collapsed="true">
-    <Position X="6" Y="3.25" Width="1.75" />
+  <Struct Name="Door">
+    <Position X="2.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIEAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Location.h</FileName>

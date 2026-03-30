@@ -5,16 +5,16 @@
 class EventRoom : public Location
 {
 private:
-    string eventPrompt;
+    std::string eventPrompt;
     bool eventCompleted;
 
 public:
     // Constructors
     EventRoom();
-    EventRoom(int nIndex, string nName, string nEventPrompt);
+    EventRoom(int nIndex, std::string nName, std::string nEventPrompt);
 
     // Event Logic
     virtual bool canStartEvent();
-    virtual string getEventPrompt();
+    virtual std::string getEventPrompt();
     virtual void startEvent();
 };

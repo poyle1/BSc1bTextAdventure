@@ -4,16 +4,14 @@
 #include <fstream> // ifstream and ofstream
 #include <string> // getline
 
-using namespace Utility;
-using namespace std;
 
-void Text::printArt(string artName)
+void Text::printArt(std::string artName)
 {
-	ifstream artFile("./Data/asciiAssets.txt");
-	string artLine;
+	std::ifstream artFile("./Data/asciiAssets.txt");
+	std::string artLine;
 	bool found = false;
 
-	string searchTag = "[" + artName + "]";
+	std::string searchTag = "[" + artName + "]";
 
 	while (getline(artFile, artLine))
 	{
@@ -28,21 +26,21 @@ void Text::printArt(string artName)
 			{
 				break; //Stops printing if the next search tag is hit
 			}
-			cout << artLine << endl;
+			std::cout << artLine << std::endl;
 		}
 	}
 	if (!found) 
 	{
-		cout << "Art[" << artName << "] not found." << endl;
+		std::cout << "Art[" << artName << "] not found." << std::endl;
 	}
 	artFile.close();
 }
 
-void Text::printDialogue(string artName, string dialogue)
+void Text::printDialogue(std::string artName, std::string dialogue)
 {
 	system("cls");
 	printArt(artName); //Draw ASCII art
-	cout << dialogue << endl << endl; //Print dialogue
+	std::cout << dialogue << std::endl << std::endl; //Print dialogue
 	system("pause");
 }
 
