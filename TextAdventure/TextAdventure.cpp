@@ -15,9 +15,6 @@
 #include "Game.h"
 #include "Common.h"
 
-std::stack<Object::Item*> winningStack;
-std::stack<Object::Item*> playerStack;
-std::stack<Object::Item*> tempStack;
 
 int main()
 {
@@ -48,11 +45,7 @@ int main()
 	Object::Item water4("Water4", "4", true);
 	Object::Item milk5("Milk5", "5", true);
 
-	winningStack.push(&mug1);
-	winningStack.push(&teabag2);
-	winningStack.push(&sugar3);
-	winningStack.push(&water4);
-	winningStack.push(&milk5);
+	
 
 	playerInventory.addItem(&mug1);
 	playerInventory.addItem(&teabag2);
@@ -60,42 +53,85 @@ int main()
 	playerInventory.addItem(&water4);
 	playerInventory.addItem(&milk5);
 
-	
-	
-	
+
+	std::stack<Object::Item*> winningStack;
+	std::stack<Object::Item*> playerStack;
+	std::vector<Object::Item*> tempStack;
+
+	winningStack.push(&mug1);
+	winningStack.push(&teabag2);
+	winningStack.push(&sugar3);
+	winningStack.push(&water4);
+	winningStack.push(&milk5);
+
 	bool eventCompleted = false;
-	bool stackComplete = false;
+	//bool stackComplete = false;
+
+	int maxValidInput = playerInventory.getSize();
 
 	while (!eventCompleted)
 	{
-		int maxValidInput = playerInventory.getSize() + 1;
+		// 1. Display Current State
+		std::cout << "Player Inv: " << std::endl;
 		playerInventory.outputInventory();
-		std::cout << "Enter the name of the item you want to add to the stack: ";
-		int stackInput = UI::getValidIntInput(1, maxValidInput);
-		playerStack.push(playerInventory.getItem(stackInput - 1));
-		
-		// Shifting INPUT to the end of vector
-		std::erase(find(playerInventory.getItems().begin(), playerInventory.getItems().end(), stackInput - 1));
-		// Deleting the last element i.e. INPUT
-		//playerInventory.getItems().pop_back();
+		std::cout << std::endl;
 
-
-
-	}
-	while (!eventCompleted)
-	{
-		if (stackComplete == true && playerStack == winningStack)
+		if (!tempStack.empty())
 		{
+			std::cout << "Current Stack:" << std::endl;
 
-			std::cout << "Congratulations! You have made the perfect cup of tea and completed the event!" << std::endl;
-			eventCompleted = true;
+			for (int i = 0; i < tempStack.size(); i++)
+			{
+				std::cout << "-" << tempStack.at(i)->getName() << std::endl;
+			}
+		}
+		// 2. Get Player Input
+		std::cout << std::endl;
+		std::cout << "Enter the item you want to add to the stack: ";
+		std::cout << std::endl;
+		int stackInput = UI::getValidIntInput(1, playerInventory.getSize());
+		std::cout << std::endl;
+
+		//3 . Update Game State
+		Object::Item* selectedItem = playerInventory.getItem(stackInput - 1); //Get the selected item from the player's inventory based on their input (subtracting 1 to convert from 1-based to 0-based index)
+		playerStack.push(selectedItem); //The item is added to the player's stack
+		tempStack.push_back(selectedItem); //The item is also added to a temporary vector to display the current stack to the player
+		playerInventory.removeItem(stackInput - 1); //The item is removed from the player's inventory
+
+		// 4. Check Win Condition
+		if (playerStack.size() == 5)
+		{
+			std::cout << "------------------" << std::endl;
+			std::cout << "Final stack:" << std::endl;
+			for (int i = 0; i < tempStack.size(); i++)
+			{
+				std::cout << "-" << tempStack.at(i)->getName() << std::endl;
+			}
+			std::cout << "------------------" << std::endl;
+			system("pause");
+			if (playerStack == winningStack)
+			{
+				std::cout << "Congratulations!" << std::endl;
+				eventCompleted = true;
+			}
+			else
+			{
+				std::cout << "Incorrect. Try again!" << std::endl;
+
+				//Return Items to playerInv
+				playerInventory.addItem(&mug1);
+				playerInventory.addItem(&teabag2);
+				playerInventory.addItem(&sugar3);
+				playerInventory.addItem(&water4);
+				playerInventory.addItem(&milk5);
+
+				//Resets the stacks
+				playerStack = std::stack<Object::Item*>(); //Reset the player's stack
+				tempStack.clear(); //Clear the temporary vector for display
+			}
 			system("pause");
 		}
-		std::cout << "Enter the name of the item you want to add to the stack: ";
-		//std::cin >> playerInput1;
-
-		int selectedIndex = -1;
-
+		maxValidInput = playerInventory.getSize();
 	}
 
 	system("pause");
