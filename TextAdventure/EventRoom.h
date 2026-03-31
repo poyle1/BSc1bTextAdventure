@@ -7,8 +7,8 @@ namespace MilkAndSugar::World
     class EventRoom : public Location
     {
     private:
-        std::string eventPrompt;
-        bool eventCompleted;
+        std::string m_eventPrompt;
+        bool m_eventCompleted;
 
     public:
         // Constructors

@@ -9,7 +9,7 @@ namespace MilkAndSugar::World
 	{
 	private:
 		//Attributes
-		std::vector<Item*> m_items;
+		std::vector<MilkAndSugar::Object::Item*> m_items;
 		int m_collectedQuestItems;
 
 	public:
@@ -17,11 +17,11 @@ namespace MilkAndSugar::World
 		Inventory();
 
 		//m_items modifiers
-		void addItem(Item* nItem);
+		void addItem(MilkAndSugar::Object::Item* nItem);
 		void removeItem(int index);
 		void clear();
-		Item* getItem(int index);
-		std::vector<Item*>& getItems();
+		MilkAndSugar::Object::Item* getItem(int index);
+		std::vector<MilkAndSugar::Object::Item*>& getItems();
 		int getSize();
 		bool isEmpty();
 

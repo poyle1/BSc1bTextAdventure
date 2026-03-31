@@ -13,50 +13,93 @@
 #include "Player.h"
 #include "Text.h"
 #include "Game.h"
+#include "Common.h"
 
-namespace UI = MilkAndSugar::UI;
-namespace World = MilkAndSugar::World;
-
-
-std::stack<Item*> winningStack;
-std::stack<Item*> playerStack;
+std::stack<Object::Item*> winningStack;
+std::stack<Object::Item*> playerStack;
+std::stack<Object::Item*> tempStack;
 
 int main()
 {
 	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	//SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	Text text;
-	Game game;
+	UI::Text text;
+	Core::Game game;
 	World::Inventory playerInventory;
+
 	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	
 	//game.outputWorld();
 	//game.getCurrentLocation()->outputItems();
 	//cout << game.getCurrentLocation()->getIndex() << std::endl;
 
-	std::vector<std::string> test = { "Hello", "World", "Test" };
+	/*std::vector<std::string> test = { "Hello", "World", "Test" };
 
 	for (std::string i : test)
 	{
 		std::cout << i << " ";
+	}*/
+
+
+	Object::Item mug1("Mug1", "1", true);
+	Object::Item teabag2("Tea bag2", "2", true);
+	Object::Item sugar3("Sugar3", "3", true);
+	Object::Item water4("Water4", "4", true);
+	Object::Item milk5("Milk5", "5", true);
+
+	winningStack.push(&mug1);
+	winningStack.push(&teabag2);
+	winningStack.push(&sugar3);
+	winningStack.push(&water4);
+	winningStack.push(&milk5);
+
+	playerInventory.addItem(&mug1);
+	playerInventory.addItem(&teabag2);
+	playerInventory.addItem(&sugar3);
+	playerInventory.addItem(&water4);
+	playerInventory.addItem(&milk5);
+
+	
+	
+	
+	bool eventCompleted = false;
+	bool stackComplete = false;
+
+	while (!eventCompleted)
+	{
+		int maxValidInput = playerInventory.getSize() + 1;
+		playerInventory.outputInventory();
+		std::cout << "Enter the name of the item you want to add to the stack: ";
+		int stackInput = UI::getValidIntInput(1, maxValidInput);
+		playerStack.push(playerInventory.getItem(stackInput - 1));
+		
+		// Shifting INPUT to the end of vector
+		std::erase(find(playerInventory.getItems().begin(), playerInventory.getItems().end(), stackInput - 1));
+		// Deleting the last element i.e. INPUT
+		//playerInventory.getItems().pop_back();
+
+
+
+	}
+	while (!eventCompleted)
+	{
+		if (stackComplete == true && playerStack == winningStack)
+		{
+
+			std::cout << "Congratulations! You have made the perfect cup of tea and completed the event!" << std::endl;
+			eventCompleted = true;
+			system("pause");
+		}
+		std::cout << "Enter the name of the item you want to add to the stack: ";
+		//std::cin >> playerInput1;
+
+		int selectedIndex = -1;
+
 	}
 
 	system("pause");
 
-	/*Item sugar("Sugar", "", true);
-	Item milk("Milk", "", true);
-	Item tea("Tea bag", "", true);
-	Item mug("Mug", "", true);
-	Item water("Water", "", true);
-
-	winningStack.push(&mug);
-	winningStack.push(&tea);
-	winningStack.push(&sugar);
-	winningStack.push(&water);
-	winningStack.push(&milk);*/
-
-	//playerInventory.push_back
 	//game.mainMenu();
 
 	//Main Game Loop//
@@ -120,7 +163,7 @@ int main()
 		}
 
 		int doorIndex = userInput - 1;
-		Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
+		World::Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
 
 		
 		//Locked Door Check//

@@ -3,6 +3,7 @@
 #include <iostream> //cout
 #include <fstream> // ifstream and ofstream
 #include <string> // getline
+#include "Common.h"
 
 namespace MilkAndSugar::UI
 {

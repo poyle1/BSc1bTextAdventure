@@ -2,6 +2,7 @@
 #include "Item.h"
 #include <vector>
 #include <iostream>
+#include "Common.h"
 
 //Constructors
 namespace MilkAndSugar::World
@@ -12,7 +13,7 @@ namespace MilkAndSugar::World
 	}
 
 	//m_items modifiers
-	void Inventory::addItem(Item* nItem)
+	void Inventory::addItem(Object::Item* nItem)
 	{
 		if (nItem == nullptr) {
 			return; //Safety check
@@ -42,7 +43,7 @@ namespace MilkAndSugar::World
 		m_collectedQuestItems = 0;
 	}
 
-	Item* Inventory::getItem(int index)
+	Object::Item* Inventory::getItem(int index)
 	{
 		if (index < 0 || index >= m_items.size()) {
 			return nullptr; //Safety check
@@ -50,7 +51,7 @@ namespace MilkAndSugar::World
 		return m_items[index];
 	}
 
-	std::vector<Item*>& Inventory::getItems()
+	std::vector<Object::Item*>& Inventory::getItems()
 	{
 		return m_items;
 	}
@@ -79,7 +80,7 @@ namespace MilkAndSugar::World
 			std::cout << "None." << std::endl;
 			return;
 		}
-		for ( Item* item : getItems())
+		for ( Object::Item* item : getItems())
 		{
 			std::cout << item->getName() << std::endl;
 		}

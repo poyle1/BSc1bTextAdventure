@@ -135,7 +135,6 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Location.cpp" />
-    <ClCompile Include="BasicEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextAdventure.cpp">

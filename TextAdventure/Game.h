@@ -4,31 +4,34 @@
 #include "Location.h"
 #include <vector>
 
-class Game
+namespace MilkAndSugar::Core
 {
-private:
-	std::vector<Location> m_worldMap;
-	Text m_ui;
-	bool m_isRunning = true;
-	Location* m_currentLocation;
+	class Game
+	{
+	private:
+		std::vector<MilkAndSugar::World::Location> m_worldMap;
+		MilkAndSugar::UI::Text m_ui;
+		bool m_isRunning = true;
+		MilkAndSugar::World::Location* m_currentLocation;
 
-public:
-	Game();
-	Game(bool nRunning, Location* nStartLocation = nullptr);
+	public:
+		Game();
+		Game(bool nRunning, MilkAndSugar::World::Location* nStartLocation = nullptr);
 
-	void run();
-	void mainMenu();
-	void displayRules();
+		void run();
+		void mainMenu();
+		void displayRules();
 
-	void loadLocations(std::string filename);
-	void loadDoors(std::string filename);
-	void loadItems(std::string filename);
-	void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName);
+		void loadLocations(std::string filename);
+		void loadDoors(std::string filename);
+		void loadItems(std::string filename);
+		void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName);
 
-	Location* getCurrentLocation();
-	void setCurrentLocation(Location* newLoc);
-	void movePlayer(int nextLocationIndex);
+		MilkAndSugar::World::Location* getCurrentLocation();
+		void setCurrentLocation(MilkAndSugar::World::Location* newLoc);
+		void movePlayer(int nextLocationIndex);
 
-	//debug functions
-	void outputWorld();
-};
+		//debug functions
+		void outputWorld();
+	};
+}

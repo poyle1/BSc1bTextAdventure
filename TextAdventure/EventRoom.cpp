@@ -1,33 +1,34 @@
 #include "EventRoom.h"
+#include "Common.h"
 
 namespace MilkAndSugar::World
 {
 	//Constructors
 	EventRoom::EventRoom()
 	{
-		this->eventPrompt = "Start the event.";
-		this->eventCompleted = false;
+		m_eventPrompt = "Start the event.";
+		m_eventCompleted = false;
 	}
 	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt) : Location(nIndex, nName)
 	{
-		this->eventPrompt = nEventPrompt;
-		this->eventCompleted = false;
+		m_eventPrompt = nEventPrompt;
+		m_eventCompleted = false;
 	}
 
 	//Event logic
 	bool EventRoom::canStartEvent()
 	{
-		return !this->eventCompleted;
+		return !m_eventCompleted;
 	}
 	std::string EventRoom::getEventPrompt()
 	{
-		return this->eventPrompt;
+		return m_eventPrompt;
 	}
 	void EventRoom::startEvent()
 	{
-		std::cout << "Event started: " << this->eventPrompt << std::endl;
+		std::cout << "Event started: " << m_eventPrompt << std::endl;
 
-		eventCompleted = true;
+		m_eventCompleted = true;
 
 	}
 }
