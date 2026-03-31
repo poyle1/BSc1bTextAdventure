@@ -1,23 +1,27 @@
 #pragma once
 #include <iostream>
 
-class Item
+namespace MilkAndSugar::Items
 {
-protected:
-	std::string m_name;
-	std::string m_description;
-	bool m_questItem;
-	
-public:
-	Item();
-	Item(std::string nName, std::string nDescription, bool isQuest);
-	bool isQuestItem();
+	class Item
+	{
+	protected:
+		std::string m_name;
+		std::string m_description;
+		bool m_questItem;
 
-	std::string getName();
-	std::string getDescription();
-	void setName(std::string nName);
-	void setDescription(std::string nDesc);
+	public:
+		Item();
+		Item(std::string nName, std::string nDescription, bool isQuest);
+		bool isQuestItem();
 
-	virtual std::string toString();
-	virtual std::string getKeyID();
-};
+		std::string getName();
+		std::string getDescription();
+		void setName(std::string nName);
+		void setDescription(std::string nDesc);
+
+		virtual std::string toString();
+		virtual std::string getKeyID();
+	};
+}
+
