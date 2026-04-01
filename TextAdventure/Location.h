@@ -6,19 +6,16 @@
 
 namespace MilkAndSugar::World
 {
-	class Location; //Forward declaration
-
-	struct Door
-	{
-		Location* destination = nullptr;
-		bool locked = false;
-		std::string requiredKeyID = "";
-	};
-
 	class Location
 	{
 	protected:
 		//attributes
+		struct Door
+		{
+			Location* destination = nullptr;
+			bool locked = false;
+			std::string requiredKeyID = "";
+		};
 		int m_index; //Used to compare locations to doors and keys
 		std::string m_name;
 		std::string m_inspectText;

@@ -65,27 +65,23 @@ int main()
 	winningStack.push(&milk5);
 
 	bool eventCompleted = false;
-	//bool stackComplete = false;
-
 	int maxValidInput = playerInventory.getSize();
 
 	while (!eventCompleted)
 	{
-		// 1. Display Current State
-		std::cout << "Player Inv: " << std::endl;
+		//Stack Info
+		std::cout << "You have: " << std::endl;
 		playerInventory.outputInventory();
-		std::cout << std::endl;
 
 		if (!tempStack.empty())
 		{
 			std::cout << "Current Stack:" << std::endl;
-
 			for (int i = 0; i < tempStack.size(); i++)
 			{
 				std::cout << "-" << tempStack.at(i)->getName() << std::endl;
 			}
 		}
-		// 2. Get Player Input
+		//Player Input
 		std::cout << std::endl;
 		std::cout << "Enter the item you want to add to the stack: ";
 		std::cout << std::endl;
