@@ -16,12 +16,23 @@ namespace MilkAndSugar::World
 	}
 
 	//Event logic
-	bool EventRoom::canStartEvent()
+	bool EventRoom::canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount)
 	{
-		return !m_eventCompleted;
+		if (playerInventory.hasReqQuestItems(reqAmount) && !m_eventCompleted)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	std::string EventRoom::getEventPrompt()
 	{
+		if (m_eventPrompt.empty())
+		{
+			return "ERROR";
+		}
 		return m_eventPrompt;
 	}
 	void EventRoom::startEvent()
@@ -29,6 +40,5 @@ namespace MilkAndSugar::World
 		std::cout << "Event started: " << m_eventPrompt << std::endl;
 
 		m_eventCompleted = true;
-
 	}
 }

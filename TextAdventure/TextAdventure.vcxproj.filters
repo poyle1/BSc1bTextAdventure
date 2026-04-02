@@ -48,6 +48,9 @@
     <ClCompile Include="Quest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RecipeBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Location.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Quest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

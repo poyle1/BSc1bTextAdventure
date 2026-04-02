@@ -21,7 +21,7 @@ namespace MilkAndSugar::World
 		std::string m_inspectText;
 		MilkAndSugar::World::Inventory m_locItems;
 		std::vector<Door> m_doors; //Each location has a list of doors, 
-
+		
 	public:
 		//Constructors//
 		Location();
@@ -52,7 +52,7 @@ namespace MilkAndSugar::World
 		void enterLocation();
 
 		//Event logic
-		virtual bool canStartEvent();
+		virtual bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount);
 		virtual std::string getEventPrompt();
 		virtual void startEvent();
 	};

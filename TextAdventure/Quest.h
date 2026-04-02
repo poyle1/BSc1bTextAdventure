@@ -1,32 +1,29 @@
 #pragma once
 #include <map>
-namespace MilkAndSugar::Core {
-class Quest
+#include <string>
+namespace MilkAndSugar::Core 
 {
-private:
-	enum state
+	class Quest
 	{
-		Unknown,
-		Aware,
-		Accepted,
-		Achieved,
-		Completed,
-		Failed
+	public:
+		enum QuestStates
+		{
+			Unknown,
+			Aware,
+			Accepted,
+			Achieved,
+			Completed,
+			Failed
+		};
+
+	private:
+		std::string m_questName;
+		QuestStates m_state = Unknown;
+
+	public:
+		Quest();
+		QuestStates getState() const;
+		void advanceState(QuestStates newState);
+		bool isFailed() const;
 	};
-
-	std::map<int, state> QuestState; // Fixed the error by replacing 'enum' with 'QuestState1'
-
-	QuestState1 m_state;
-	bool m_failed;
-	
-
-public:
-	Quest();
-	QuestState1 getState();
-	void setState(QuestState1 newState);
-	void advanceState();
-
-	bool isFailed() const;
-	void setFailed();
-};
 }

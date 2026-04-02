@@ -1,7 +1,7 @@
-Index,Name,isEventRoom
+Index,Name,isEventRoom,EventPrompt
 0,Living Room,false
 1,Hallway,false
-2,Kitchen,ture
+2,Kitchen,true,Make a tea
 3,Bedroom,false
 4,En suite,false
 5,Bathroom,false

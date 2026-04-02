@@ -1,26 +1,22 @@
 #pragma once
 #include <iostream>
+#include "Inventory.h"
 
-
-class Player
+namespace MilkAndSugar::Object
 {
-private:
-	int health;
-	bool alive;
-	std::string name;
-	//Inventory inventory; //Player's inventory, can hold items the player has collected
+	class Player
+	{
+	private:
+		std::string m_name;
+		MilkAndSugar::World::Inventory m_playerInv;
 
-public:
-	Player();
-	Player(std::string nName);
+	public:
+		Player();
+		Player(std::string nName);
 
-	int getHealth();
-	void damage(int toDamage);
-	void heal(int toHeal);
+		void setName(std::string nName);
+		std::string getName();
 
-	void setName(std::string nName);
-	std::string getName();
-
-	bool isAlive();
-	void kill();
-};
+		MilkAndSugar::World::Inventory& getInventory();
+	};
+}

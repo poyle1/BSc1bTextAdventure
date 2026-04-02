@@ -193,7 +193,7 @@ namespace MilkAndSugar::World
 	}
 
 	//Event logic//
-	bool Location::canStartEvent()
+	bool Location::canStartEvent(World::Inventory& playerInventory, int reqAmount)
 	{
 		return false;
 	}

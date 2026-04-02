@@ -2,34 +2,30 @@
 #include "Common.h"
 
 namespace MilkAndSugar::Core {
-Quest::Quest()
-{
-	m_state = Unknown;
-	m_failed = false;
-}
-Core::Quest::QuestState Quest::getState()
-{
-	return m_state;
-}
-void Quest::setState(QuestState newState)
-{
-	m_state = newState;
-}
-void Quest::advanceState()
-{
-	if (m_failed == true || m_state == Completed)
+	Quest::Quest()
 	{
-		return; //Can't advance if the quest is already failed or completed
+		m_state = Unknown;
 	}
-	m_state = static_cast<QuestState>(static_cast<int>(m_state) + 1); //Advance to the next state in the enum
-}
-bool Quest::isFailed() const
-{
-	return m_failed;
-}
-void Quest::setFailed()
-{
-	m_failed = true;
-	m_state = Failed;
-}
+	Quest::QuestStates Quest::getState() const
+	{
+		return m_state;
+	}
+
+	void Quest::advanceState(QuestStates newState)
+	{
+		if (m_state == Failed || m_state == Completed)
+		{
+			return; //Can't advance if the quest is already failed or completed
+		}
+		if (newState <= m_state)
+		{
+			return; //Can't regress or stay in the same state
+		}
+		m_state = newState;
+	}
+
+	bool Quest::isFailed() const
+	{
+		return m_state == Failed;
+	}
 }

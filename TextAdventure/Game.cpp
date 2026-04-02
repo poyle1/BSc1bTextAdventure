@@ -5,6 +5,7 @@
 #include "Utility.h"
 #include "Key.h"
 #include "Common.h"
+#include "EventRoom.h"
 
 namespace MilkAndSugar::Core
 {
@@ -81,7 +82,7 @@ namespace MilkAndSugar::Core
 		while (getline(locationFile, row))
 		{
 			rowstream = std::stringstream(row); //Convert each row to a stringstream
-			std::string index, name, isEventRoom;
+			std::string index, name, isEventRoom, EventPrompt;
 
 			getline(rowstream, index, ',');
 			getline(rowstream, name, ',');
@@ -91,17 +92,20 @@ namespace MilkAndSugar::Core
 
 			if (eventRoom)
 			{
-
+				getline(rowstream, EventPrompt, ',');
+				World::EventRoom* newEvent = new World::EventRoom(stoi(index), name, EventPrompt);
+				m_worldMap.push_back(newEvent);
+			} 
+			else
+			{
+				World::Location* newLocation = new World::Location(stoi(index), name);
+				m_worldMap.push_back(newLocation);
 			}
-
-			World::Location tempLocation = World::Location(stoi(index), name);
-			m_worldMap.push_back(tempLocation);
-
 		}
 		locationFile.close();
 		if (!m_worldMap.empty())
 		{
-			m_currentLocation = &m_worldMap.front();
+			m_currentLocation = m_worldMap.front();
 		}
 	}
 
@@ -131,8 +135,8 @@ namespace MilkAndSugar::Core
 			getline(rowstream, isLocked, ',');
 			getline(rowstream, doorID, ',');
 
-			World::Location* origin = &m_worldMap[stoi(indexOrigin)];
-			World::Location* dest = &m_worldMap[stoi(indexDestination)];
+			World::Location* origin = m_worldMap[stoi(indexOrigin)];
+			World::Location* dest = m_worldMap[stoi(indexDestination)];
 			bool locked = (isLocked == "true"); //String to bool
 
 			origin->addDoor(dest, locked, doorID);
@@ -174,13 +178,13 @@ namespace MilkAndSugar::Core
 			{
 				getline(rowstream, keyID, ',');
 				Object::Key* newKey = new Object::Key(name, description, key, keyID);
-				World::Location* pAddTo = &m_worldMap[stoi(addTo)];
+				World::Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newKey);
 			}
 			else
 			{
 				Object::Item* newItem = new Object::Item(name, description, questItem);
-				World::Location* pAddTo = &m_worldMap[stoi(addTo)];
+				World::Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newItem);
 			}
 		}
@@ -208,25 +212,24 @@ namespace MilkAndSugar::Core
 
 	void Game::movePlayer(int nextLocationIndex)
 	{
-		if (nextLocationIndex >= 0 && nextLocationIndex < m_worldMap.size())
-		{
-			m_currentLocation = &m_worldMap[nextLocationIndex]; //Sets the current location to the mem address of
-			//the selected location (stored in the worldmap vec)
-			m_currentLocation->enterLocation();
-		}
-		else
+		if (nextLocationIndex <= 0 || nextLocationIndex > m_worldMap.size()) //Safety check
 		{
 			std::cout << "Error: Destination " << nextLocationIndex << " doesn not exist." << std::endl;
 			system("pause");
+		}
+		else
+		{
+			m_currentLocation = m_worldMap[nextLocationIndex];
+			m_currentLocation->enterLocation();
 		}
 	}
 
 	//debug functions
 	void Game::outputWorld()
 	{
-		for (World::Location& l : m_worldMap)
+		for (World::Location* l : m_worldMap)
 		{
-			std::cout << l.getIndex() << l.getName() << std::endl;
+			std::cout << l->getIndex() << l->getName() << std::endl;
 		}
 	}
 }

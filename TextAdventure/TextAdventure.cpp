@@ -14,140 +14,32 @@
 #include "Text.h"
 #include "Game.h"
 #include "Common.h"
-
+#include "Quest.h"
+#include "RecipeBuilder.h"
 
 int main()
 {
-	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
+	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	//SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
 	UI::Text text;
 	Core::Game game;
-	World::Inventory playerInventory;
-
+	Object::Player player;
+	Core::Quest testQuest;
+	Core::RecipeBuilder recipeBuilder;
 	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
-	
-	//game.outputWorld();
-	//game.getCurrentLocation()->outputItems();
-	//cout << game.getCurrentLocation()->getIndex() << std::endl;
-
-	/*std::vector<std::string> test = { "Hello", "World", "Test" };
-
-	for (std::string i : test)
-	{
-		std::cout << i << " ";
-	}*/
-
-
-	Object::Item mug1("Mug1", "1", true);
-	Object::Item teabag2("Tea bag2", "2", true);
-	Object::Item sugar3("Sugar3", "3", true);
-	Object::Item water4("Water4", "4", true);
-	Object::Item milk5("Milk5", "5", true);
-
-	
-
-	playerInventory.addItem(&mug1);
-	playerInventory.addItem(&teabag2);
-	playerInventory.addItem(&sugar3);
-	playerInventory.addItem(&water4);
-	playerInventory.addItem(&milk5);
-
-
-	std::stack<Object::Item*> winningStack;
-	std::stack<Object::Item*> playerStack;
-	std::vector<Object::Item*> tempStack;
-
-	winningStack.push(&mug1);
-	winningStack.push(&teabag2);
-	winningStack.push(&sugar3);
-	winningStack.push(&water4);
-	winningStack.push(&milk5);
-
-	bool eventCompleted = false;
-	int maxValidInput = playerInventory.getSize();
-
-	while (!eventCompleted)
-	{
-		//Stack Info
-		std::cout << "You have: " << std::endl;
-		playerInventory.outputInventory();
-
-		if (!tempStack.empty())
-		{
-			std::cout << "Current Stack:" << std::endl;
-			for (int i = 0; i < tempStack.size(); i++)
-			{
-				std::cout << "-" << tempStack.at(i)->getName() << std::endl;
-			}
-		}
-		//Player Input
-		std::cout << std::endl;
-		std::cout << "Enter the item you want to add to the stack: ";
-		std::cout << std::endl;
-		int stackInput = UI::getValidIntInput(1, playerInventory.getSize());
-		std::cout << std::endl;
-
-		//3 . Update Game State
-		Object::Item* selectedItem = playerInventory.getItem(stackInput - 1); //Get the selected item from the player's inventory based on their input (subtracting 1 to convert from 1-based to 0-based index)
-		playerStack.push(selectedItem); //The item is added to the player's stack
-		tempStack.push_back(selectedItem); //The item is also added to a temporary vector to display the current stack to the player
-		playerInventory.removeItem(stackInput - 1); //The item is removed from the player's inventory
-
-		// 4. Check Win Condition
-		if (playerStack.size() == 5)
-		{
-			std::cout << "------------------" << std::endl;
-			std::cout << "Final stack:" << std::endl;
-			for (int i = 0; i < tempStack.size(); i++)
-			{
-				std::cout << "-" << tempStack.at(i)->getName() << std::endl;
-			}
-			std::cout << "------------------" << std::endl;
-			system("pause");
-			if (playerStack == winningStack)
-			{
-				std::cout << "Congratulations!" << std::endl;
-				eventCompleted = true;
-			}
-			else
-			{
-				std::cout << "Incorrect. Try again!" << std::endl;
-
-				//Return Items to playerInv
-				playerInventory.addItem(&mug1);
-				playerInventory.addItem(&teabag2);
-				playerInventory.addItem(&sugar3);
-				playerInventory.addItem(&water4);
-				playerInventory.addItem(&milk5);
-
-				//Resets the stacks
-				playerStack = std::stack<Object::Item*>(); //Reset the player's stack
-				tempStack.clear(); //Clear the temporary vector for display
-			}
-			system("pause");
-		}
-		maxValidInput = playerInventory.getSize();
-	}
-
-	system("pause");
-
 	//game.mainMenu();
 
 	//Main Game Loop//
 	while (true)
 	{
-		//Investigate option will always output as the next option after the last available room
-		//Followed by the start event option if present
-
-		int numDoors = game.getCurrentLocation()->getNumDoors();
-		int investigateRoomOption = numDoors + 1;
-		int startEventOption = numDoors + 2;
-
+		//Available Actions Logic//
+		int investigateRoomOption = game.getCurrentLocation()->getNumDoors() + 1;
+		int startEventOption = game.getCurrentLocation()->getNumDoors() + 2;
 		int maxValidInput = investigateRoomOption;
-		if (game.getCurrentLocation()->canStartEvent())
+		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1))
 		{
-			maxValidInput = startEventOption; // if event room, option to use
+			maxValidInput = startEventOption;
 		}
 
 		//Current Room Info//
@@ -157,9 +49,9 @@ int main()
 		game.getCurrentLocation()->itemCheck();
 		std::cout << "====================================================================================================\n";
 		std::cout << "Collected Items: ";
-		playerInventory.outputInventory();
+		player.getInventory().outputInventory();
 		std::cout << std::endl;
-		std::cout << "Total Ingredients: " << playerInventory.getQuestItemTotal();
+		std::cout << "Total Ingredients: " << player.getInventory().getQuestItemTotal();
 		std::cout << std::endl;
 		std::cout << "====================================================================================================\n";
 		text.printArt(game.getCurrentLocation()->getName());
@@ -167,7 +59,12 @@ int main()
 		std::cout << "Available Actions:" << "\n";
 		game.getCurrentLocation()->outputDoors();
 		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
-		if (game.getCurrentLocation()->canStartEvent())
+
+		//test
+		std::cout << game.getCurrentLocation()->getEventPrompt() << std::endl;
+
+
+		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1))
 		{
 			std::cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
 		}
@@ -182,12 +79,12 @@ int main()
 		//Investigate Current Location//
 		if (userInput == investigateRoomOption)
 		{
-			game.getCurrentLocation()->investigateRoom(playerInventory);
+			game.getCurrentLocation()->investigateRoom(player.getInventory());
 			UI::pauseAndFlush();
 			continue;
 		}
 
-		if (game.getCurrentLocation()->canStartEvent() && userInput == startEventOption)
+		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1) && userInput == startEventOption)
 		{
 			game.getCurrentLocation()->startEvent();
 			UI::pauseAndFlush();
@@ -196,12 +93,11 @@ int main()
 
 		int doorIndex = userInput - 1;
 		World::Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
-
 		
 		//Locked Door Check//
 		if (game.getCurrentLocation()->isDoorLocked(doorIndex))
 		{
-			if (!game.getCurrentLocation()->unlockDoor(doorIndex, playerInventory)) {
+			if (!game.getCurrentLocation()->unlockDoor(doorIndex, player.getInventory())) {
 				std::cout << "The door is locked - you cannot open it!" << std::endl;
 				UI::pauseAndFlush();
 				continue; 

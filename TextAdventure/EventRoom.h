@@ -11,13 +11,13 @@ namespace MilkAndSugar::World
         bool m_eventCompleted;
 
     public:
-        // Constructors
+        //Constructors
         EventRoom();
         EventRoom(int nIndex, std::string nName, std::string nEventPrompt);
 
-        // Event Logic
-        virtual bool canStartEvent();
-        virtual std::string getEventPrompt();
-        virtual void startEvent();
+        //Event Logic
+        bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount) override;
+        std::string getEventPrompt() override;
+        void startEvent() override;
     };
 }
