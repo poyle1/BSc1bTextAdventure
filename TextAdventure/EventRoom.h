@@ -1,6 +1,7 @@
 #pragma once
 #include "Location.h"
 #include <iostream>
+#include "RecipeBuilder.h"
 
 namespace MilkAndSugar::World
 {
@@ -18,6 +19,6 @@ namespace MilkAndSugar::World
         //Event Logic
         bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount) override;
         std::string getEventPrompt() override;
-        void startEvent() override;
+        void startEvent(MilkAndSugar::Core::RecipeBuilder nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest nQuest) override;
     };
 }

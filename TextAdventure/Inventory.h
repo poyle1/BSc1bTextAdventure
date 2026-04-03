@@ -26,6 +26,8 @@ namespace MilkAndSugar::World
 		bool isEmpty();
 
 		void outputInventory();
+		void outputInventoryWithNumbers();
+		void outputQuestItems();
 
 		int getQuestItemTotal();
 		bool hasReqQuestItems(int reqAmount) const;

@@ -203,7 +203,7 @@ namespace MilkAndSugar::World
 		return std::string("");
 	}
 
-	void Location::startEvent()
+	void Location::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest)
 	{
 		return;
 	}

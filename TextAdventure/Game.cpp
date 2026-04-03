@@ -31,8 +31,9 @@ namespace MilkAndSugar::Core
 			m_ui.printArt("TITLESCREEN");
 			std::cout << "====================================================================================================\n";
 			std::cout << "Enter '1' to start a new game.\n";
-			std::cout << "Enter '2' to display the rules.\n";
-			std::cout << "Enter '3' to quit the game.\n";
+			std::cout << "Enter '2' for the game rules.\n";
+			std::cout << "Enter '3' to open the game credits.\n";
+			std::cout << "Enter '4' to quit the game.\n";
 			std::cout << "====================================================================================================\n";
 			std::cout << "Enter: ";
 
@@ -51,6 +52,10 @@ namespace MilkAndSugar::Core
 			}
 			else if (userInput == 3)
 			{
+				displayCredits();
+			}
+			else if (userInput == 4)
+			{
 				std::cout << "Exiting game - Goodbye for now!" << std::endl;
 				MilkAndSugar::UI::pauseAndFlush();
 				exit(0);
@@ -62,6 +67,32 @@ namespace MilkAndSugar::Core
 	{
 		system("cls");
 		m_ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
+	}
+
+	void Game::displayCredits()
+	{
+		system("cls");
+		std::cout << "====================================================================================================\n";
+		m_ui.printArt("CREDITS");
+		std::cout << "====================================================================================================\n";
+		std::cout << "A game by Tyler Poyle of TyPo Games" << std::endl;
+		std::cout << "Art assets, courtesy of ASCII Art Archive, asciiart.eu:" << std::endl;
+		std::cout << std::endl;
+		std::cout << "Living Room: Untitled by Joan G. Stark." << std::endl;
+		std::cout << "Kitchen: Sink by Joan G. Stark." << std::endl;
+		std::cout << "Hallway: Drawer by Riitta Rasimus." << std::endl;
+		std::cout << "Bathroom: Untitled by Praseodymium 59." << std::endl;
+		std::cout << "On Suite: Untitled by Joan G. Stark." << std::endl;
+		std::cout << "Garage: Ready to Paint by Joan G. Stark." << std::endl;
+		std::cout << "Front garden: Flower garden by Joan G. Stark." << std::endl;
+		std::cout << "Back garden: Untitled by Joan G. Stark." << std::endl;
+		std::cout << "Shed: Untitled by Anonymous" << std::endl;
+		std::cout << "QuestCompleteP1: Coffee mug by H P Barmario." << std::endl;
+		std::cout << "Misc art and titles created by the ASCII Art Archive ASCII Art Tools." << std::endl;
+		//std::cout << " " << std::endl;
+		std::cout << std::endl;
+		std::cout << "====================================================================================================\n";
+		system("pause");
 	}
 
 	void Game::loadLocations(std::string filename)

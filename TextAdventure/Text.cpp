@@ -57,4 +57,8 @@ namespace MilkAndSugar::UI
 		printDialogue("INTRO", "\"Lost history...\"");
 		printDialogue("INTRO", "\"But first, can you make me a cup of tea?\"");
 	}
+	void Text::lineBreak()
+	{
+		std::cout << "====================================================================================================\n";
+	}
 }

@@ -25,10 +25,12 @@ int main()
 	UI::Text text;
 	Core::Game game;
 	Object::Player player;
-	Core::Quest testQuest;
-	Core::RecipeBuilder recipeBuilder;
+	Core::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
+	Core::RecipeBuilder teaRecipe("Cup of Tea");
+
 	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
-	//game.mainMenu();
+	
+	game.mainMenu();
 
 	//Main Game Loop//
 	while (true)
@@ -46,6 +48,10 @@ int main()
 		system("cls");
 		std::cout << "====================================================================================================\n";
 		std::cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
+		std::cout << "====================================================================================================\n";
+		text.printArt(game.getCurrentLocation()->getName()+"Map");
+		std::cout << "====================================================================================================\n";
+		
 		game.getCurrentLocation()->itemCheck();
 		std::cout << "====================================================================================================\n";
 		std::cout << "Collected Items: ";
@@ -86,7 +92,7 @@ int main()
 
 		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1) && userInput == startEventOption)
 		{
-			game.getCurrentLocation()->startEvent();
+			game.getCurrentLocation()->startEvent(teaRecipe, player, mainQuest);
 			UI::pauseAndFlush();
 			continue;
 		}

@@ -4,7 +4,24 @@
 namespace MilkAndSugar::Core {
 	Quest::Quest()
 	{
+		m_questName = "Default Quest";
+		m_questDescription = "This is a default quest description.";
 		m_state = Unknown;
+	}
+	Quest::Quest(std::string nName, std::string nQuDesc)
+	{
+		m_questName = nName;
+		m_state = Unknown;
+	}
+	
+	std::string Quest::getQuestName() const
+	{
+		return m_questName;
+	}
+
+	void Quest::setQuestName(std::string nName)
+	{
+		m_questName = nName;
 	}
 	Quest::QuestStates Quest::getState() const
 	{
@@ -22,6 +39,14 @@ namespace MilkAndSugar::Core {
 			return; //Can't regress or stay in the same state
 		}
 		m_state = newState;
+		if (newState == Completed)
+		{
+			m_questName += " [COMPLETED]";
+		}
+		if (newState == Failed)
+		{
+			m_questName += " [FAILED]";
+		}
 	}
 
 	bool Quest::isFailed() const

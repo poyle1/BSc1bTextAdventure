@@ -21,6 +21,7 @@ namespace MilkAndSugar::Core
 		void run();
 		void mainMenu();
 		void displayRules();
+		void displayCredits();
 
 		void loadLocations(std::string filename);
 		void loadDoors(std::string filename);

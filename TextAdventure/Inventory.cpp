@@ -86,6 +86,30 @@ namespace MilkAndSugar::World
 		}
 	}
 
+	void Inventory::outputInventoryWithNumbers()
+	{
+		if (m_items.empty())
+		{
+			std::cout << "None." << std::endl;
+			return;
+		}
+		for (int i = 0; i < getItems().size(); i++)
+		{
+			std::cout << i + 1 << ")" << getItems()[i]->getName() << std::endl;
+		}
+	}
+
+	void Inventory::outputQuestItems()
+	{
+		for (Object::Item* item : getItems())
+		{
+			if (item->isQuestItem())
+			{
+				std::cout << item->getName() << std::endl;
+			}
+		}
+	}
+
 	int Inventory::getQuestItemTotal()
 	{
 		return m_collectedQuestItems;

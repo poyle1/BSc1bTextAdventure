@@ -1,5 +1,6 @@
 #include "EventRoom.h"
 #include "Common.h"
+#include "RecipeBuilder.h"
 
 namespace MilkAndSugar::World
 {
@@ -35,9 +36,9 @@ namespace MilkAndSugar::World
 		}
 		return m_eventPrompt;
 	}
-	void EventRoom::startEvent()
+	void EventRoom::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest)
 	{
-		std::cout << "Event started: " << m_eventPrompt << std::endl;
+		nRecipe.teaBuilder(nPlayer, nQuest);
 
 		m_eventCompleted = true;
 	}

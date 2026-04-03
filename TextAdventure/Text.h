@@ -11,5 +11,6 @@ namespace MilkAndSugar::UI
 		void printArt(std::string artName);
 		void printDialogue(std::string artName, std::string dialogue);
 		void gameIntro();
+		void lineBreak();
 	};
 };

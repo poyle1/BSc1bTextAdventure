@@ -3,6 +3,8 @@
 #include <string>
 #include "Item.h"
 #include "Inventory.h"
+#include "Quest.h"
+#include "RecipeBuilder.h"
 
 namespace MilkAndSugar::World
 {
@@ -54,6 +56,7 @@ namespace MilkAndSugar::World
 		//Event logic
 		virtual bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount);
 		virtual std::string getEventPrompt();
-		virtual void startEvent();
+		virtual void startEvent(MilkAndSugar::Core::RecipeBuilder nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest nQuest);
+
 	};
 }
