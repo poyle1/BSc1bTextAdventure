@@ -1,7 +1,7 @@
-Index,Name,isEventRoom,EventPrompt
-0,Living Room,false
+Index,Name,isEventRoom,EventPrompt,ReqQItems
+0,Living Room,true,Talk to John,0
 1,Hallway,false
-2,Kitchen,true,Make a tea
+2,Kitchen,true,Make a tea,5
 3,Bedroom,false
 4,En suite,false
 5,Bathroom,false

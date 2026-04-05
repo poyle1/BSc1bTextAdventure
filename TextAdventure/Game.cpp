@@ -113,7 +113,7 @@ namespace MilkAndSugar::Core
 		while (getline(locationFile, row))
 		{
 			rowstream = std::stringstream(row); //Convert each row to a stringstream
-			std::string index, name, isEventRoom, EventPrompt;
+			std::string index, name, isEventRoom, EventPrompt, ReqQItems;
 
 			getline(rowstream, index, ',');
 			getline(rowstream, name, ',');
@@ -124,7 +124,8 @@ namespace MilkAndSugar::Core
 			if (eventRoom)
 			{
 				getline(rowstream, EventPrompt, ',');
-				World::EventRoom* newEvent = new World::EventRoom(stoi(index), name, EventPrompt);
+				getline(rowstream, ReqQItems, ',');
+				World::EventRoom* newEvent = new World::EventRoom(stoi(index), name, EventPrompt, stoi(ReqQItems));
 				m_worldMap.push_back(newEvent);
 			} 
 			else

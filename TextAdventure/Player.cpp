@@ -4,11 +4,13 @@ namespace MilkAndSugar::Object
 	Player::Player()
 	{
 		m_name = "Player";
+		m_hasActiveQuest = false;
 	}
 
 	Player::Player(std::string nName)
 	{
 		m_name = nName;
+		m_hasActiveQuest = false;
 	}
 
 	void Player::setName(std::string nName)
@@ -16,12 +18,23 @@ namespace MilkAndSugar::Object
 		m_name = nName;
 	}
 
-	std::string Player::getName()
+	std::string Player::getName() const
 	{
 		return m_name;
 	}
+
 	MilkAndSugar::World::Inventory& Player::getInventory()
 	{
 		return m_playerInv;
+	}
+
+	bool Player::getHasActiveQuest() const
+	{
+		return m_hasActiveQuest;
+	}
+
+	void Player::setHasActiveQuest(bool hasActive)
+	{
+		m_hasActiveQuest = hasActive;
 	}
 }

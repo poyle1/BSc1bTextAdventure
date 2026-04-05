@@ -9,11 +9,13 @@ namespace MilkAndSugar::World
 	{
 		m_eventPrompt = "Start the event.";
 		m_eventCompleted = false;
+		m_questItemsRequired = 0;
 	}
-	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt) : Location(nIndex, nName)
+	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq) : Location(nIndex, nName)
 	{
 		m_eventPrompt = nEventPrompt;
 		m_eventCompleted = false;
+		m_questItemsRequired = nQItemReq;
 	}
 
 	//Event logic
@@ -36,10 +38,26 @@ namespace MilkAndSugar::World
 		}
 		return m_eventPrompt;
 	}
-	void EventRoom::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest)
+	void EventRoom::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest, std::string eventType)
 	{
-		nRecipe.teaBuilder(nPlayer, nQuest);
+		UI::Text eventText;
 
-		m_eventCompleted = true;
+		if (eventType == "Tea") 
+		{
+			nRecipe.teaBuilder(nPlayer, nQuest);
+		}
+		if (eventType == "John1")
+		{
+			
+		}
+		
+	}
+	int EventRoom::getQuestItemsRequired() const
+	{
+		return m_questItemsRequired;
+	}
+	void EventRoom::setQuestItemsRequired(int reqItems)
+	{
+		m_questItemsRequired = reqItems;
 	}
 }

@@ -1,7 +1,12 @@
 #pragma once
-#include <map>
 #include <string>
-#include <string>
+#include "Player.h"
+
+namespace MilkAndSugar::Object
+{
+	class Player;
+}
+
 namespace MilkAndSugar::Core 
 {
 	class Quest
@@ -38,7 +43,7 @@ namespace MilkAndSugar::Core
 
 		//Quest state logic//
 		QuestStates getState() const;
-		void advanceState(QuestStates newState);
+		void advanceState(QuestStates nState, MilkAndSugar::Object::Player& nPlayer);
 		bool isFailed() const;
 
 		//Objective logic//

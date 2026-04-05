@@ -48,17 +48,36 @@ namespace MilkAndSugar::UI
 
 	void Text::gameIntro()
 	{
-		printDialogue("INTRO", "\"Hello!\"");
-		printDialogue("INTRO", "\"Thank you for popping round.\"");
-		printDialogue("INTRO", "\"I get very lonely sometimes...\"");
-		printDialogue("INTRO", "\"...\"");
-		printDialogue("INTRO", "\"Would you like me to tell you a story?\"");
-		printDialogue("INTRO", "\"Its about history!\"");
-		printDialogue("INTRO", "\"Lost history...\"");
-		printDialogue("INTRO", "\"But first, can you make me a cup of tea?\"");
+		printDialogue("INTRO", "Hello!");
+		printDialogue("INTRO", "Thank you for popping round.");
+		printDialogue("INTRO", "I get very lonely sometimes...");
+		printDialogue("INTRO", "...");
+		printDialogue("INTRO", "Would you like me to tell you a story?");
+		printDialogue("INTRO", "Its about history!");
+		printDialogue("INTRO", "Lost history...");
+		printDialogue("INTRO", "But first, can you make me a cup of tea?");
+	}
+	void Text::johnDialogue1(const Object::Player& nPlayer) 
+	{
+		std::cout << "John: How's that tea coming along, " << nPlayer.getName() << "?" << std::endl;
+		std::cout << "John: The house is a bit of a mess, but you should be able to find what you need if you look around." << std::endl;
+	}
+	void Text::johnDialogue2(const Object::Player& nPlayer)
+	{
+		std::cout << "John: Oh thank you" << nPlayer.getName() << "! This is just what I needed." << std::endl;
+		std::cout << "John: *sips*" << std::endl;
+		std::cout << "John: *...*" << std::endl;
+		std::cout << "John: *blows*" << std::endl;
+		std::cout << "John: *sips*" << std::endl;
+		std::cout << "John: *slurps*" << std::endl;
+		std::cout << "John: Now then, let me tell you all about a tale of lost histories!" << std::endl;
 	}
 	void Text::lineBreak()
 	{
 		std::cout << "====================================================================================================\n";
+	}
+	void Text::lineSpace()
+	{
+		std::cout << std::endl;
 	}
 }

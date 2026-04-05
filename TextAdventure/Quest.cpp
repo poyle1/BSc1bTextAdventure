@@ -1,5 +1,6 @@
 #include "Quest.h"
 #include "Common.h"
+#include "Player.h"
 
 namespace MilkAndSugar::Core {
 	Quest::Quest()
@@ -28,24 +29,31 @@ namespace MilkAndSugar::Core {
 		return m_state;
 	}
 
-	void Quest::advanceState(QuestStates newState)
+	void Quest::advanceState(QuestStates nState, Object::Player& nPlayer)
 	{
 		if (m_state == Failed || m_state == Completed)
 		{
 			return; //Can't advance if the quest is already failed or completed
 		}
-		if (newState <= m_state)
+		if (nState <= m_state)
 		{
 			return; //Can't regress or stay in the same state
 		}
-		m_state = newState;
-		if (newState == Completed)
+		m_state = nState;
+		if (nState == Accepted)
+		{
+			m_questName += " [ACTIVE QUEST]";
+			nPlayer.setHasActiveQuest(true);
+		}
+		if (nState == Completed)
 		{
 			m_questName += " [COMPLETED]";
+			nPlayer.setHasActiveQuest(false);
 		}
-		if (newState == Failed)
+		if (nState == Failed)
 		{
 			m_questName += " [FAILED]";
+			nPlayer.setHasActiveQuest(false);
 		}
 	}
 

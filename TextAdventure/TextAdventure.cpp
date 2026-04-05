@@ -30,7 +30,7 @@ int main()
 
 	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	
-	game.mainMenu();
+	//game.mainMenu();
 
 	//Main Game Loop//
 	while (true)
@@ -46,36 +46,34 @@ int main()
 
 		//Current Room Info//
 		system("cls");
-		std::cout << "====================================================================================================\n";
+		text.lineBreak(); ///
 		std::cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
-		std::cout << "====================================================================================================\n";
+		text.lineBreak(); ///
 		text.printArt(game.getCurrentLocation()->getName()+"Map");
-		std::cout << "====================================================================================================\n";
-		
+		text.lineBreak(); ///
 		game.getCurrentLocation()->itemCheck();
-		std::cout << "====================================================================================================\n";
+		text.lineBreak(); ///
+
+		//Inventory and Quest Info//
 		std::cout << "Collected Items: ";
 		player.getInventory().outputInventory();
-		std::cout << std::endl;
+		text.lineSpace(); ///
 		std::cout << "Total Ingredients: " << player.getInventory().getQuestItemTotal();
-		std::cout << std::endl;
-		std::cout << "====================================================================================================\n";
+		text.lineSpace(); ///
+		text.lineBreak(); ///
 		text.printArt(game.getCurrentLocation()->getName());
-		std::cout << "====================================================================================================\n";
+		text.lineBreak(); ///
+
+		//Available Actions//
 		std::cout << "Available Actions:" << "\n";
 		game.getCurrentLocation()->outputDoors();
 		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
-
-		//test
-		std::cout << game.getCurrentLocation()->getEventPrompt() << std::endl;
-
-
 		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1))
 		{
 			std::cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
 		}
 		std::cout << std::endl;
-		std::cout << "====================================================================================================\n";
+		text.lineBreak(); ///
 		std::cout << "Enter a character to complete an action:\n\n";
 
 		//User Input//

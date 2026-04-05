@@ -118,7 +118,7 @@ namespace MilkAndSugar::Core
 				{
 					std::cout << "You have made a cup of tea - although in a very strange order..." << std::endl;
 					std::cout << "Now bring it to John." << std::endl;
-					nQuest.advanceState(Core::Quest::Achieved);
+					nQuest.advanceState(Core::Quest::Achieved, nPlayer);
 					eventCompleted = true;
 					return true;
 				}
@@ -126,7 +126,7 @@ namespace MilkAndSugar::Core
 				{
 					std::cout << "You have successfully made a good cup of tea!" << std::endl;
 					std::cout << "Now bring it to John." << std::endl;
-					nQuest.advanceState(Core::Quest::Achieved);
+					nQuest.advanceState(Core::Quest::Achieved, nPlayer);
 					eventCompleted = true;
 					return true;
 				}
