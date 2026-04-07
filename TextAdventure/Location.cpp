@@ -4,6 +4,10 @@
 #include <iostream>
 #include <vector>
 #include "common.h"
+#include "Player.h"
+#include "Text.h"
+#include "RecipeBuilder.h"
+#include "Quest.h"
 
 namespace MilkAndSugar::World
 {
@@ -203,7 +207,15 @@ namespace MilkAndSugar::World
 		return std::string("");
 	}
 
-	void Location::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest)
+	void Location::startEvent(Core::RecipeBuilder& nRecipe,Object::Player& nPlayer,Core::Quest& nQuest)
+	{
+		return;
+	}
+	bool Location::getIsEventRoom() const
+	{
+		return false;
+	}
+	void Location::setIsEventRoom(bool nIsEventRoom)
 	{
 		return;
 	}

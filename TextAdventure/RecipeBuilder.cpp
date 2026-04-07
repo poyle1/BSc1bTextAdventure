@@ -19,6 +19,12 @@ namespace MilkAndSugar::Core
 
 	bool MilkAndSugar::Core::RecipeBuilder::teaBuilder(Object::Player& nPlayer, Core::Quest nQuest)
 	{
+		if (nPlayer.getInventory().getQuestItemTotal() < 5)
+		{
+			std::cout << "You don't have all the ingredients to make a cup of tea! Come back when you have collected them all." << std::endl;
+			UI::pauseAndFlush();
+			return false;
+		}
 		std::stack<Object::Item*> winningStack1; //best outcome
 		std::stack<Object::Item*> winningStack2; //best outcome
 		std::stack<Object::Item*> winningStack3; //okay outcome

@@ -22,13 +22,13 @@ int main()
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
 	//SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
 
-	UI::Text text;
-	Core::Game game;
-	Object::Player player;
+	UI::Text mainText;
+	Core::Game mainGame;
+	Object::Player mainPlayer;
 	Core::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
 	Core::RecipeBuilder teaRecipe("Cup of Tea");
 
-	game.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
+	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	
 	//game.mainMenu();
 
@@ -36,79 +36,86 @@ int main()
 	while (true)
 	{
 		//Available Actions Logic//
-		int investigateRoomOption = game.getCurrentLocation()->getNumDoors() + 1;
-		int startEventOption = game.getCurrentLocation()->getNumDoors() + 2;
+		int investigateRoomOption = mainGame.getCurrentLocation()->getNumDoors() + 1;
+		int startEventOption = mainGame.getCurrentLocation()->getNumDoors() + 2;
 		int maxValidInput = investigateRoomOption;
-		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1))
+		if (mainGame.getCurrentLocation()->getIsEventRoom() == true)
 		{
 			maxValidInput = startEventOption;
 		}
 
 		//Current Room Info//
 		system("cls");
-		text.lineBreak(); ///
-		std::cout << "Current location: " << game.getCurrentLocation()->getName() << "\n";
-		text.lineBreak(); ///
-		text.printArt(game.getCurrentLocation()->getName()+"Map");
-		text.lineBreak(); ///
-		game.getCurrentLocation()->itemCheck();
-		text.lineBreak(); ///
+		mainText.lineBreak(); ///
+		std::cout << "Current location: " << mainGame.getCurrentLocation()->getName() << "\n";
+		mainText.lineBreak(); ///
+		mainText.printArt(mainGame.getCurrentLocation()->getName());
+		mainText.lineBreak(); ///
+		mainText.printArt(mainGame.getCurrentLocation()->getName() + "Map");
+		mainText.lineBreak(); ///
+		mainGame.getCurrentLocation()->itemCheck();
+		mainText.lineBreak(); ///
 
 		//Inventory and Quest Info//
 		std::cout << "Collected Items: ";
-		player.getInventory().outputInventory();
-		text.lineSpace(); ///
-		std::cout << "Total Ingredients: " << player.getInventory().getQuestItemTotal();
-		text.lineSpace(); ///
-		text.lineBreak(); ///
-		text.printArt(game.getCurrentLocation()->getName());
-		text.lineBreak(); ///
+		mainPlayer.getInventory().outputInventory();
+		mainText.lineSpace(); ///
+		std::cout << "Total Ingredients: " << mainPlayer.getInventory().getQuestItemTotal();
+		mainText.lineSpace(); ///
+		mainText.lineBreak(); ///
 
 		//Available Actions//
 		std::cout << "Available Actions:" << "\n";
-		game.getCurrentLocation()->outputDoors();
+		mainGame.getCurrentLocation()->outputDoors();
 		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
-		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1))
-		{
-			std::cout << startEventOption << ") " << game.getCurrentLocation()->getEventPrompt();
-		}
+		std::cout << startEventOption << ") " << mainGame.getCurrentLocation()->getEventPrompt();
+	
 		std::cout << std::endl;
-		text.lineBreak(); ///
+		mainText.lineBreak(); ///
 		std::cout << "Enter a character to complete an action:\n\n";
 
 		//User Input//
 		int userInput = UI::getValidIntInput(1, maxValidInput);
 		std::cout << std::endl;
 
-		//Investigate Current Location//
-		if (userInput == investigateRoomOption)
+
+		if (userInput == startEventOption)
 		{
-			game.getCurrentLocation()->investigateRoom(player.getInventory());
+			mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest);
 			UI::pauseAndFlush();
 			continue;
 		}
-
-		if (game.getCurrentLocation()->canStartEvent(player.getInventory(),1) && userInput == startEventOption)
+		if (!mainPlayer.getHasActiveQuest())
 		{
-			game.getCurrentLocation()->startEvent(teaRecipe, player, mainQuest);
+			std::cout << "You should talk to John first before exploring around." << std::endl;
 			UI::pauseAndFlush();
-			continue;
 		}
-
-		int doorIndex = userInput - 1;
-		World::Location* chosenLocation = game.getCurrentLocation()->getDoor(doorIndex);
-		
-		//Locked Door Check//
-		if (game.getCurrentLocation()->isDoorLocked(doorIndex))
+		else
 		{
-			if (!game.getCurrentLocation()->unlockDoor(doorIndex, player.getInventory())) {
-				std::cout << "The door is locked - you cannot open it!" << std::endl;
+			//Investigate Current Location//
+			if (userInput == investigateRoomOption)
+			{
+				mainGame.getCurrentLocation()->investigateRoom(mainPlayer.getInventory());
 				UI::pauseAndFlush();
-				continue; 
+				continue;
 			}
+
+			int doorIndex = userInput - 1;
+			World::Location* chosenLocation = mainGame.getCurrentLocation()->getDoor(doorIndex);
+
+			//Locked Door Check//
+			if (mainGame.getCurrentLocation()->isDoorLocked(doorIndex))
+			{
+				if (!mainGame.getCurrentLocation()->unlockDoor(doorIndex, mainPlayer.getInventory())) {
+					std::cout << "The door is locked - you cannot open it!" << std::endl;
+					UI::pauseAndFlush();
+					continue;
+				}
+			}
+			//Enter Chosen Location//
+			mainGame.setCurrentLocation(chosenLocation);
+			mainGame.getCurrentLocation()->enterLocation();
 		}
-		//Enter Chosen Location//
-		game.setCurrentLocation(chosenLocation);
-		game.getCurrentLocation()->enterLocation();
+	
 	}
 }

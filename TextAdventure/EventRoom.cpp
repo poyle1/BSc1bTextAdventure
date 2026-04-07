@@ -1,7 +1,9 @@
 #include "EventRoom.h"
 #include "Common.h"
 #include "RecipeBuilder.h"
-
+#include "Text.h"
+#include "Player.h"
+#include "Quest.h"
 namespace MilkAndSugar::World
 {
 	//Constructors
@@ -10,12 +12,16 @@ namespace MilkAndSugar::World
 		m_eventPrompt = "Start the event.";
 		m_eventCompleted = false;
 		m_questItemsRequired = 0;
+		m_eventType = "";
+		m_isEventRoom = true;
 	}
-	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq) : Location(nIndex, nName)
+	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName)
 	{
 		m_eventPrompt = nEventPrompt;
 		m_eventCompleted = false;
 		m_questItemsRequired = nQItemReq;
+		m_eventType = nEventType;
+		m_isEventRoom = true;
 	}
 
 	//Event logic
@@ -38,19 +44,33 @@ namespace MilkAndSugar::World
 		}
 		return m_eventPrompt;
 	}
-	void EventRoom::startEvent(Core::RecipeBuilder nRecipe, Object::Player& nPlayer, Core::Quest nQuest, std::string eventType)
+	std::string EventRoom::getEventType() const
 	{
-		UI::Text eventText;
-
-		if (eventType == "Tea") 
+		return std::string();
+	}
+	void EventRoom::startEvent(Core::RecipeBuilder& nRecipe, Object::Player& nPlayer, Core::Quest& nQuest)
+	{
+		if (m_eventType == "Tea") 
 		{
 			nRecipe.teaBuilder(nPlayer, nQuest);
 		}
-		if (eventType == "John1")
+		if (m_eventType == "John")
 		{
-			
+			if (nQuest.getState() == Core::Quest::Unknown)
+			{
+				m_dialogue->johnDialogue1(nPlayer);
+				nQuest.advanceState(Core::Quest::Accepted, nPlayer);
+			}
+			//if (nQuest.getState() == Core::Quest:)
 		}
-		
+	}
+	bool EventRoom::getIsEventRoom() const
+	{
+		return m_isEventRoom;
+	}
+	void EventRoom::setIsEventRoom(bool nIsEventRoom)
+	{
+		m_isEventRoom = nIsEventRoom;
 	}
 	int EventRoom::getQuestItemsRequired() const
 	{

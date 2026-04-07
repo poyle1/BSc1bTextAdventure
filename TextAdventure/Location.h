@@ -3,8 +3,13 @@
 #include <string>
 #include "Item.h"
 #include "Inventory.h"
-#include "Quest.h"
-#include "RecipeBuilder.h"
+
+//Forward declarations to avoid circular dependencies, as Location has functions that use these classes but they also use Location in their own functions
+namespace MilkAndSugar {
+	namespace UI { class Text; }
+	namespace Core { class RecipeBuilder; class Quest; }
+	namespace Object { class Player; }
+}
 
 namespace MilkAndSugar::World
 {
@@ -23,6 +28,7 @@ namespace MilkAndSugar::World
 		std::string m_inspectText;
 		MilkAndSugar::World::Inventory m_locItems;
 		std::vector<Door> m_doors; //Each location has a list of doors, 
+		MilkAndSugar::UI::Text* m_dialogue;
 		
 	public:
 		//Constructors//
@@ -56,7 +62,8 @@ namespace MilkAndSugar::World
 		//Event logic
 		virtual bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount);
 		virtual std::string getEventPrompt();
-		virtual void startEvent(MilkAndSugar::Core::RecipeBuilder nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest nQuest, std::string eventType);
-
+		virtual void startEvent(MilkAndSugar::Core::RecipeBuilder& nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest& nQuest);
+		virtual bool getIsEventRoom() const;
+		virtual void setIsEventRoom(bool nIsEventRoom);
 	};
 }
