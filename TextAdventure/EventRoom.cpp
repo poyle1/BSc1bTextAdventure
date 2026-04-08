@@ -14,6 +14,7 @@ namespace MilkAndSugar::World
 		m_questItemsRequired = 0;
 		m_eventType = "";
 		m_isEventRoom = true;
+		m_dialogue = nullptr;
 	}
 	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName)
 	{
@@ -22,6 +23,7 @@ namespace MilkAndSugar::World
 		m_questItemsRequired = nQItemReq;
 		m_eventType = nEventType;
 		m_isEventRoom = true;
+		m_dialogue = nullptr;
 	}
 
 	//Event logic
@@ -56,12 +58,19 @@ namespace MilkAndSugar::World
 		}
 		if (m_eventType == "John")
 		{
-			if (nQuest.getState() == Core::Quest::Unknown)
+			if (m_dialogue != nullptr)
 			{
-				m_dialogue->johnDialogue1(nPlayer);
-				nQuest.advanceState(Core::Quest::Accepted, nPlayer);
+				if (nQuest.getState() == Core::Quest::Unknown)
+				{
+					m_dialogue->johnDialogue1(nPlayer);
+					nQuest.advanceState(Core::Quest::Accepted, nPlayer);
+				}
+				//if (nQuest.getState() == Core::Quest::Accepted)
+				//{
+				//}
 			}
-			//if (nQuest.getState() == Core::Quest:)
+			
+			
 		}
 	}
 	bool EventRoom::getIsEventRoom() const

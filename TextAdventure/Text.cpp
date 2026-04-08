@@ -8,119 +8,61 @@
 
 namespace MilkAndSugar::UI
 {
-	void Text::loadArtLibrary(std::string filename)
+	void Text::loadArtLibrary(std::string fileName)
 	{
-		std::ifstream locationFile(filename);
-		if (!locationFile.is_open())
+		std::ifstream artFile(fileName);
+		if (!artFile.is_open())
 		{
-			std::cout << "Error, could not find file " << filename << std::endl;
+			std::cout << "Error, could not find file " << fileName << std::endl;
 			return;
 		}
 
 		std::string artLine;
-		bool found = false;
-
-		std::string searchTag = "[" + artName + "]";
+		std::string searchTag = "";
+		std::string artBlock = "";
 
 		while (getline(artFile, artLine))
 		{
-			if (artLine == searchTag)
+			//Detect Tag
+			if (!artLine.empty() && artLine.front() == '[' && artLine.back() == ']')
 			{
-				found = true;
-				continue; //Skips the line where the searchTag is found
-			}
-			if (found)
-			{
-				if (artLine.size() > 0 && artLine[0] == '[')
+				//If a tag is in progress, add it to the library before moving on to the next tag
+				if (!searchTag.empty()) //safety check
 				{
-					break; //Stops printing if the next search tag is hit
+					//makes a new entry
+					m_artLibrary[searchTag] = artBlock;
 				}
-				std::cout << artLine << std::endl;
+				
+				//Start new tag
+				searchTag = artLine.substr(1, artLine.size() - 2);
+				//artLine.erase(0, 1);
+				//artLine.erase(artLine.size() - 1);
+				artBlock = "";
+			
+			}
+			else if (!searchTag.empty())
+			{
+				artBlock += artLine + "\n";
 			}
 		}
-		if (!found)
+
+		if (!searchTag.empty())
 		{
-			std::cout << "Art[" << artName << "] not found." << std::endl;
+			m_artLibrary[searchTag] = artBlock;
 		}
 		artFile.close();
 	}
 
-	//void Game::loadLocations(std::string filename)
-	//{
-	//	std::ifstream locationFile(filename);
-
-	//	if (!locationFile.is_open())
-	//	{
-	//		std::cout << "Error, could not find file " << filename << std::endl;
-	//		return;
-	//	}
-
-	//	std::string row;
-	//	std::stringstream rowstream;
-
-	//	getline(locationFile, row); // skips header of csv
-
-	//	while (getline(locationFile, row))
-	//	{
-	//		rowstream = std::stringstream(row); //Convert each row to a stringstream
-	//		std::string index, name, isEventRoom, EventPrompt, ReqQItems, EventType;
-
-	//		getline(rowstream, index, ',');
-	//		getline(rowstream, name, ',');
-	//		getline(rowstream, isEventRoom, ',');
-
-	//		bool eventRoom = (isEventRoom == "true");
-
-	//		if (eventRoom)
-	//		{
-	//			getline(rowstream, EventPrompt, ',');
-	//			getline(rowstream, ReqQItems, ',');
-	//			getline(rowstream, EventType, ',');
-	//			World::EventRoom* newEvent = new World::EventRoom(stoi(index), name, EventPrompt, stoi(ReqQItems), EventType);
-	//			m_worldMap.push_back(newEvent);
-	//		}
-	//		else
-	//		{
-	//			World::Location* newLocation = new World::Location(stoi(index), name);
-	//			m_worldMap.push_back(newLocation);
-	//		}
-	//	}
-	//	locationFile.close();
-	//	if (!m_worldMap.empty())
-	//	{
-	//		m_currentLocation = m_worldMap.front();
-	//	}
-	//}
-
 	void Text::printArt(std::string artName)
 	{
-		std::ifstream artFile("./Data/asciiAssets.txt");
-		std::string artLine;
-		bool found = false;
-
-		std::string searchTag = "[" + artName + "]";
-
-		while (getline(artFile, artLine))
+		if (m_artLibrary.count(artName))
 		{
-			if (artLine == searchTag)
-			{
-				found = true;
-				continue; //Skips the line where the searchTag is found
-			}
-			if (found)
-			{
-				if (artLine.size() > 0 && artLine[0] == '[')
-				{
-					break; //Stops printing if the next search tag is hit
-				}
-				std::cout << artLine << std::endl;
-			}
+			std::cout << m_artLibrary[artName];
 		}
-		if (!found)
+		else
 		{
-			std::cout << "Art[" << artName << "] not found." << std::endl;
+			std::cout << "Error: Art " << artName << " not found in library." << std::endl;
 		}
-		artFile.close();
 	}
 
 	void Text::printDialogue(std::string artName, std::string dialogue)
@@ -156,29 +98,22 @@ namespace MilkAndSugar::UI
 
 	void Text::johnDialogue1(const MilkAndSugar::Object::Player& nPlayer)
 	{
-		system("cls");
-		lineBreak();
-		std::cout << "John" << std::endl;
-		lineBreak();
-		printArt("JOHN");
-		lineBreak();
-		lineSpace();
+		dialogueBox("John", "JOHN");
+		std::cout << "John: Oh hello " << nPlayer.getName() << "!" << std::endl;
+		std::cout << "John: I'm glad you're here - I was getting a bit bored on my own." << std::endl;
+		std::cout << "John: I was just about to make myself a tea, but I've unpacked the shopping in a VERY strange way..." << std::endl;
+		std::cout << "John: Please could you have a look around and make me a tea once you have everything?" << std::endl;
 	}
 	void Text::johnDialogue2(const Object::Player& nPlayer)
 	{
-		system("cls");
-		lineBreak();
-		std::cout << "John" << std::endl;
-		lineBreak();
-		printArt("JOHN");
-		lineBreak();
-		lineSpace();
+		dialogueBox("John", "JOHN");
 		std::cout << "\"How's that tea coming along, " << nPlayer.getName() << "?\"" << std::endl;
 		std::cout << "\"The house is a bit of a mess, but you should be able to find what you need if you look around.\"" << std::endl;
 		std::cout << "\"There is a key somewhere in here for my bedroom. I think I left the sugar in there...\"" << std::endl;
 	}
-	void Text::johnDialogue5(const Object::Player& nPlayer)
+	void Text::johnDialogue3(const Object::Player& nPlayer)
 	{
+		dialogueBox("John", "JOHN");
 		std::cout << "John: Oh thank you" << nPlayer.getName() << "! This is just what I needed." << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;

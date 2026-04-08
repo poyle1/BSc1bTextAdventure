@@ -29,7 +29,7 @@ int main()
 	Core::RecipeBuilder teaRecipe("Cup of Tea");
 
 	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
-	
+	mainText.loadArtLibrary("./Data/asciiAssets.txt");
 	//game.mainMenu();
 
 	//Main Game Loop//

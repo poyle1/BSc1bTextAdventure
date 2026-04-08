@@ -16,12 +16,14 @@ namespace MilkAndSugar::World
 	{
 		m_index = NULL;
 		m_name = "A location";
+		m_dialogue = nullptr;
 	}
 
 	Location::Location(const int nIndex, std::string nName)
 	{
 		m_index = nIndex;
 		m_name = nName;
+		m_dialogue = nullptr;
 	}
 
 	//Getters and setters//

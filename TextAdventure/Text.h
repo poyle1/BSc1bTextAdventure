@@ -22,7 +22,7 @@ namespace MilkAndSugar::UI
 		void dialogueBox(std::string nCharacter, std::string nArtName);
 		void johnDialogue1(const MilkAndSugar::Object::Player& nPlayer);
 		void johnDialogue2(const MilkAndSugar::Object::Player& nPlayer);
-		void johnDialogue5(const MilkAndSugar::Object::Player& nPlayer);
+		void johnDialogue3(const MilkAndSugar::Object::Player& nPlayer);
 		void lineBreak();
 		void lineSpace();
 	};
