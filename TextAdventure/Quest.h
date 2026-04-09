@@ -35,11 +35,13 @@ namespace MilkAndSugar::Core
 
 	public:
 		Quest();
-		Quest(std::string nQuName, std::string nQuDesc);
+		Quest(std::string nName, std::string nDesc);
 
 		//Basic Getters and setters//
 		std::string getQuestName() const;
 		void setQuestName(std::string nName);
+		std::string getQuestDescription() const;
+		void setQuestDescription(std::string nDesc);
 
 		//Quest state logic//
 		QuestStates getState() const;

@@ -10,7 +10,6 @@ namespace MilkAndSugar::Core
 	{
 	private:
 		std::vector<MilkAndSugar::World::Location*> m_worldMap;
-		MilkAndSugar::UI::Text m_ui;
 		bool m_isRunning = true;
 		MilkAndSugar::World::Location* m_currentLocation;
 

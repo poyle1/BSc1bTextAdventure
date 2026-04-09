@@ -91,6 +91,7 @@ namespace MilkAndSugar::World
 		if (hasItems())
 		{
 			std::cout << "There doesn't seem to be anything useful in here." << std::endl;
+			UI::pauseAndFlush();
 			return;
 		}
 		std::cout << "You look around and grab: " << std::endl;
@@ -104,6 +105,7 @@ namespace MilkAndSugar::World
 			playerInventory.addItem(collectedItem);
 		}
 		getInventory().clear();
+		UI::pauseAndFlush();
 	}
 
 	//Door/connection Logic//
@@ -157,6 +159,7 @@ namespace MilkAndSugar::World
 
 				std::cout << "You use the " << playerInventory.getItem(i)->getName() << " to unlock the door." << std::endl;
 				playerInventory.getItems().erase(playerInventory.getItems().begin() + i);
+				UI::pauseAndFlush();
 				return true; //Exit loop
 			}
 		}

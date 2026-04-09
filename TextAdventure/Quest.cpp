@@ -9,9 +9,10 @@ namespace MilkAndSugar::Core {
 		m_questDescription = "This is a default quest description.";
 		m_state = Unknown;
 	}
-	Quest::Quest(std::string nName, std::string nQuDesc)
+	Quest::Quest(std::string nName, std::string nDesc)
 	{
 		m_questName = nName;
+		m_questDescription = nDesc;
 		m_state = Unknown;
 	}
 	
@@ -23,6 +24,14 @@ namespace MilkAndSugar::Core {
 	void Quest::setQuestName(std::string nName)
 	{
 		m_questName = nName;
+	}
+	std::string Quest::getQuestDescription() const
+	{
+		return m_questDescription;
+	}
+	void Quest::setQuestDescription(std::string nDesc)
+	{
+		m_questDescription = nDesc;
 	}
 	Quest::QuestStates Quest::getState() const
 	{
@@ -42,7 +51,7 @@ namespace MilkAndSugar::Core {
 		m_state = nState;
 		if (nState == Accepted)
 		{
-			m_questName += " [ACTIVE QUEST]";
+			m_questName += " [ACTIVE]";
 			nPlayer.setHasActiveQuest(true);
 		}
 		if (nState == Completed)

@@ -1,16 +1,29 @@
 #include "Text.h"
 #include "Utility.h"
 #include "Player.h"
-#include <iostream> //cout
-#include <fstream> // ifstream and ofstream
-#include <string> // getline
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "Common.h"
 
 namespace MilkAndSugar::UI
 {
+	Text Text::m_Instance;
+
+	std::map<std::string, std::string>& Text::getMap()
+	{
+		static std::map<std::string, std::string> artLibrary;
+		return artLibrary;
+	}
+	Text& Text::getInstance()
+	{
+		return m_Instance;
+	}
+
 	void Text::loadArtLibrary(std::string fileName)
 	{
 		std::ifstream artFile(fileName);
+		auto& artLibrary = getMap();
 		if (!artFile.is_open())
 		{
 			std::cout << "Error, could not find file " << fileName << std::endl;
@@ -30,13 +43,11 @@ namespace MilkAndSugar::UI
 				if (!searchTag.empty()) //safety check
 				{
 					//makes a new entry
-					m_artLibrary[searchTag] = artBlock;
+					artLibrary[searchTag] = artBlock;
 				}
 				
 				//Start new tag
 				searchTag = artLine.substr(1, artLine.size() - 2);
-				//artLine.erase(0, 1);
-				//artLine.erase(artLine.size() - 1);
 				artBlock = "";
 			
 			}
@@ -48,16 +59,17 @@ namespace MilkAndSugar::UI
 
 		if (!searchTag.empty())
 		{
-			m_artLibrary[searchTag] = artBlock;
+			artLibrary[searchTag] = artBlock;
 		}
 		artFile.close();
 	}
 
 	void Text::printArt(std::string artName)
 	{
-		if (m_artLibrary.count(artName))
+		auto& artLibrary = getMap();
+		if (artLibrary.count(artName))
 		{
-			std::cout << m_artLibrary[artName];
+			std::cout << artLibrary[artName];
 		}
 		else
 		{
@@ -75,14 +87,10 @@ namespace MilkAndSugar::UI
 
 	void Text::gameIntro()
 	{
-		printDialogue("INTRO", "Hello!");
-		printDialogue("INTRO", "Thank you for popping round.");
-		printDialogue("INTRO", "I get very lonely sometimes...");
-		printDialogue("INTRO", "...");
-		printDialogue("INTRO", "Would you like me to tell you a story?");
-		printDialogue("INTRO", "Its about history!");
-		printDialogue("INTRO", "Lost history...");
-		printDialogue("INTRO", "But first, can you make me a cup of tea?");
+		//introArtFrame1
+		//introArtFrame2
+		//introArtFrame3
+		//Then the game start
 	}
 
 	void Text::dialogueBox(std::string nCharacter, std::string nArtName)

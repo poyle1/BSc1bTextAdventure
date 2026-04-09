@@ -19,17 +19,13 @@
 
 int main()
 {
-	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); //Maximize the console window on start for better visibility of the ASCII art and game text
-	//SetConsoleOutputCP(CP_UTF8); //Enable UTF-8 encoding for console output to support extended ASCII characters in the art
-
-	UI::Text mainText;
 	Core::Game mainGame;
 	Object::Player mainPlayer;
 	Core::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
 	Core::RecipeBuilder teaRecipe("Cup of Tea");
 
 	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
-	mainText.loadArtLibrary("./Data/asciiAssets.txt");
+	UI::Text::getInstance().loadArtLibrary("./Data/asciiAssets.txt");
 	//game.mainMenu();
 
 	//Main Game Loop//
@@ -46,32 +42,40 @@ int main()
 
 		//Current Room Info//
 		system("cls");
-		mainText.lineBreak(); ///
-		std::cout << "Current location: " << mainGame.getCurrentLocation()->getName() << "\n";
-		mainText.lineBreak(); ///
-		mainText.printArt(mainGame.getCurrentLocation()->getName());
-		mainText.lineBreak(); ///
-		mainText.printArt(mainGame.getCurrentLocation()->getName() + "Map");
-		mainText.lineBreak(); ///
+		UI::Text::getInstance().lineBreak(); ///
+		std::cout << "Current location: " << mainGame.getCurrentLocation()->getName() << " | ";
 		mainGame.getCurrentLocation()->itemCheck();
-		mainText.lineBreak(); ///
+		UI::Text::getInstance().lineBreak(); ///
+		UI::Text::getInstance().printArt(mainGame.getCurrentLocation()->getName());
+		UI::Text::getInstance().lineBreak(); ///
+		UI::Text::getInstance().printArt(mainGame.getCurrentLocation()->getName() + "Map");
+		UI::Text::getInstance().lineBreak(); ///
 
 		//Inventory and Quest Info//
 		std::cout << "Collected Items: ";
 		mainPlayer.getInventory().outputInventory();
-		mainText.lineSpace(); ///
-		std::cout << "Total Ingredients: " << mainPlayer.getInventory().getQuestItemTotal();
-		mainText.lineSpace(); ///
-		mainText.lineBreak(); ///
+		std::cout << "Quest: ";
+		if (mainPlayer.getHasActiveQuest())
+		{
+			std::cout << mainQuest.getQuestName() << " - " << mainQuest.getQuestDescription() << std::endl;
+			std::cout << "Total Ingredients: " << mainPlayer.getInventory().getQuestItemTotal() << std::endl;
+		}
+		else
+		{
+			std::cout << "None" << std::endl;
+		}
+		UI::Text::getInstance().lineBreak(); ///
 
 		//Available Actions//
 		std::cout << "Available Actions:" << "\n";
 		mainGame.getCurrentLocation()->outputDoors();
 		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
-		std::cout << startEventOption << ") " << mainGame.getCurrentLocation()->getEventPrompt();
-	
+		if (mainGame.getCurrentLocation()->getIsEventRoom() == true)
+		{
+			std::cout << startEventOption << ") " << mainGame.getCurrentLocation()->getEventPrompt();
+		}
 		std::cout << std::endl;
-		mainText.lineBreak(); ///
+		UI::Text::getInstance().lineBreak(); ///
 		std::cout << "Enter a character to complete an action:\n\n";
 
 		//User Input//
@@ -82,7 +86,7 @@ int main()
 		if (userInput == startEventOption)
 		{
 			mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest);
-			UI::pauseAndFlush();
+			//UI::pauseAndFlush();
 			continue;
 		}
 		if (!mainPlayer.getHasActiveQuest())
@@ -96,7 +100,6 @@ int main()
 			if (userInput == investigateRoomOption)
 			{
 				mainGame.getCurrentLocation()->investigateRoom(mainPlayer.getInventory());
-				UI::pauseAndFlush();
 				continue;
 			}
 
@@ -107,15 +110,14 @@ int main()
 			if (mainGame.getCurrentLocation()->isDoorLocked(doorIndex))
 			{
 				if (!mainGame.getCurrentLocation()->unlockDoor(doorIndex, mainPlayer.getInventory())) {
-					std::cout << "The door is locked - you cannot open it!" << std::endl;
+					std::cout << "The door to the " << chosenLocation->getName() << " is locked!" << std::endl;
 					UI::pauseAndFlush();
 					continue;
 				}
 			}
 			//Enter Chosen Location//
 			mainGame.setCurrentLocation(chosenLocation);
-			mainGame.getCurrentLocation()->enterLocation();
+			//mainGame.getCurrentLocation()->enterLocation();
 		}
-	
 	}
 }

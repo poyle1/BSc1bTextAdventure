@@ -12,9 +12,14 @@ namespace MilkAndSugar::UI
 	class Text
 	{
 	private:
-		std::map<std::string, std::string> m_artLibrary;
-	public:
-		void loadArtLibrary(std::string filename);
+		Text() {}
+		static Text m_Instance;
+		static std::map<std::string, std::string>& getMap();
+
+	 public:
+		static Text& getInstance();
+
+		void loadArtLibrary(std::string fileName);
 		void printArt(std::string artName);
 
 		void printDialogue(std::string artName, std::string dialogue);

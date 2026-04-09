@@ -1,5 +1,6 @@
 #include "EventRoom.h"
 #include "Common.h"
+#include "Utility.h"
 #include "RecipeBuilder.h"
 #include "Text.h"
 #include "Player.h"
@@ -14,7 +15,6 @@ namespace MilkAndSugar::World
 		m_questItemsRequired = 0;
 		m_eventType = "";
 		m_isEventRoom = true;
-		m_dialogue = nullptr;
 	}
 	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName)
 	{
@@ -23,7 +23,6 @@ namespace MilkAndSugar::World
 		m_questItemsRequired = nQItemReq;
 		m_eventType = nEventType;
 		m_isEventRoom = true;
-		m_dialogue = nullptr;
 	}
 
 	//Event logic
@@ -52,27 +51,26 @@ namespace MilkAndSugar::World
 	}
 	void EventRoom::startEvent(Core::RecipeBuilder& nRecipe, Object::Player& nPlayer, Core::Quest& nQuest)
 	{
-		if (m_eventType == "Tea") 
+
+		if (m_eventType == "Tea")
 		{
 			nRecipe.teaBuilder(nPlayer, nQuest);
 		}
 		if (m_eventType == "John")
 		{
-			if (m_dialogue != nullptr)
+			if (nQuest.getState() == Core::Quest::Unknown || nPlayer.getHasActiveQuest() == false)
 			{
-				if (nQuest.getState() == Core::Quest::Unknown)
-				{
-					m_dialogue->johnDialogue1(nPlayer);
-					nQuest.advanceState(Core::Quest::Accepted, nPlayer);
-				}
-				//if (nQuest.getState() == Core::Quest::Accepted)
-				//{
-				//}
+				UI::Text::getInstance().johnDialogue1(nPlayer); //Accessing Text singleton to print dialogue
+				nQuest.advanceState(Core::Quest::Accepted, nPlayer);
+				UI::pauseAndFlush();
+			} else if (nQuest.getState() == Core::Quest::Accepted)
+			{
+				UI::Text::getInstance().johnDialogue2(nPlayer);
+				UI::pauseAndFlush();
 			}
-			
-			
 		}
 	}
+	
 	bool EventRoom::getIsEventRoom() const
 	{
 		return m_isEventRoom;

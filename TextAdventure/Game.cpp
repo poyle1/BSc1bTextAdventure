@@ -28,7 +28,8 @@ namespace MilkAndSugar::Core
 		{
 			system("cls");
 			std::cout << "====================================================================================================\n";
-			m_ui.printArt("TITLESCREEN");
+			UI::Text::getInstance().printArt("TITLESCREEN");
+			
 			std::cout << "====================================================================================================\n";
 			std::cout << "Enter '1' to start a new game.\n";
 			std::cout << "Enter '2' for the game rules.\n";
@@ -43,7 +44,7 @@ namespace MilkAndSugar::Core
 
 			if (userInput == 1)
 			{
-				m_ui.gameIntro();
+				UI::Text::getInstance().gameIntro();
 				break;
 			}
 			else if (userInput == 2)
@@ -66,14 +67,14 @@ namespace MilkAndSugar::Core
 	void Game::displayRules()
 	{
 		system("cls");
-		m_ui.printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
+		UI::Text::getInstance().printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
 	}
 
 	void Game::displayCredits()
 	{
 		system("cls");
 		std::cout << "====================================================================================================\n";
-		m_ui.printArt("CREDITS");
+		UI::Text::getInstance().printArt("CREDITS");
 		std::cout << "====================================================================================================\n";
 		std::cout << "A game by Tyler Poyle of TyPo Games" << std::endl;
 		std::cout << "Art assets, courtesy of ASCII Art Archive, asciiart.eu:" << std::endl;
@@ -89,7 +90,6 @@ namespace MilkAndSugar::Core
 		std::cout << "Shed: Untitled by Anonymous" << std::endl;
 		std::cout << "QuestCompleteP1: Coffee mug by H P Barmario." << std::endl;
 		std::cout << "Misc art and titles created by the ASCII Art Archive ASCII Art Tools." << std::endl;
-		//std::cout << " " << std::endl;
 		std::cout << std::endl;
 		std::cout << "====================================================================================================\n";
 		system("pause");
