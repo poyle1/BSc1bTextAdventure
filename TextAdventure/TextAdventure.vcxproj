@@ -146,7 +146,6 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
     <ClInclude Include="EventRoom.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />

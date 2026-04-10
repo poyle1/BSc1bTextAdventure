@@ -1,8 +1,8 @@
 #include "Utility.h"
 #include <iostream>
-#include "Common.h"
 
-namespace MilkAndSugar::UI
+
+namespace UI
 {
     int getValidIntInput(int min, int max)
     {

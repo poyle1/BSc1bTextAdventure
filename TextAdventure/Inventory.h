@@ -3,13 +3,13 @@
 #include <string>
 #include "Item.h"
 
-namespace MilkAndSugar::World
+namespace GameObject
 {
 	class Inventory
 	{
 	private:
 		//Attributes
-		std::vector<MilkAndSugar::Object::Item*> m_items;
+		std::vector<Item*> m_items;
 		int m_collectedQuestItems;
 
 	public:
@@ -17,11 +17,11 @@ namespace MilkAndSugar::World
 		Inventory();
 
 		//m_items modifiers
-		void addItem(MilkAndSugar::Object::Item* nItem);
+		void addItem(Item* nItem);
 		void removeItem(int index);
 		void clear();
-		MilkAndSugar::Object::Item* getItem(int index);
-		std::vector<MilkAndSugar::Object::Item*>& getItems();
+		Item* getItem(int index);
+		std::vector<Item*>& getItems();
 		int getSize();
 		bool isEmpty();
 

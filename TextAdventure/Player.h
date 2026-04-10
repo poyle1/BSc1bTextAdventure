@@ -2,13 +2,13 @@
 #include <iostream>
 #include "Inventory.h"
 
-namespace MilkAndSugar::Object
+namespace GameObject
 {
 	class Player
 	{
 	private:
 		std::string m_name;
-		MilkAndSugar::World::Inventory m_playerInv;
+		Inventory m_playerInv;
 		bool m_hasActiveQuest;
 
 	public:
@@ -18,7 +18,7 @@ namespace MilkAndSugar::Object
 		void setName(std::string nName);
 		std::string getName() const;
 
-		MilkAndSugar::World::Inventory& getInventory();
+		Inventory& getInventory();
 
 		bool getHasActiveQuest() const;
 		void setHasActiveQuest(bool hasActive);

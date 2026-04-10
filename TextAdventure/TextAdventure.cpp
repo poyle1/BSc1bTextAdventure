@@ -13,16 +13,15 @@
 #include "Player.h"
 #include "Text.h"
 #include "Game.h"
-#include "Common.h"
 #include "Quest.h"
 #include "RecipeBuilder.h"
 
 int main()
 {
-	Core::Game mainGame;
-	Object::Player mainPlayer;
-	Core::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
-	Core::RecipeBuilder teaRecipe("Cup of Tea");
+	GameObject::Game mainGame;
+	GameObject::Player mainPlayer;
+	GameObject::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
+	GameObject::RecipeBuilder teaRecipe("Cup of Tea");
 
 	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
 	UI::Text::getInstance().loadArtLibrary("./Data/asciiAssets.txt");
@@ -104,7 +103,7 @@ int main()
 			}
 
 			int doorIndex = userInput - 1;
-			World::Location* chosenLocation = mainGame.getCurrentLocation()->getDoor(doorIndex);
+			GameObject::Location* chosenLocation = mainGame.getCurrentLocation()->getDoor(doorIndex);
 
 			//Locked Door Check//
 			if (mainGame.getCurrentLocation()->isDoorLocked(doorIndex))

@@ -1,7 +1,7 @@
 #pragma once
 #include "Item.h"
 
-namespace MilkAndSugar::Object
+namespace GameObject
 {
 	class Key : public Item
 	{

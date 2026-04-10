@@ -4,9 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Common.h"
 
-namespace MilkAndSugar::UI
+
+namespace UI
 {
 	Text Text::m_Instance;
 
@@ -104,7 +104,7 @@ namespace MilkAndSugar::UI
 		lineSpace();
 	}
 
-	void Text::johnDialogue1(const MilkAndSugar::Object::Player& nPlayer)
+	void Text::johnDialogue1(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: Oh hello " << nPlayer.getName() << "!" << std::endl;
@@ -112,14 +112,14 @@ namespace MilkAndSugar::UI
 		std::cout << "John: I was just about to make myself a tea, but I've unpacked the shopping in a VERY strange way..." << std::endl;
 		std::cout << "John: Please could you have a look around and make me a tea once you have everything?" << std::endl;
 	}
-	void Text::johnDialogue2(const Object::Player& nPlayer)
+	void Text::johnDialogue2(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "\"How's that tea coming along, " << nPlayer.getName() << "?\"" << std::endl;
 		std::cout << "\"The house is a bit of a mess, but you should be able to find what you need if you look around.\"" << std::endl;
 		std::cout << "\"There is a key somewhere in here for my bedroom. I think I left the sugar in there...\"" << std::endl;
 	}
-	void Text::johnDialogue3(const Object::Player& nPlayer)
+	void Text::johnDialogue3(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: Oh thank you" << nPlayer.getName() << "! This is just what I needed." << std::endl;

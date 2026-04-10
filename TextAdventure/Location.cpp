@@ -3,15 +3,14 @@
 #include "Inventory.h"
 #include <iostream>
 #include <vector>
-#include "common.h"
+
 #include "Player.h"
 #include "Text.h"
 #include "RecipeBuilder.h"
 #include "Quest.h"
 
-namespace MilkAndSugar::World
+namespace GameObject
 {
-	//Constructors//
 	Location::Location()
 	{
 		m_index = NULL;
@@ -48,7 +47,7 @@ namespace MilkAndSugar::World
 	}
 
 	//Items//
-	World::Inventory& Location::getInventory()
+	Inventory& Location::getInventory()
 	{
 		return m_locItems;
 	}
@@ -85,7 +84,7 @@ namespace MilkAndSugar::World
 		}
 	}
 
-	void Location::investigateRoom(World::Inventory& playerInventory)
+	void Location::investigateRoom(Inventory& playerInventory)
 	{
 		//std::cout << getInspectText() << std::endl;
 		if (hasItems())
@@ -95,7 +94,7 @@ namespace MilkAndSugar::World
 			return;
 		}
 		std::cout << "You look around and grab: " << std::endl;
-		for (Object::Item* collectedItem : m_locItems.getItems())
+		for (Item* collectedItem : m_locItems.getItems())
 		{
 			if (collectedItem == nullptr) //Safety check
 			{
@@ -141,7 +140,7 @@ namespace MilkAndSugar::World
 		return m_doors[index].locked;
 	}
 
-	bool Location::unlockDoor(int index, World::Inventory& playerInventory)
+	bool Location::unlockDoor(int index, Inventory& playerInventory)
 	{
 		if (index < 0 || index >= m_doors.size())
 		{
@@ -202,7 +201,7 @@ namespace MilkAndSugar::World
 	}
 
 	//Event logic//
-	bool Location::canStartEvent(World::Inventory& playerInventory, int reqAmount)
+	bool Location::canStartEvent(Inventory& playerInventory, int reqAmount)
 	{
 		return false;
 	}
@@ -212,7 +211,7 @@ namespace MilkAndSugar::World
 		return std::string("");
 	}
 
-	void Location::startEvent(Core::RecipeBuilder& nRecipe,Object::Player& nPlayer,Core::Quest& nQuest)
+	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
 		return;
 	}

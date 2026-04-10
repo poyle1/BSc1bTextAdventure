@@ -1,11 +1,14 @@
 #include "RecipeBuilder.h"
-#include "Common.h"
+
 #include <stack>
 #include <iostream>
 #include "Utility"
 #include "Utility.h"
+#include "Item.h"
+#include "Player.h"
+#include "Quest.h"
 
-namespace MilkAndSugar::Core
+namespace GameObject
 {
 	RecipeBuilder::RecipeBuilder()
 	{
@@ -17,7 +20,7 @@ namespace MilkAndSugar::Core
 		m_recipeName = nRecipeName;
 	}
 
-	bool MilkAndSugar::Core::RecipeBuilder::teaBuilder(Object::Player& nPlayer, Core::Quest nQuest)
+	bool RecipeBuilder::teaBuilder(Player& nPlayer, Quest& nQuest)
 	{
 		if (nPlayer.getInventory().getQuestItemTotal() < 5)
 		{
@@ -25,19 +28,19 @@ namespace MilkAndSugar::Core
 			UI::pauseAndFlush();
 			return false;
 		}
-		std::stack<Object::Item*> winningStack1; //best outcome
-		std::stack<Object::Item*> winningStack2; //best outcome
-		std::stack<Object::Item*> winningStack3; //okay outcome
-		std::stack<Object::Item*> winningStack4; //okay outcome
+		std::stack<Item*> winningStack1; //best outcome
+		std::stack<Item*> winningStack2; //best outcome
+		std::stack<Item*> winningStack3; //okay outcome
+		std::stack<Item*> winningStack4; //okay outcome
 
-		std::stack<Object::Item*> playerStack;
-		std::vector<Object::Item*> outputVector;
+		std::stack<Item*> playerStack;
+		std::vector<Item*> outputVector;
 
-		Object::Item mug("Mug1", "1", true);
-		Object::Item teabag("Tea bag2", "2", true);
-		Object::Item sugar("Sugar3", "3", true);
-		Object::Item water("Water4", "4", true);
-		Object::Item milk("Milk5", "5", true);
+		Item mug("Mug1", "1", true);
+		Item teabag("Tea bag2", "2", true);
+		Item sugar("Sugar3", "3", true);
+		Item water("Water4", "4", true);
+		Item milk("Milk5", "5", true);
 
 		winningStack1.push(&mug);
 		winningStack1.push(&teabag);
@@ -97,7 +100,7 @@ namespace MilkAndSugar::Core
 			std::cout << std::endl;
 
 			//Update Game State
-			Object::Item* selectedItem = nPlayer.getInventory().getItem(stackInput - 1); //Get the selected item from the player's inventory
+			Item* selectedItem = nPlayer.getInventory().getItem(stackInput - 1); //Get the selected item from the player's inventory
 			if (!selectedItem->isQuestItem())
 			{
 				std::cout << "That item isn't an ingredient! Please select an ingredient to add to the stack." << std::endl;
@@ -124,7 +127,7 @@ namespace MilkAndSugar::Core
 				{
 					std::cout << "You have made a cup of tea - although in a very strange order..." << std::endl;
 					std::cout << "Now bring it to John." << std::endl;
-					nQuest.advanceState(Core::Quest::Achieved, nPlayer);
+					nQuest.advanceState(Quest::Achieved, nPlayer);
 					eventCompleted = true;
 					return true;
 				}
@@ -132,7 +135,7 @@ namespace MilkAndSugar::Core
 				{
 					std::cout << "You have successfully made a good cup of tea!" << std::endl;
 					std::cout << "Now bring it to John." << std::endl;
-					nQuest.advanceState(Core::Quest::Achieved, nPlayer);
+					nQuest.advanceState(Quest::Achieved, nPlayer);
 					eventCompleted = true;
 					return true;
 				}
@@ -145,7 +148,7 @@ namespace MilkAndSugar::Core
 					}
 
 					//Resets the stacks
-					playerStack = std::stack<Object::Item*>(); //Reset the player's stack
+					playerStack = std::stack<Item*>(); //Reset the player's stack
 					outputVector.clear(); //Reset the output vector
 					system("pause");
 				}

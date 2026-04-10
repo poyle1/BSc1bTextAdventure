@@ -2,12 +2,12 @@
 #include <string>
 #include <map>
 
-namespace MilkAndSugar::Object 
+namespace GameObject 
 {
 	class Player;
 }
 
-namespace MilkAndSugar::UI
+namespace UI
 {
 	class Text
 	{
@@ -25,9 +25,9 @@ namespace MilkAndSugar::UI
 		void printDialogue(std::string artName, std::string dialogue);
 		void gameIntro();
 		void dialogueBox(std::string nCharacter, std::string nArtName);
-		void johnDialogue1(const MilkAndSugar::Object::Player& nPlayer);
-		void johnDialogue2(const MilkAndSugar::Object::Player& nPlayer);
-		void johnDialogue3(const MilkAndSugar::Object::Player& nPlayer);
+		void johnDialogue1(const GameObject::Player& nPlayer);
+		void johnDialogue2(const GameObject::Player& nPlayer);
+		void johnDialogue3(const GameObject::Player& nPlayer);
 		void lineBreak();
 		void lineSpace();
 	};

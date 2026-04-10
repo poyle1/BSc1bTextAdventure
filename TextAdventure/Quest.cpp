@@ -1,8 +1,8 @@
 #include "Quest.h"
-#include "Common.h"
+
 #include "Player.h"
 
-namespace MilkAndSugar::Core {
+namespace GameObject {
 	Quest::Quest()
 	{
 		m_questName = "Default Quest";
@@ -38,7 +38,7 @@ namespace MilkAndSugar::Core {
 		return m_state;
 	}
 
-	void Quest::advanceState(QuestStates nState, Object::Player& nPlayer)
+	void Quest::advanceState(QuestStates nState, Player& nPlayer)
 	{
 		if (m_state == Failed || m_state == Completed)
 		{

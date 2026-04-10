@@ -2,10 +2,10 @@
 #include "Item.h"
 #include <vector>
 #include <iostream>
-#include "Common.h"
+
 
 //Constructors
-namespace MilkAndSugar::World
+namespace GameObject
 {
 	Inventory::Inventory()
 	{
@@ -13,7 +13,7 @@ namespace MilkAndSugar::World
 	}
 
 	//m_items modifiers
-	void Inventory::addItem(Object::Item* nItem)
+	void Inventory::addItem(Item* nItem)
 	{
 		if (nItem == nullptr) {
 			return; //Safety check
@@ -43,7 +43,7 @@ namespace MilkAndSugar::World
 		m_collectedQuestItems = 0;
 	}
 
-	Object::Item* Inventory::getItem(int index)
+	Item* Inventory::getItem(int index)
 	{
 		if (index < 0 || index >= m_items.size()) {
 			return nullptr; //Safety check
@@ -51,7 +51,7 @@ namespace MilkAndSugar::World
 		return m_items[index];
 	}
 
-	std::vector<Object::Item*>& Inventory::getItems()
+	std::vector<Item*>& Inventory::getItems()
 	{
 		return m_items;
 	}
@@ -80,7 +80,7 @@ namespace MilkAndSugar::World
 			std::cout << "None." << std::endl;
 			return;
 		}
-		for ( Object::Item* item : getItems())
+		for (Item* item : getItems())
 		{
 			std::cout << item->getName() << std::endl;
 		}
@@ -101,7 +101,7 @@ namespace MilkAndSugar::World
 
 	void Inventory::outputQuestItems()
 	{
-		for (Object::Item* item : getItems())
+		for (Item* item : getItems())
 		{
 			if (item->isQuestItem())
 			{

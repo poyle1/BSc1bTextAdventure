@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
-#include "Player.h"
-#include "Quest.h"
+#include <string>
 
-namespace MilkAndSugar::Core
+namespace GameObject
 {
+	class Player;
+	class Quest;
+
 	class RecipeBuilder
 	{
 	private:
@@ -19,7 +21,7 @@ namespace MilkAndSugar::Core
 			Milk
 		};
 
-		struct RecipeResults 
+		struct RecipeResults
 		{
 			int score;
 			bool failed;
@@ -28,6 +30,6 @@ namespace MilkAndSugar::Core
 	public:
 		RecipeBuilder();
 		RecipeBuilder(std::string nRecipeName);
-		bool teaBuilder(MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest nQuest);
+		bool teaBuilder(Player& nPlayer, Quest& nQuest);
 	};
 }

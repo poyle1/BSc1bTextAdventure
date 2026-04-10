@@ -4,10 +4,10 @@
 #include <sstream>
 #include "Utility.h"
 #include "Key.h"
-#include "Common.h"
+
 #include "EventRoom.h"
 
-namespace MilkAndSugar::Core
+namespace GameObject
 {
 	//Constructors
 	Game::Game()
@@ -16,7 +16,7 @@ namespace MilkAndSugar::Core
 		m_currentLocation = nullptr;
 	}
 
-	Game::Game(bool nRunning, World::Location* nStartLocation)
+	Game::Game(bool nRunning, Location* nStartLocation)
 	{
 		m_isRunning = nRunning;
 		m_currentLocation = nStartLocation;
@@ -39,7 +39,7 @@ namespace MilkAndSugar::Core
 			std::cout << "Enter: ";
 
 			//User Input//
-			int userInput = MilkAndSugar::UI::getValidIntInput(1, 3);
+			int userInput = UI::getValidIntInput(1, 3);
 			std::cout << std::endl;
 
 			if (userInput == 1)
@@ -58,7 +58,7 @@ namespace MilkAndSugar::Core
 			else if (userInput == 4)
 			{
 				std::cout << "Exiting game - Goodbye for now!" << std::endl;
-				MilkAndSugar::UI::pauseAndFlush();
+				UI::pauseAndFlush();
 				exit(0);
 			}
 		}
@@ -126,12 +126,12 @@ namespace MilkAndSugar::Core
 				getline(rowstream, EventPrompt, ',');
 				getline(rowstream, ReqQItems, ',');
 				getline(rowstream, EventType, ',');
-				World::EventRoom* newEvent = new World::EventRoom(stoi(index), name, EventPrompt, stoi(ReqQItems),EventType);
+				EventRoom* newEvent = new EventRoom(stoi(index), name, EventPrompt, stoi(ReqQItems),EventType);
 				m_worldMap.push_back(newEvent);
 			} 
 			else
 			{
-				World::Location* newLocation = new World::Location(stoi(index), name);
+				Location* newLocation = new Location(stoi(index), name);
 				m_worldMap.push_back(newLocation);
 			}
 		}
@@ -168,8 +168,8 @@ namespace MilkAndSugar::Core
 			getline(rowstream, isLocked, ',');
 			getline(rowstream, doorID, ',');
 
-			World::Location* origin = m_worldMap[stoi(indexOrigin)];
-			World::Location* dest = m_worldMap[stoi(indexDestination)];
+			Location* origin = m_worldMap[stoi(indexOrigin)];
+			Location* dest = m_worldMap[stoi(indexDestination)];
 			bool locked = (isLocked == "true"); //String to bool
 
 			origin->addDoor(dest, locked, doorID);
@@ -210,14 +210,14 @@ namespace MilkAndSugar::Core
 			if (key)
 			{
 				getline(rowstream, keyID, ',');
-				Object::Key* newKey = new Object::Key(name, description, key, keyID);
-				World::Location* pAddTo = m_worldMap[stoi(addTo)];
+				Key* newKey = new Key(name, description, key, keyID);
+				Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newKey);
 			}
 			else
 			{
-				Object::Item* newItem = new Object::Item(name, description, questItem);
-				World::Location* pAddTo = m_worldMap[stoi(addTo)];
+				Item* newItem = new Item(name, description, questItem);
+				Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newItem);
 			}
 		}
@@ -232,12 +232,12 @@ namespace MilkAndSugar::Core
 	}
 
 
-	World::Location* Game::getCurrentLocation()
+	Location* Game::getCurrentLocation()
 	{
 		return m_currentLocation;
 	}
 
-	void Game::setCurrentLocation(World::Location* newLoc)
+	void Game::setCurrentLocation(Location* newLoc)
 	{
 		m_currentLocation = newLoc;
 	}
@@ -260,7 +260,7 @@ namespace MilkAndSugar::Core
 	//debug functions
 	void Game::outputWorld()
 	{
-		for (World::Location* l : m_worldMap)
+		for (Location* l : m_worldMap)
 		{
 			std::cout << l->getIndex() << l->getName() << std::endl;
 		}

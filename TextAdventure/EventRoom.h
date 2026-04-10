@@ -3,7 +3,7 @@
 #include <iostream>
 #include "RecipeBuilder.h"
 
-namespace MilkAndSugar::World
+namespace GameObject
 {
     class EventRoom : public Location
     {
@@ -20,10 +20,10 @@ namespace MilkAndSugar::World
         EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType);
 
         //Event Logic
-        bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount) override;
+        bool canStartEvent(Inventory& playerInventory, int reqAmount) override;
         std::string getEventPrompt() override;
 		std::string getEventType() const;
-        void startEvent(MilkAndSugar::Core::RecipeBuilder& nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest& nQuest) override;
+        void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest) override;
 		bool getIsEventRoom() const override;
         void setIsEventRoom(bool nIsEventRoom);
 

@@ -1,9 +1,9 @@
 #include "Item.h"
 #include <string>
 #include "Key.h"
-#include "Common.h"
 
-namespace MilkAndSugar::Object
+
+namespace GameObject
 {
 	Item::Item()
 	{

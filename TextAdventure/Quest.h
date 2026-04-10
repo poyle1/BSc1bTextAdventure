@@ -2,12 +2,12 @@
 #include <string>
 #include "Player.h"
 
-namespace MilkAndSugar::Object
+namespace GameObject
 {
 	class Player;
 }
 
-namespace MilkAndSugar::Core 
+namespace GameObject 
 {
 	class Quest
 	{
@@ -45,7 +45,7 @@ namespace MilkAndSugar::Core
 
 		//Quest state logic//
 		QuestStates getState() const;
-		void advanceState(QuestStates nState, MilkAndSugar::Object::Player& nPlayer);
+		void advanceState(QuestStates nState, Player& nPlayer);
 		bool isFailed() const;
 
 		//Objective logic//

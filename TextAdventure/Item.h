@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-namespace MilkAndSugar::Object
+namespace GameObject
 {
 	class Item
 	{

@@ -1,5 +1,5 @@
 #include "Player.h"
-namespace MilkAndSugar::Object
+namespace GameObject
 {
 	Player::Player()
 	{
@@ -23,7 +23,7 @@ namespace MilkAndSugar::Object
 		return m_name;
 	}
 
-	MilkAndSugar::World::Inventory& Player::getInventory()
+	Inventory& Player::getInventory()
 	{
 		return m_playerInv;
 	}

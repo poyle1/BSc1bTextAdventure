@@ -1,11 +1,11 @@
 #include "EventRoom.h"
-#include "Common.h"
+
 #include "Utility.h"
 #include "RecipeBuilder.h"
 #include "Text.h"
 #include "Player.h"
 #include "Quest.h"
-namespace MilkAndSugar::World
+namespace GameObject
 {
 	//Constructors
 	EventRoom::EventRoom()
@@ -26,7 +26,7 @@ namespace MilkAndSugar::World
 	}
 
 	//Event logic
-	bool EventRoom::canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount)
+	bool EventRoom::canStartEvent(Inventory& playerInventory, int reqAmount)
 	{
 		if (playerInventory.hasReqQuestItems(reqAmount) && !m_eventCompleted)
 		{
@@ -49,7 +49,7 @@ namespace MilkAndSugar::World
 	{
 		return std::string();
 	}
-	void EventRoom::startEvent(Core::RecipeBuilder& nRecipe, Object::Player& nPlayer, Core::Quest& nQuest)
+	void EventRoom::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
 
 		if (m_eventType == "Tea")
@@ -58,12 +58,12 @@ namespace MilkAndSugar::World
 		}
 		if (m_eventType == "John")
 		{
-			if (nQuest.getState() == Core::Quest::Unknown || nPlayer.getHasActiveQuest() == false)
+			if (nQuest.getState() == Quest::Unknown || nPlayer.getHasActiveQuest() == false)
 			{
 				UI::Text::getInstance().johnDialogue1(nPlayer); //Accessing Text singleton to print dialogue
-				nQuest.advanceState(Core::Quest::Accepted, nPlayer);
+				nQuest.advanceState(Quest::Accepted, nPlayer);
 				UI::pauseAndFlush();
-			} else if (nQuest.getState() == Core::Quest::Accepted)
+			} else if (nQuest.getState() == Quest::Accepted)
 			{
 				UI::Text::getInstance().johnDialogue2(nPlayer);
 				UI::pauseAndFlush();

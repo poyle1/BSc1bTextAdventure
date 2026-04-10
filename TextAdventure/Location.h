@@ -1,18 +1,19 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "Item.h"
 #include "Inventory.h"
 
-//Forward declarations to avoid circular dependencies, as Location has functions that use these classes but they also use Location in their own functions
-namespace MilkAndSugar {
-	namespace UI { class Text; }
-	namespace Core { class RecipeBuilder; class Quest; }
-	namespace Object { class Player; }
+namespace UI {
+	class Text;
 }
 
-namespace MilkAndSugar::World
+namespace GameObject
 {
+	class Player;
+	class Quest;
+	class RecipeBuilder;
+	class Inventory;
+
 	class Location
 	{
 	protected:
@@ -26,9 +27,9 @@ namespace MilkAndSugar::World
 		int m_index; //Used to compare locations to doors and keys
 		std::string m_name;
 		std::string m_inspectText;
-		MilkAndSugar::World::Inventory m_locItems;
+		Inventory m_locItems;
 		std::vector<Door> m_doors; //Each location has a list of doors, 
-		MilkAndSugar::UI::Text* m_dialogue;
+		UI::Text* m_dialogue;
 		
 	public:
 		//Constructors//
@@ -42,27 +43,27 @@ namespace MilkAndSugar::World
 		int getIndex() const; //gets the index number of the selected location
 
 		//Items
-		MilkAndSugar::World::Inventory& getInventory();
+		Inventory& getInventory();
 		bool hasItems();
 		void itemCheck();
 		void outputItems();
-		void investigateRoom(MilkAndSugar::World::Inventory& playerInventory);
+		void investigateRoom(Inventory& playerInventory);
 
 		//Door/Connection Logic
 		void addDoor(Location* targetLoc, bool locked, std::string keyID);
 		int getNumDoors();
 		Location* getDoor(int index);
 		bool isDoorLocked(int index); //Checks if a specific connection is locked, used to check if the player can move to a location before moving there
-		bool unlockDoor(int index, MilkAndSugar::World::Inventory& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
+		bool unlockDoor(int index, Inventory& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
 		void unlockNextDoor(Location* target);
 		void setLocked(int index, bool locked);
 		void outputDoors();
 		void enterLocation();
 
 		//Event logic
-		virtual bool canStartEvent(MilkAndSugar::World::Inventory& playerInventory, int reqAmount);
+		virtual bool canStartEvent(Inventory& playerInventory, int reqAmount);
 		virtual std::string getEventPrompt();
-		virtual void startEvent(MilkAndSugar::Core::RecipeBuilder& nRecipe, MilkAndSugar::Object::Player& nPlayer, MilkAndSugar::Core::Quest& nQuest);
+		virtual void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
 		virtual bool getIsEventRoom() const;
 		virtual void setIsEventRoom(bool nIsEventRoom);
 	};
