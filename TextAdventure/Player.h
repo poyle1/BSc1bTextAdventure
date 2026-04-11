@@ -1,5 +1,8 @@
 #pragma once
+
+#include <string>
 #include <iostream>
+
 #include "Inventory.h"
 
 namespace GameObject

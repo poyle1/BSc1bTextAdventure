@@ -1,5 +1,8 @@
 #include "Quest.h"
 
+#include <string>
+#include <iostream>
+
 #include "Player.h"
 
 namespace GameObject {

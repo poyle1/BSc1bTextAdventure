@@ -1,11 +1,13 @@
 #include "Game.h"
+
 #include <fstream>
 #include <string>
 #include <sstream>
+
 #include "Utility.h"
 #include "Key.h"
-
 #include "EventRoom.h"
+#include "Text.h"
 
 namespace GameObject
 {

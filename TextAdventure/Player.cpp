@@ -1,4 +1,8 @@
 #include "Player.h"
+
+#include <string>
+#include <iostream>
+
 namespace GameObject
 {
 	Player::Player()

@@ -1,10 +1,10 @@
 #include "Inventory.h"
-#include "Item.h"
+
 #include <vector>
 #include <iostream>
 
+#include "Item.h"
 
-//Constructors
 namespace GameObject
 {
 	Inventory::Inventory()
@@ -12,7 +12,6 @@ namespace GameObject
 		m_collectedQuestItems = 0;
 	}
 
-	//m_items modifiers
 	void Inventory::addItem(Item* nItem)
 	{
 		if (nItem == nullptr) {

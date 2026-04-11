@@ -1,20 +1,18 @@
-#include <iostream> //cout
-#include <fstream> // ifstream and ofstream
-#include <string> // getline
-#include <vector>
+#include <iostream>
+#include <string>
 #include <windows.h>
-#include <stack>
-#include "Utility.h"
-#include "Location.h"
+
 #include "EventRoom.h"
+#include "Game.h"
+#include "Inventory.h"
 #include "Item.h"
 #include "Key.h"
-#include "Inventory.h"
+#include "Location.h"
 #include "Player.h"
-#include "Text.h"
-#include "Game.h"
 #include "Quest.h"
 #include "RecipeBuilder.h"
+#include "Text.h"
+#include "Utility.h"
 
 int main()
 {
@@ -43,11 +41,9 @@ int main()
 		system("cls");
 		UI::Text::getInstance().lineBreak(); ///
 		std::cout << "Current location: " << mainGame.getCurrentLocation()->getName() << " | ";
-		mainGame.getCurrentLocation()->itemCheck();
+		mainGame.getCurrentLocation()->searchCheck();
 		UI::Text::getInstance().lineBreak(); ///
 		UI::Text::getInstance().printArt(mainGame.getCurrentLocation()->getName());
-		UI::Text::getInstance().lineBreak(); ///
-		UI::Text::getInstance().printArt(mainGame.getCurrentLocation()->getName() + "Map");
 		UI::Text::getInstance().lineBreak(); ///
 
 		//Inventory and Quest Info//
@@ -85,7 +81,6 @@ int main()
 		if (userInput == startEventOption)
 		{
 			mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest);
-			//UI::pauseAndFlush();
 			continue;
 		}
 		if (!mainPlayer.getHasActiveQuest())

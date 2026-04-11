@@ -1,10 +1,11 @@
 #include "Text.h"
-#include "Utility.h"
-#include "Player.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 
+#include "Utility.h"
+#include "Player.h"
 
 namespace UI
 {
@@ -90,7 +91,7 @@ namespace UI
 		//introArtFrame1
 		//introArtFrame2
 		//introArtFrame3
-		//Then the game start
+		//Then the game starts
 	}
 
 	void Text::dialogueBox(std::string nCharacter, std::string nArtName)

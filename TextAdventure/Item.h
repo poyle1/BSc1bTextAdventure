@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 namespace GameObject
 {
@@ -24,4 +25,3 @@ namespace GameObject
 		virtual std::string getKeyID();
 	};
 }
-

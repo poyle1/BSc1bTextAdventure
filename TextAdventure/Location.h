@@ -1,6 +1,9 @@
 #pragma once
+
 #include <vector>
 #include <string>
+#include <iostream>
+
 #include "Inventory.h"
 
 namespace UI {
@@ -10,46 +13,43 @@ namespace UI {
 namespace GameObject
 {
 	class Player;
-	class Quest;
 	class RecipeBuilder;
-	class Inventory;
+	class Quest;
 
 	class Location
 	{
 	protected:
-		//attributes
 		struct Door
 		{
 			Location* destination = nullptr;
 			bool locked = false;
 			std::string requiredKeyID = "";
 		};
-		int m_index; //Used to compare locations to doors and keys
+		int m_index;
 		std::string m_name;
 		std::string m_inspectText;
 		Inventory m_locItems;
-		std::vector<Door> m_doors; //Each location has a list of doors, 
-		UI::Text* m_dialogue;
+		bool m_searched;
+		std::vector<Door> m_doors;
 		
 	public:
-		//Constructors//
 		Location();
 		Location(const int nIndex, std::string nName);
 
-		//Getters and setters/
 		std::string getName() const;
 		std::string getInspectText() const;
 		void setInspectText(std::string nText);
 		int getIndex() const; //gets the index number of the selected location
 
-		//Items
 		Inventory& getInventory();
 		bool hasItems();
 		void itemCheck();
 		void outputItems();
 		void investigateRoom(Inventory& playerInventory);
+		bool getSearched() const;
+		void setSearched(bool nSearched);
+		void searchCheck();
 
-		//Door/Connection Logic
 		void addDoor(Location* targetLoc, bool locked, std::string keyID);
 		int getNumDoors();
 		Location* getDoor(int index);
@@ -60,7 +60,6 @@ namespace GameObject
 		void outputDoors();
 		void enterLocation();
 
-		//Event logic
 		virtual bool canStartEvent(Inventory& playerInventory, int reqAmount);
 		virtual std::string getEventPrompt();
 		virtual void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);

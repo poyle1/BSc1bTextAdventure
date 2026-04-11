@@ -1,8 +1,10 @@
 #include "RecipeBuilder.h"
 
 #include <stack>
+#include <string>
 #include <iostream>
-#include "Utility"
+#include <vector>
+
 #include "Utility.h"
 #include "Item.h"
 #include "Player.h"

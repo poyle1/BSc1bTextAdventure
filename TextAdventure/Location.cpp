@@ -1,9 +1,11 @@
 #include "Location.h"
-#include "Utility.h"
-#include "Inventory.h"
+
+#include <string>
 #include <iostream>
 #include <vector>
 
+#include "Utility.h"
+#include "Inventory.h"
 #include "Player.h"
 #include "Text.h"
 #include "RecipeBuilder.h"
@@ -15,17 +17,16 @@ namespace GameObject
 	{
 		m_index = NULL;
 		m_name = "A location";
-		m_dialogue = nullptr;
+		m_searched = false;
 	}
 
 	Location::Location(const int nIndex, std::string nName)
 	{
 		m_index = nIndex;
 		m_name = nName;
-		m_dialogue = nullptr;
+		m_searched = false;
 	}
 
-	//Getters and setters//
 	std::string Location::getName() const
 	{
 		return m_name;
@@ -46,7 +47,6 @@ namespace GameObject
 		return m_index;
 	}
 
-	//Items//
 	Inventory& Location::getInventory()
 	{
 		return m_locItems;
@@ -86,28 +86,54 @@ namespace GameObject
 
 	void Location::investigateRoom(Inventory& playerInventory)
 	{
-		//std::cout << getInspectText() << std::endl;
-		if (hasItems())
+		//std::cout << getInspectText() \n\n;
+		std::cout << "ROOM INSPECT TEXT PLACEHOLDER \n\n";
+		if (!m_searched)
 		{
-			std::cout << "There doesn't seem to be anything useful in here." << std::endl;
+			std::cout << "You look around and grab: " << std::endl;
+			for (Item* collectedItem : m_locItems.getItems())
+			{
+				if (collectedItem == nullptr) //Safety check
+				{
+					std::cout << "error" << std::endl;
+				}
+				std::cout << "- " << collectedItem->getName() << std::endl;
+				playerInventory.addItem(collectedItem);
+			}
+			getInventory().clear();
+			m_searched = true;
+			UI::pauseAndFlush();
+		}
+		else if (m_searched)
+		{
+			std::cout << "You've already grabbed everything you need." << std::endl;
 			UI::pauseAndFlush();
 			return;
 		}
-		std::cout << "You look around and grab: " << std::endl;
-		for (Item* collectedItem : m_locItems.getItems())
-		{
-			if (collectedItem == nullptr) //Safety check
-			{
-				std::cout << "error" << std::endl;
-			}
-			std::cout << "- " << collectedItem->getName() << std::endl;
-			playerInventory.addItem(collectedItem);
-		}
-		getInventory().clear();
-		UI::pauseAndFlush();
 	}
 
-	//Door/connection Logic//
+	bool Location::getSearched() const
+	{
+		return m_searched;
+	}
+
+	void Location::setSearched(bool nSearched)
+	{
+		m_searched = nSearched;
+	}
+
+	void Location::searchCheck()
+	{
+		if (m_searched)
+		{
+			std::cout << "AREA SEARCHED" << std::endl;
+		}
+		else
+		{
+			std::cout << "AREA UNSEARCHED" << std::endl;
+		}
+	}
+
 	void Location::addDoor(Location* nDestination, bool nLocked, std::string nKeyID)
 	{
 		Door newDoor;
@@ -200,7 +226,6 @@ namespace GameObject
 		UI::pauseAndFlush();
 	}
 
-	//Event logic//
 	bool Location::canStartEvent(Inventory& playerInventory, int reqAmount)
 	{
 		return false;
@@ -215,10 +240,12 @@ namespace GameObject
 	{
 		return;
 	}
+
 	bool Location::getIsEventRoom() const
 	{
 		return false;
 	}
+
 	void Location::setIsEventRoom(bool nIsEventRoom)
 	{
 		return;

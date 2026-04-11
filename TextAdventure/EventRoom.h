@@ -1,10 +1,15 @@
 #pragma once
 #include "Location.h"
+
+#include <string>
 #include <iostream>
-#include "RecipeBuilder.h"
 
 namespace GameObject
 {
+	class Player;
+	class Quest;
+	class RecipeBuilder;
+
     class EventRoom : public Location
     {
     private:
@@ -15,11 +20,9 @@ namespace GameObject
 		bool m_isEventRoom;
 
     public:
-        //Constructors
         EventRoom();
         EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType);
 
-        //Event Logic
         bool canStartEvent(Inventory& playerInventory, int reqAmount) override;
         std::string getEventPrompt() override;
 		std::string getEventType() const;

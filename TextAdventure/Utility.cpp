@@ -1,6 +1,7 @@
 #include "Utility.h"
-#include <iostream>
 
+#include <iostream>
+#include <string>
 
 namespace UI
 {

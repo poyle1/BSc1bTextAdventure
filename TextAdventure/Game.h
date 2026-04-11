@@ -1,8 +1,9 @@
 #pragma once
-#include "Text.h"
 #include <iostream>
-#include "Location.h"
+#include <string>
 #include <vector>
+
+#include "Location.h"
 
 namespace GameObject
 {

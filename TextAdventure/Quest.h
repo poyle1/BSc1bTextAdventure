@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Player.h"
+#include <iostream>
 
 namespace GameObject
 {
@@ -37,20 +37,17 @@ namespace GameObject
 		Quest();
 		Quest(std::string nName, std::string nDesc);
 
-		//Basic Getters and setters//
 		std::string getQuestName() const;
 		void setQuestName(std::string nName);
 		std::string getQuestDescription() const;
 		void setQuestDescription(std::string nDesc);
 
-		//Quest state logic//
 		QuestStates getState() const;
 		void advanceState(QuestStates nState, Player& nPlayer);
 		bool isFailed() const;
 
-		//Objective logic//
-		void addObjective(std::string objectiveName, std::string objectiveDescription);
+		/*void addObjective(std::string objectiveName, std::string objectiveDescription);
 		void objectiveCompleted(std::string objectiveName);
-		void outputObjectives() const;
+		void outputObjectives() const;*/
 	};
 }

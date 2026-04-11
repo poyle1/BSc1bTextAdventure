@@ -1,10 +1,14 @@
 #include "EventRoom.h"
 
+#include <string>
+#include <iostream>
+
 #include "Utility.h"
 #include "RecipeBuilder.h"
 #include "Text.h"
 #include "Player.h"
 #include "Quest.h"
+
 namespace GameObject
 {
 	//Constructors
@@ -15,6 +19,7 @@ namespace GameObject
 		m_questItemsRequired = 0;
 		m_eventType = "";
 		m_isEventRoom = true;
+		m_searched = false;
 	}
 	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName)
 	{
@@ -23,6 +28,7 @@ namespace GameObject
 		m_questItemsRequired = nQItemReq;
 		m_eventType = nEventType;
 		m_isEventRoom = true;
+		m_searched = false;
 	}
 
 	//Event logic
