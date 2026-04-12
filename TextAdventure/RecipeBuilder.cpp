@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "Quest.h"
+#include "Text.h"
 
 namespace GameObject
 {
@@ -159,4 +160,168 @@ namespace GameObject
 			maxValidInput = nPlayer.getInventory().getSize();
 		}
 	}
+
+	bool RecipeBuilder::teaBuilderMkII(Player& nPlayer, Quest& nQuest)
+	{
+		if (nPlayer.getInventory().getQuestItemTotal() < 5)
+		{
+			std::cout << "You don't have all the ingredients to make a cup of tea! Come back when you have collected them all." << std::endl;
+			UI::pauseAndFlush();
+			return false;
+		}
+
+		std::stack<Item*> playerStack;
+		std::vector<Item*> outputVector;
+		int score = 0;
+		int ingredientScore = 0;
+		int steps = 0;
+
+		Item mug("Mug1", "1", true);
+		Item teabag("Tea bag2", "2", true);
+		Item sugar("Sugar3", "3", true);
+		Item water("Water4", "4", true);
+		Item milk("Milk5", "5", true);
+
+		bool eventCompleted = false;
+		int maxValidInput = nPlayer.getInventory().getSize();
+
+		while (!eventCompleted)
+		{
+			system("cls");
+			std::cout << "====================================================================================================\n";
+			std::cout << "Make a cup of tea by entering the ingredients in the correct order!" << std::endl;
+			std::cout << "Hint: Milk is added last!" << std::endl;
+			std::cout << "====================================================================================================\n";
+
+			//Stack Info
+			std::cout << "You have: " << std::endl;
+			nPlayer.getInventory().outputInventoryWithNumbers();
+
+			if (!outputVector.empty())
+			{
+				std::cout << "Current Stack:" << std::endl;
+				std::cout << "=-=-=-=-=-=-=" << std::endl;
+				for (int i = 0; i < outputVector.size(); i++)
+				{
+					std::cout << "-" << outputVector.at(i)->getName() << std::endl;
+				}
+				std::cout << "=-=-=-=-=-=-=" << std::endl;
+			}
+
+			//Player Input
+			std::cout << std::endl;
+			std::cout << "Enter the item you want to add to the stack: ";
+			std::cout << std::endl;
+			int stackInput = UI::getValidIntInput(1, nPlayer.getInventory().getSize());
+			std::cout << std::endl;
+
+			//Update Game State
+			Item* selectedItem = nPlayer.getInventory().getItem(stackInput - 1); //Get the selected item from the player's inventory
+			if (!selectedItem->isQuestItem())
+			{
+				std::cout << "That item isn't an ingredient! Please select an ingredient to add to the stack." << std::endl;
+				UI::pauseAndFlush();
+				continue; //Skip the rest of the loop and prompt the player for input again
+			}
+
+			if (steps == 0)
+			{
+				if (selectedItem == &teabag)
+				{
+					std::cout << "You place a tea bag on the counter. Thats not quite a cup of tea, is it? " << std::endl;
+					UI::Text::getInstance().lineSpace();
+					std::cout << "...lets try again!" << std::endl;
+				}
+				else if (selectedItem == &sugar)
+				{
+					std::cout << "You pour sugar onto the counter. I hope you like ants." << std::endl;
+					UI::Text::getInstance().lineSpace();
+					std::cout << "...lets try again!" << std::endl;
+				}
+				else if (selectedItem == &water)
+				{
+					std::cout << "You pour boiling water onto the kitchen counter. Well done." << std::endl;
+					UI::Text::getInstance().lineSpace();
+					std::cout << "...lets try again!" << std::endl;
+				}
+				else if (selectedItem == &milk)
+				{
+					std::cout << "You pour milk onto the kitchen counter. It's a dairy disaster." << std::endl;
+					UI::Text::getInstance().lineSpace();
+					std::cout << "...lets try again!" << std::endl;
+				}
+				UI::pauseAndFlush();
+				continue; //Skip the rest of the loop and prompt the player for input again
+			}
+			else if (steps == 1)
+			{
+				if (selectedItem == &teabag || selectedItem == &sugar)
+				{
+					std::cout << "You put the " << selectedItem->getName() << " in the mug." << std::endl;
+					UI::Text::getInstance().lineSpace();
+					
+					UI::pauseAndFlush();
+					score 
+					continue; //Skip the rest of the loop and prompt the player for input again
+				}
+			}
+			
+
+
+
+			playerStack.push(selectedItem); //The item is added to the player's stack
+			outputVector.push_back(selectedItem); //The item is also added to a vector to display the current stack
+			nPlayer.getInventory().removeItem(stackInput - 1); //The item is removed from the player's inventory
+
+			ingredientScore += score2DArray
+			steps++;
+
+			//Check Win Condition
+			if (playerStack.size() == 5)
+			{
+
+				std::cout << "Final stack:" << std::endl;
+				std::cout << "------------------" << std::endl;
+				for (int i = 0; i < outputVector.size(); i++)
+				{
+					std::cout << "-" << outputVector.at(i)->getName() << std::endl;
+				}
+				std::cout << "------------------" << std::endl;
+
+				if (playerStack == winningStack3 || playerStack == winningStack4)
+				{
+					std::cout << "You have made a cup of tea - although in a very strange order..." << std::endl;
+					std::cout << "Now bring it to John." << std::endl;
+					nQuest.advanceState(Quest::Achieved, nPlayer);
+					eventCompleted = true;
+					return true;
+				}
+				if (playerStack == winningStack1 || playerStack == winningStack2)
+				{
+					std::cout << "You have successfully made a good cup of tea!" << std::endl;
+					std::cout << "Now bring it to John." << std::endl;
+					nQuest.advanceState(Quest::Achieved, nPlayer);
+					eventCompleted = true;
+					return true;
+				}
+				else
+				{
+					std::cout << "You've mad a tea... but it isn't very good. Try again!" << std::endl;
+					for (int i = 0; i < outputVector.size(); i++)
+					{
+						nPlayer.getInventory().addItem(outputVector.at(i)); //Return the items to the player's inventory
+					}
+
+					//Resets the stacks
+					playerStack = std::stack<Item*>(); //Reset the player's stack
+					outputVector.clear(); //Reset the output vector
+					system("pause");
+				}
+				system("pause");
+			}
+			maxValidInput = nPlayer.getInventory().getSize();
+		}
+	}
+
+
 }

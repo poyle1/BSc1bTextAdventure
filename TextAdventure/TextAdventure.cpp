@@ -28,6 +28,7 @@ int main()
 	//Main Game Loop//
 	while (true)
 	{
+		system("cls");
 		//Available Actions Logic//
 		int investigateRoomOption = mainGame.getCurrentLocation()->getNumDoors() + 1;
 		int startEventOption = mainGame.getCurrentLocation()->getNumDoors() + 2;
@@ -37,45 +38,22 @@ int main()
 			maxValidInput = startEventOption;
 		}
 
-		//Current Room Info//
-		system("cls");
-		UI::Text::getInstance().lineBreak(); ///
-		std::cout << "Current location: " << mainGame.getCurrentLocation()->getName() << " | ";
-		mainGame.getCurrentLocation()->searchCheck();
-		UI::Text::getInstance().lineBreak(); ///
-		UI::Text::getInstance().printArt(mainGame.getCurrentLocation()->getName());
-		UI::Text::getInstance().lineBreak(); ///
+		//Current Location & Art//
+		mainGame.currentLocationInfo();
 
-		//Inventory and Quest Info//
+		//Inventory Info//
 		std::cout << "Collected Items: ";
 		mainPlayer.getInventory().outputInventory();
-		std::cout << "Quest: ";
-		if (mainPlayer.getHasActiveQuest())
-		{
-			std::cout << mainQuest.getQuestName() << " - " << mainQuest.getQuestDescription() << std::endl;
-			std::cout << "Total Ingredients: " << mainPlayer.getInventory().getQuestItemTotal() << std::endl;
-		}
-		else
-		{
-			std::cout << "None" << std::endl;
-		}
-		UI::Text::getInstance().lineBreak(); ///
+
+		//Quest Status//
+		mainQuest.currentQuestInfo(mainPlayer);
 
 		//Available Actions//
-		std::cout << "Available Actions:" << "\n";
-		mainGame.getCurrentLocation()->outputDoors();
-		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
-		if (mainGame.getCurrentLocation()->getIsEventRoom() == true)
-		{
-			std::cout << startEventOption << ") " << mainGame.getCurrentLocation()->getEventPrompt();
-		}
-		std::cout << std::endl;
-		UI::Text::getInstance().lineBreak(); ///
-		std::cout << "Enter a character to complete an action:\n\n";
+		mainGame.currentActionsInfo(investigateRoomOption, startEventOption);
 
 		//User Input//
 		int userInput = UI::getValidIntInput(1, maxValidInput);
-		std::cout << std::endl;
+		UI::Text::getInstance().lineBreak();
 
 
 		if (userInput == startEventOption)
@@ -111,7 +89,6 @@ int main()
 			}
 			//Enter Chosen Location//
 			mainGame.setCurrentLocation(chosenLocation);
-			//mainGame.getCurrentLocation()->enterLocation();
 		}
 	}
 }

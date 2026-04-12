@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+#include "Text.h"
 #include "Player.h"
 
 namespace GameObject {
@@ -72,5 +73,19 @@ namespace GameObject {
 	bool Quest::isFailed() const
 	{
 		return m_state == Failed;
+	}
+	void Quest::currentQuestInfo(Player& nPlayer) const
+	{
+		std::cout << "Quest: ";
+		if (nPlayer.getHasActiveQuest())
+		{
+			std::cout << m_questName << " - " << m_questDescription << std::endl;
+			std::cout << "Total Ingredients: " << nPlayer.getInventory().getQuestItemTotal() << std::endl;
+		}
+		else
+		{
+			std::cout << "None" << std::endl;
+		}
+		UI::Text::getInstance().lineBreak();
 	}
 }

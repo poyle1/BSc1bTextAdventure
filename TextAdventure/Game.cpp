@@ -259,6 +259,30 @@ namespace GameObject
 		}
 	}
 
+	void Game::currentLocationInfo()
+	{
+		UI::Text::getInstance().lineBreak(); ///
+		std::cout << "Current location: " << m_currentLocation->getName() << " | ";
+		m_currentLocation->searchCheck();
+		UI::Text::getInstance().lineBreak(); ///
+		UI::Text::getInstance().printArt(m_currentLocation->getName());
+		UI::Text::getInstance().lineBreak(); ///
+	}
+
+	void Game::currentActionsInfo(int investigateRoomOption, int startEventOption)
+	{
+		std::cout << "Available Actions:" << "\n";
+		getCurrentLocation()->outputDoors();
+		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
+		if (getCurrentLocation()->getIsEventRoom() == true)
+		{
+			std::cout << startEventOption << ") " << getCurrentLocation()->getEventPrompt();
+		}
+		std::cout << std::endl;
+		UI::Text::getInstance().lineBreak(); ///
+		std::cout << "Enter a character to complete an action:\n\n";
+	}
+
 	//debug functions
 	void Game::outputWorld()
 	{

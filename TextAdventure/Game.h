@@ -32,6 +32,9 @@ namespace GameObject
 		void setCurrentLocation(Location* newLoc);
 		void movePlayer(int nextLocationIndex);
 
+		void currentLocationInfo();
+		void currentActionsInfo(int investigateRoomOption, int startEventOption);
+
 		//debug functions
 		void outputWorld();
 	};

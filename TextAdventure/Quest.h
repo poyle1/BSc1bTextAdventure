@@ -6,6 +6,9 @@ namespace GameObject
 {
 	class Player;
 }
+namespace UI {
+	class Text;
+}
 
 namespace GameObject 
 {
@@ -49,5 +52,7 @@ namespace GameObject
 		/*void addObjective(std::string objectiveName, std::string objectiveDescription);
 		void objectiveCompleted(std::string objectiveName);
 		void outputObjectives() const;*/
+
+		void currentQuestInfo(Player& nPlayer) const; 
 	};
 }
