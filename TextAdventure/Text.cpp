@@ -108,10 +108,10 @@ namespace UI
 	void Text::johnDialogue1(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
-		std::cout << "John: Oh hello " << nPlayer.getName() << "!" << std::endl;
-		std::cout << "John: I'm glad you're here - I was getting a bit bored on my own." << std::endl;
-		std::cout << "John: I was just about to make myself a tea, but I've unpacked the shopping in a VERY strange way..." << std::endl;
-		std::cout << "John: Please could you have a look around and make me a tea once you have everything?" << std::endl;
+		std::cout << "John: \"Oh hello " << nPlayer.getName() << "!\"" << std::endl;
+		std::cout << "John: \"I'm glad you're here - I was getting a bit bored on my own.\"" << std::endl;
+		std::cout << "John: \"I was just about to make myself a tea, but I've unpacked the shopping in a VERY strange way...\"" << std::endl;
+		std::cout << "John: \"Please could you have a look around and make me a tea once you have everything?\"" << std::endl;
 	}
 	void Text::johnDialogue2(const GameObject::Player& nPlayer)
 	{
@@ -120,16 +120,40 @@ namespace UI
 		std::cout << "\"The house is a bit of a mess, but you should be able to find what you need if you look around.\"" << std::endl;
 		std::cout << "\"There is a key somewhere in here for my bedroom. I think I left the sugar in there...\"" << std::endl;
 	}
-	void Text::johnDialogue3(const GameObject::Player& nPlayer)
+	
+	void Text::johnDialogueBadEnding(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
-		std::cout << "John: Oh thank you" << nPlayer.getName() << "! This is just what I needed." << std::endl;
+		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
+		std::cout << "John: *sips*" << std::endl;
+		std::cout << "John: *...*" << std::endl;
+		std::cout << "John: *sips*..." << std::endl;
+		UI::pauseAndFlush;
+		std::cout << "John falls to the floor." << std::endl;
+	}
+	void Text::johnDialogueNeutralEnding(const GameObject::Player& nPlayer)
+	{
+		dialogueBox("John", "JOHN");
+		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
+		std::cout << "John: *sips*" << std::endl;
+		std::cout << "John: *...*" << std::endl;
+		std::cout << "John: *sips*" << std::endl;
+		std::cout << "John: \"Umm...Thanks... Yeah, this is good, thanks...\"" << std::endl;
+		UI::pauseAndFlush;
+		std::cout << "John: \"....Hmm, whats that?\"" << std::endl;
+		std::cout << "John: \"Oh yeah, I suppose I'll tell you about a tale of lost histories then.\"" << std::endl;
+	}
+	void Text::johnDialogueGoodEnding(const GameObject::Player& nPlayer)
+	{
+		dialogueBox("John", "JOHN");
+		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *blows*" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
-		std::cout << "John: *slurps*" << std::endl;
-		std::cout << "John: Now then, let me tell you all about a tale of lost histories!" << std::endl;
+		std::cout << "John: \"Thats lovely, great stuff.\"" << std::endl;
+		UI::pauseAndFlush;
+		std::cout << "John: \"Now then, let me tell you all about a tale of lost histories!\"" << std::endl;
 	}
 	void Text::lineBreak()
 	{

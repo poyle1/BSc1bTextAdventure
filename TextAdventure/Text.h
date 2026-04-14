@@ -28,7 +28,9 @@ namespace UI
 		void dialogueBox(std::string nCharacter, std::string nArtName);
 		void johnDialogue1(const GameObject::Player& nPlayer);
 		void johnDialogue2(const GameObject::Player& nPlayer);
-		void johnDialogue3(const GameObject::Player& nPlayer);
+		void johnDialogueBadEnding(const GameObject::Player& nPlayer);
+		void johnDialogueNeutralEnding(const GameObject::Player& nPlayer);
+		void johnDialogueGoodEnding(const GameObject::Player& nPlayer);
 		void lineBreak();
 		void lineSpace();
 	};

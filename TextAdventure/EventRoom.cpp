@@ -57,21 +57,59 @@ namespace GameObject
 	}
 	void EventRoom::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
-
 		if (m_eventType == "Tea")
 		{
-			nRecipe.teaBuilder(nPlayer, nQuest);
-		}
-		if (m_eventType == "John")
-		{
-			if (nQuest.getState() == Quest::Unknown || nPlayer.getHasActiveQuest() == false)
+			if (nPlayer.getInventory().getQuestItemTotal() < nRecipe.getRecipeSteps())
 			{
-				UI::Text::getInstance().johnDialogue1(nPlayer); //Accessing Text singleton to print dialogue
+				std::cout << "You don't have all " << nRecipe.getRecipeSteps() << " ingredients needed! Come back when you have collected them all." << std::endl;
+				UI::pauseAndFlush();
+				return;
+			}
+			nQuest.advanceState(Quest::Achieved, nPlayer);
+			nRecipe.teaBuilderMkII(nPlayer, nQuest);
+			return;
+		}
+		else if (m_eventType == "John")
+		{
+			if (nQuest.getState() == Quest::Unknown)
+			{
+				UI::Text::getInstance().johnDialogue1(nPlayer);
 				nQuest.advanceState(Quest::Accepted, nPlayer);
 				UI::pauseAndFlush();
-			} else if (nQuest.getState() == Quest::Accepted)
+			} 
+			else if (nQuest.getState() == Quest::Accepted)
 			{
 				UI::Text::getInstance().johnDialogue2(nPlayer);
+				UI::pauseAndFlush();
+			}
+			else if (nQuest.getState() == Quest::Achieved)
+			{
+				for (int i = 0; i < nPlayer.getInventory().getItems().size(); i++)
+				{
+					if (nPlayer.getInventory().getItem(i)->isQuestItem())
+					{
+						if (nPlayer.getInventory().getItem(i)->getScoreValue() <= 10) //Bad ending
+						{
+							std::cout << "You pass the tea over to John." << std::endl;
+							UI::Text::getInstance().johnDialogueBadEnding(nPlayer);
+							nQuest.setResult(Quest::Bad);
+						} 
+						else if //Neutral Ending
+							(nPlayer.getInventory().getItem(i)->getScoreValue() > 10 && nPlayer.getInventory().getItem(i)->getScoreValue() < 19)
+						{
+							std::cout << "You pass the tea over to John." << std::endl;
+							UI::Text::getInstance().johnDialogueNeutralEnding(nPlayer);
+							nQuest.setResult(Quest::Neutral);
+						}
+						else //Good Ending
+						{
+							std::cout << "You pass the tea over to John." << std::endl;
+							UI::Text::getInstance().johnDialogueGoodEnding(nPlayer);
+							nQuest.setResult(Quest::Good);
+						}
+					}
+				}
+				nQuest.advanceState(Quest::Completed, nPlayer);
 				UI::pauseAndFlush();
 			}
 		}

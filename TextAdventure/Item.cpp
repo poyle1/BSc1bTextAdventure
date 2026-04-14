@@ -43,6 +43,26 @@ namespace GameObject
 		m_description = nDesc;
 	}
 
+	int Item::getScoreValue()
+	{
+		return m_scoreValue;
+	}
+
+	void Item::setScoreValue(int nScore)
+	{
+		m_scoreValue = nScore;
+	}
+
+	int Item::getRecipeIndex()
+	{
+		return m_recipeIndex;
+	}
+
+	void Item::setRecipeIndex(int nIndex)
+	{
+		m_recipeIndex = nIndex;
+	}
+
 	std::string Item::toString()
 	{
 		return m_name + "." + m_description;

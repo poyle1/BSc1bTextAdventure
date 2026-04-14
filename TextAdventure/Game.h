@@ -7,6 +7,8 @@
 
 namespace GameObject
 {
+	class Quest;
+
 	class Game
 	{
 	private:
@@ -22,6 +24,10 @@ namespace GameObject
 		void mainMenu();
 		void displayRules();
 		void displayCredits();
+		void gameOver(Quest& nQuest);
+
+		bool getIsRunning() const;
+		void setIsRunning(bool nRunning);
 
 		void loadLocations(std::string filename);
 		void loadDoors(std::string filename);

@@ -12,12 +12,14 @@ namespace GameObject {
 		m_questName = "Default Quest";
 		m_questDescription = "This is a default quest description.";
 		m_state = Unknown;
+		m_result = Incomplete;
 	}
 	Quest::Quest(std::string nName, std::string nDesc)
 	{
 		m_questName = nName;
 		m_questDescription = nDesc;
 		m_state = Unknown;
+		m_result = Incomplete;
 	}
 	
 	std::string Quest::getQuestName() const
@@ -37,12 +39,12 @@ namespace GameObject {
 	{
 		m_questDescription = nDesc;
 	}
-	Quest::QuestStates Quest::getState() const
+	Quest::questStates Quest::getState() const
 	{
 		return m_state;
 	}
 
-	void Quest::advanceState(QuestStates nState, Player& nPlayer)
+	void Quest::advanceState(questStates nState, Player& nPlayer)
 	{
 		if (m_state == Failed || m_state == Completed)
 		{
@@ -69,10 +71,17 @@ namespace GameObject {
 			nPlayer.setHasActiveQuest(false);
 		}
 	}
-
 	bool Quest::isFailed() const
 	{
 		return m_state == Failed;
+	}
+	Quest::questResult Quest::getResult() const
+	{
+		return m_result;
+	}
+	void Quest::setResult(questResult nResult)
+	{
+		m_result = nResult;
 	}
 	void Quest::currentQuestInfo(Player& nPlayer) const
 	{

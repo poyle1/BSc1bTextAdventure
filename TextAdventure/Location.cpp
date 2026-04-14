@@ -90,19 +90,26 @@ namespace GameObject
 		std::cout << "ROOM INSPECT TEXT PLACEHOLDER \n\n";
 		if (!m_searched)
 		{
-			std::cout << "You look around and grab: " << std::endl;
-			for (Item* collectedItem : m_locItems.getItems())
+			if (hasItems())
 			{
-				if (collectedItem == nullptr) //Safety check
+				std::cout << "You look around and grab: " << std::endl;
+				for (Item* collectedItem : m_locItems.getItems())
 				{
-					std::cout << "error" << std::endl;
+					if (collectedItem == nullptr) //Safety check
+					{
+						std::cout << "error" << std::endl;
+					}
+					std::cout << "- " << collectedItem->getName() << std::endl;
+					playerInventory.addItem(collectedItem);
 				}
-				std::cout << "- " << collectedItem->getName() << std::endl;
-				playerInventory.addItem(collectedItem);
+				getInventory().clear();
 			}
-			getInventory().clear();
-			m_searched = true;
-			UI::pauseAndFlush();
+			else
+			{
+				std::cout << "There isn't anything useful here." << std::endl;
+				m_searched = true;
+				UI::pauseAndFlush();
+			}
 		}
 		else if (m_searched)
 		{

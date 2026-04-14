@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 
+#include "Quest.h"
 #include "Utility.h"
 #include "Key.h"
 #include "EventRoom.h"
@@ -95,6 +96,55 @@ namespace GameObject
 		std::cout << std::endl;
 		std::cout << "====================================================================================================\n";
 		system("pause");
+	}
+
+	void Game::gameOver(Quest& nQuest)
+	{
+		if (nQuest.getResult() == Quest::Bad)
+		{ 
+			std::cout << "====================================================================================================\n";
+			UI::Text::getInstance().printArt("BadEnd");
+		}
+		else if (nQuest.getResult() == Quest::Neutral)
+		{
+			std::cout << "====================================================================================================\n";
+			UI::Text::getInstance().printArt("NeutralEnd");
+		}
+		else //Good result
+		{
+			std::cout << "====================================================================================================\n";
+			UI::Text::getInstance().printArt("GoodEnd");
+		}
+		std::cout << "====================================================================================================\n";
+		std::cout << "Enter '1' to quit the game.\n";
+		std::cout << "Enter '2' to return to the main menu.\n";
+		std::cout << "====================================================================================================\n";
+		std::cout << "Enter: ";
+
+		//User Input//
+		int userInput = UI::getValidIntInput(1, 2);
+		std::cout << std::endl;
+
+		if (userInput == 1)
+		{
+			std::cout << "Exiting game - Thanks for playing!" << std::endl;
+			UI::pauseAndFlush();
+			exit(0);
+		}
+		else if (userInput == 2)
+		{
+			return;
+		}
+	}
+
+	bool Game::getIsRunning() const
+	{
+		return m_isRunning;
+	}
+
+	void Game::setIsRunning(bool nRunning)
+	{
+		m_isRunning = nRunning;
 	}
 
 	void Game::loadLocations(std::string filename)

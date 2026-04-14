@@ -15,7 +15,7 @@ namespace GameObject
 	class Quest
 	{
 	public:
-		enum QuestStates
+		enum questStates
 		{
 			Unknown,
 			Aware,
@@ -24,11 +24,19 @@ namespace GameObject
 			Completed,
 			Failed
 		};
+		enum questResult
+		{
+			Incomplete,
+			Good,
+			Neutral,
+			Bad
+		};
 
 	private:
 		std::string m_questName;
 		std::string m_questDescription;
-		QuestStates m_state = Unknown;
+		questStates m_state = Unknown;
+		questResult m_result = Incomplete;
 		struct QuestObjectiveInfo
 		{
 			std::string objectiveName;
@@ -45,9 +53,11 @@ namespace GameObject
 		std::string getQuestDescription() const;
 		void setQuestDescription(std::string nDesc);
 
-		QuestStates getState() const;
-		void advanceState(QuestStates nState, Player& nPlayer);
+		questStates getState() const;
+		void advanceState(questStates nState, Player& nPlayer);
 		bool isFailed() const;
+		questResult getResult() const;
+		void setResult(questResult nResult);
 
 		/*void addObjective(std::string objectiveName, std::string objectiveDescription);
 		void objectiveCompleted(std::string objectiveName);
