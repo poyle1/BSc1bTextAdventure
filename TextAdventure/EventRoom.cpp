@@ -47,16 +47,25 @@ namespace GameObject
 	{
 		if (m_eventPrompt.empty())
 		{
-			return "ERROR";
+			return "ERROR MISSING EVENT PROMPT";
 		}
 		return m_eventPrompt;
 	}
 	std::string EventRoom::getEventType() const
 	{
-		return std::string();
+		return m_eventType;
 	}
+	void EventRoom::setEventType(std::string nType)
+	{
+		m_eventType = nType;
+	}
+
+	//m_eventType is set via ifstream to determine what the EventRoom activates.
 	void EventRoom::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
+		//The 'Tea' event advances the quest and starts the
+		// RecipeBuilder minigame if the player has quest items
+		// >= the amount of steps in the recipe
 		if (m_eventType == "Tea")
 		{
 			if (nPlayer.getInventory().getQuestItemTotal() < nRecipe.getRecipeSteps())
@@ -69,6 +78,8 @@ namespace GameObject
 			nRecipe.teaBuilderMkII(nPlayer, nQuest);
 			return;
 		}
+		//The 'John' event advances the quest and delivers dialogue to 
+		// the player based on the current quest state
 		else if (m_eventType == "John")
 		{
 			if (nQuest.getState() == Quest::Unknown)

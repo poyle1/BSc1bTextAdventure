@@ -32,17 +32,15 @@ namespace GameObject
 			system("cls");
 			std::cout << "====================================================================================================\n";
 			UI::Text::getInstance().printArt("TITLESCREEN");
-			
 			std::cout << "====================================================================================================\n";
-			std::cout << "Enter '1' to start a new game.\n";
-			std::cout << "Enter '2' for the game rules.\n";
-			std::cout << "Enter '3' to open the game credits.\n";
-			std::cout << "Enter '4' to quit the game.\n";
+			std::cout << "\tEnter 1) New game.\n";
+			std::cout << "\tEnter 2) How to play.\n";
+			std::cout << "\tEnter 3) Credits.\n";
+			std::cout << "\tEnter 4) Quit game.\n";
 			std::cout << "====================================================================================================\n";
-			std::cout << "Enter: ";
 
 			//User Input//
-			int userInput = UI::getValidIntInput(1, 3);
+			int userInput = UI::getValidIntInput(1, 4);
 			std::cout << std::endl;
 
 			if (userInput == 1)
@@ -70,7 +68,13 @@ namespace GameObject
 	void Game::displayRules()
 	{
 		system("cls");
-		UI::Text::getInstance().printDialogue("RULES", "1) Collect ingredients. 2) Make the tea!");
+		UI::Text::getInstance().printArt("RULES");
+		UI::Text::getInstance().lineSpace();
+		char rules[] = "Navigate the house and complete actions by entering the respective\n"
+						"number. Search rooms to find items that may help you in your quest.\n\n"
+						"Speak to John to begin.\n";
+		printf(rules);
+		UI::pauseAndFlush();
 	}
 
 	void Game::displayCredits()
@@ -92,7 +96,7 @@ namespace GameObject
 		std::cout << "Back garden: Untitled by Joan G. Stark." << std::endl;
 		std::cout << "Shed: Untitled by Anonymous" << std::endl;
 		std::cout << "QuestCompleteP1: Coffee mug by H P Barmario." << std::endl;
-		std::cout << "Misc art and titles created by the ASCII Art Archive ASCII Art Tools." << std::endl;
+		std::cout << "Misc art and titles created using the ASCII Art Archive ASCII Art Tools." << std::endl;
 		std::cout << std::endl;
 		std::cout << "====================================================================================================\n";
 		system("pause");
@@ -321,14 +325,15 @@ namespace GameObject
 
 	void Game::currentActionsInfo(int investigateRoomOption, int startEventOption)
 	{
-		std::cout << "Available Actions:" << "\n";
+		std::cout << "\tAvailable Actions:" << "\n";
 		getCurrentLocation()->outputDoors();
-		std::cout << investigateRoomOption << ") Investigate the room" << std::endl;
+		std::cout << "\t" << investigateRoomOption << ") Investigate the room" << std::endl;
 		if (getCurrentLocation()->getIsEventRoom() == true)
 		{
-			std::cout << startEventOption << ") " << getCurrentLocation()->getEventPrompt();
+			std::cout << "\t" << startEventOption << ") " << getCurrentLocation()->getEventPrompt();
+			UI::Text::getInstance().lineSpace();
 		}
-		std::cout << std::endl;
+		UI::Text::getInstance().lineSpace();
 		UI::Text::getInstance().lineBreak(); ///
 		std::cout << "Enter a character to complete an action:\n\n";
 	}

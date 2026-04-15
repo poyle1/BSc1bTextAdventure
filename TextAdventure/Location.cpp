@@ -218,7 +218,7 @@ namespace GameObject
 	{
 		for (int i = 0; i < m_doors.size(); i++)
 		{
-			std::cout << i + 1 << ") Enter the: " << m_doors[i].destination->getName();
+			std::cout << "\t" <<  i + 1 << ") Enter the: " << m_doors[i].destination->getName();
 			if (m_doors[i].locked)
 			{
 				std::cout << " [LOCKED]";

@@ -26,6 +26,7 @@ namespace GameObject
         bool canStartEvent(Inventory& playerInventory, int reqAmount) override;
         std::string getEventPrompt() override;
 		std::string getEventType() const;
+        void setEventType(std::string nType);
         void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest) override;
 		bool getIsEventRoom() const override;
         void setIsEventRoom(bool nIsEventRoom);

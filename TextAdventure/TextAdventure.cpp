@@ -28,9 +28,9 @@ int main()
 
 	while (mainGame.getIsRunning())
 	{
-		mainGame.mainMenu();
+		//mainGame.mainMenu(); //Main menu, player name input, short intro scene
 
-		//Main Game Loop//
+		//Main Game Loop// Quest states are advanced by EventRoom.cpp 
 		while (mainQuest.getState() != GameObject::Quest::Completed)
 		{
 			system("cls");

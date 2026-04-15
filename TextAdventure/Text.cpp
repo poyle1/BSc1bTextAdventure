@@ -88,10 +88,19 @@ namespace UI
 
 	void Text::gameIntro()
 	{
-		//introArtFrame1
-		//introArtFrame2
-		//introArtFrame3
-		//Then the game starts
+		system("cls");
+		printArt("INTRO1");
+		pauseAndWipe();
+		printArt("INTRO2");
+		pauseAndWipe();
+		printArt("INTRO3");
+		pauseAndWipe();
+		printArt("INTRO4");
+		pauseAndWipe();
+		printArt("INTRO5");
+		pauseAndWipe();
+		printArt("INTRO6");
+		pauseAndWipe();
 	}
 
 	void Text::dialogueBox(std::string nCharacter, std::string nArtName)
