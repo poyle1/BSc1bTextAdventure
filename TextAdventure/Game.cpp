@@ -104,19 +104,18 @@ namespace GameObject
 
 	void Game::gameOver(Quest& nQuest)
 	{
+		std::cout << "====================================================================================================\n";
+
 		if (nQuest.getResult() == Quest::Bad)
 		{ 
-			std::cout << "====================================================================================================\n";
 			UI::Text::getInstance().printArt("BadEnd");
 		}
 		else if (nQuest.getResult() == Quest::Neutral)
 		{
-			std::cout << "====================================================================================================\n";
 			UI::Text::getInstance().printArt("NeutralEnd");
 		}
-		else //Good result
+		else if (nQuest.getResult() == Quest::Good)
 		{
-			std::cout << "====================================================================================================\n";
 			UI::Text::getInstance().printArt("GoodEnd");
 		}
 		std::cout << "====================================================================================================\n";

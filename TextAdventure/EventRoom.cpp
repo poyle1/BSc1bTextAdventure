@@ -95,7 +95,7 @@ namespace GameObject
 			}
 			else if (nQuest.getState() == Quest::Achieved)
 			{
-				for (int i = 0; i < nPlayer.getInventory().getItems().size(); i++)
+				for (int i = 0; i < nPlayer.getInventory().getInventory().size(); i++)
 				{
 					if (nPlayer.getInventory().getItem(i)->isQuestItem())
 					{

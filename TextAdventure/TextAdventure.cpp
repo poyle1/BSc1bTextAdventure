@@ -28,12 +28,13 @@ int main()
 
 	while (mainGame.getIsRunning())
 	{
-		//mainGame.mainMenu(); //Main menu, player name input, short intro scene
+		mainGame.mainMenu(); //Main menu, player name input, short intro scene
 
 		//Main Game Loop// Quest states are advanced by EventRoom.cpp 
 		while (mainQuest.getState() != GameObject::Quest::Completed)
 		{
 			system("cls");
+			mainGame.getCurrentLocation()->outputItems(); //DEBUG
 			//Available Actions Logic//
 			int investigateRoomOption = mainGame.getCurrentLocation()->getNumDoors() + 1;
 			int startEventOption = mainGame.getCurrentLocation()->getNumDoors() + 2;
@@ -66,11 +67,11 @@ int main()
 				mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest);
 				continue;
 			}
-			if (!mainPlayer.getHasActiveQuest())
+			/*if (!mainPlayer.getHasActiveQuest())
 			{
 				std::cout << "You should talk to John first before exploring around." << std::endl;
 				UI::pauseAndFlush();
-			}
+			}*/
 			else
 			{
 				//Investigate Current Location//
@@ -97,6 +98,7 @@ int main()
 			}
 		}
 		//End Game//
+		system("cls");
 		mainGame.gameOver(mainQuest);
 	}
 }

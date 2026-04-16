@@ -54,14 +54,7 @@ namespace GameObject
 
 	bool Location::hasItems()
 	{
-		if (m_locItems.isEmpty())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return !m_locItems.isEmpty();
 	}
 
 	void Location::itemCheck()
@@ -88,35 +81,32 @@ namespace GameObject
 	{
 		//std::cout << getInspectText() \n\n;
 		std::cout << "ROOM INSPECT TEXT PLACEHOLDER \n\n";
-		if (!m_searched)
-		{
-			if (hasItems())
-			{
-				std::cout << "You look around and grab: " << std::endl;
-				for (Item* collectedItem : m_locItems.getItems())
-				{
-					if (collectedItem == nullptr) //Safety check
-					{
-						std::cout << "error" << std::endl;
-					}
-					std::cout << "- " << collectedItem->getName() << std::endl;
-					playerInventory.addItem(collectedItem);
-				}
-				getInventory().clear();
-			}
-			else
-			{
-				std::cout << "There isn't anything useful here." << std::endl;
-				m_searched = true;
-				UI::pauseAndFlush();
-			}
-		}
-		else if (m_searched)
+		if (m_searched)
 		{
 			std::cout << "You've already grabbed everything you need." << std::endl;
 			UI::pauseAndFlush();
 			return;
 		}
+		if (hasItems())
+		{
+			std::cout << "You look around and grab: " << std::endl;
+			for (Item* collectedItem : m_locItems.getInventory())
+			{
+				if (collectedItem == nullptr) //Safety check
+				{
+					std::cout << "error" << std::endl;
+				}
+				std::cout << "- " << collectedItem->getName() << std::endl;
+				playerInventory.addItem(collectedItem);
+			}
+			getInventory().clear();
+		}
+		else
+		{
+			std::cout << "There isn't anything useful here." << std::endl;
+		}
+		m_searched = true;
+		UI::pauseAndFlush();
 	}
 
 	bool Location::getSearched() const
@@ -181,7 +171,7 @@ namespace GameObject
 		}
 		Door& currentDoor = m_doors[index];
 
-		for (int i = 0; i < playerInventory.getItems().size(); i++)
+		for (int i = 0; i < playerInventory.getInventory().size(); i++)
 		{
 			if (playerInventory.getItem(i)->getKeyID() == m_doors[index].requiredKeyID)
 			{
@@ -190,7 +180,7 @@ namespace GameObject
 				nextRoom->unlockNextDoor(this);
 
 				std::cout << "You use the " << playerInventory.getItem(i)->getName() << " to unlock the door." << std::endl;
-				playerInventory.getItems().erase(playerInventory.getItems().begin() + i);
+				playerInventory.getInventory().erase(playerInventory.getInventory().begin() + i);
 				UI::pauseAndFlush();
 				return true; //Exit loop
 			}

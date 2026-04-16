@@ -18,7 +18,7 @@ namespace GameObject
 		void removeItem(int index);
 		void clear();
 		Item* getItem(int index);
-		std::vector<Item*>& getItems();
+		std::vector<Item*>& getInventory();
 		int getSize();
 		bool isEmpty();
 

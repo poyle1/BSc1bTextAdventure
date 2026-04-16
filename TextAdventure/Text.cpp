@@ -133,7 +133,7 @@ namespace UI
 	void Text::johnDialogueBadEnding(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
-		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
+		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *sips*..." << std::endl;
@@ -143,7 +143,7 @@ namespace UI
 	void Text::johnDialogueNeutralEnding(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
-		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
+		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
@@ -155,7 +155,7 @@ namespace UI
 	void Text::johnDialogueGoodEnding(const GameObject::Player& nPlayer)
 	{
 		dialogueBox("John", "JOHN");
-		std::cout << "John: \"Oh thank you" << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
+		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *blows*" << std::endl;

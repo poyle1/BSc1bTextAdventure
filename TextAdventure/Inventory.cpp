@@ -50,7 +50,7 @@ namespace GameObject
 		return m_items[index];
 	}
 
-	std::vector<Item*>& Inventory::getItems()
+	std::vector<Item*>& Inventory::getInventory()
 	{
 		return m_items;
 	}
@@ -79,7 +79,7 @@ namespace GameObject
 			std::cout << "None." << std::endl;
 			return;
 		}
-		for (Item* item : getItems())
+		for (Item* item : getInventory())
 		{
 			std::cout << item->getName() << std::endl;
 		}
@@ -92,15 +92,15 @@ namespace GameObject
 			std::cout << "None." << std::endl;
 			return;
 		}
-		for (int i = 0; i < getItems().size(); i++)
+		for (int i = 0; i < getInventory().size(); i++)
 		{
-			std::cout << i + 1 << ")" << getItems()[i]->getName() << std::endl;
+			std::cout << i + 1 << ")" << getInventory()[i]->getName() << std::endl;
 		}
 	}
 
 	void Inventory::outputQuestItems()
 	{
-		for (Item* item : getItems())
+		for (Item* item : getInventory())
 		{
 			if (item->isQuestItem())
 			{
