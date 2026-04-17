@@ -28,5 +28,9 @@ namespace GameObject
 
 		int getQuestItemTotal();
 		bool hasReqQuestItems(int reqAmount) const;
+
+		bool hasItem(std::string nItem);
+		int itemAmount(std::string nItem);
+		void inventorySearch(std::string nItem);
 	};
 }

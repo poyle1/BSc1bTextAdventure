@@ -168,25 +168,26 @@ namespace GameObject
 		while (getline(locationFile, row))
 		{
 			rowstream = std::stringstream(row); //Convert each row to a stringstream
-			std::string index, name, isEventRoom, EventPrompt, ReqQItems, EventType;
+			std::string index, name, description, isEventRoom, eventPrompt, reqQItems, eventType;
 
-			getline(rowstream, index, ',');
-			getline(rowstream, name, ',');
-			getline(rowstream, isEventRoom, ',');
+			getline(rowstream, index, '$');
+			getline(rowstream, name, '$');
+			getline(rowstream, description, '$');
+			getline(rowstream, isEventRoom, '$');
 
 			bool eventRoom = (isEventRoom == "true");
 
 			if (eventRoom)
 			{
-				getline(rowstream, EventPrompt, ',');
-				getline(rowstream, ReqQItems, ',');
-				getline(rowstream, EventType, ',');
-				EventRoom* newEvent = new EventRoom(stoi(index), name, EventPrompt, stoi(ReqQItems),EventType);
+				getline(rowstream, eventPrompt, '$');
+				getline(rowstream, reqQItems, '$');
+				getline(rowstream, eventType, '$');
+				EventRoom* newEvent = new EventRoom(stoi(index), name, description, eventPrompt, stoi(reqQItems),eventType);
 				m_worldMap.push_back(newEvent);
 			} 
 			else
 			{
-				Location* newLocation = new Location(stoi(index), name);
+				Location* newLocation = new Location(stoi(index), name, description);
 				m_worldMap.push_back(newLocation);
 			}
 		}
@@ -210,11 +211,10 @@ namespace GameObject
 		std::string row;
 		std::stringstream rowstream;
 
-		getline(locationFile, row); // skips header of csv
+		getline(locationFile, row); //skips the header of the .CSV
 
 		while (getline(locationFile, row))
 		{
-
 			rowstream = std::stringstream(row); //Convert each row to a stringstream
 			std::string indexOrigin, indexDestination, isLocked, doorID;
 
@@ -225,7 +225,7 @@ namespace GameObject
 
 			Location* origin = m_worldMap[stoi(indexOrigin)];
 			Location* dest = m_worldMap[stoi(indexDestination)];
-			bool locked = (isLocked == "true"); //String to bool
+			bool locked = (isLocked == "true"); //String to bool conversion
 
 			origin->addDoor(dest, locked, doorID);
 		}
@@ -326,7 +326,7 @@ namespace GameObject
 	{
 		std::cout << "\tAvailable Actions:" << "\n";
 		getCurrentLocation()->outputDoors();
-		std::cout << "\t" << investigateRoomOption << ") Investigate the room" << std::endl;
+		std::cout << "\t" << investigateRoomOption << ") Investigate the area" << std::endl;
 		if (getCurrentLocation()->getIsEventRoom() == true)
 		{
 			std::cout << "\t" << startEventOption << ") " << getCurrentLocation()->getEventPrompt();

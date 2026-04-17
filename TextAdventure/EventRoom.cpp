@@ -11,7 +11,6 @@
 
 namespace GameObject
 {
-	//Constructors
 	EventRoom::EventRoom()
 	{
 		m_eventPrompt = "Start the event.";
@@ -21,7 +20,7 @@ namespace GameObject
 		m_isEventRoom = true;
 		m_searched = false;
 	}
-	EventRoom::EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName)
+	EventRoom::EventRoom(int nIndex, std::string nName, std::string nDescription, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName, nDescription)
 	{
 		m_eventPrompt = nEventPrompt;
 		m_eventCompleted = false;
@@ -30,8 +29,6 @@ namespace GameObject
 		m_isEventRoom = true;
 		m_searched = false;
 	}
-
-	//Event logic
 	bool EventRoom::canStartEvent(Inventory& playerInventory, int reqAmount)
 	{
 		if (playerInventory.hasReqQuestItems(reqAmount) && !m_eventCompleted)
@@ -99,20 +96,20 @@ namespace GameObject
 				{
 					if (nPlayer.getInventory().getItem(i)->isQuestItem())
 					{
-						if (nPlayer.getInventory().getItem(i)->getScoreValue() <= 10) //Bad ending
+						if (nPlayer.getInventory().getItem(i)->getScoreValue() <= 15) //Bad ending, 15 or less score
 						{
 							std::cout << "You pass the tea over to John." << std::endl;
 							UI::Text::getInstance().johnDialogueBadEnding(nPlayer);
 							nQuest.setResult(Quest::Bad);
 						} 
-						else if //Neutral Ending
-							(nPlayer.getInventory().getItem(i)->getScoreValue() > 10 && nPlayer.getInventory().getItem(i)->getScoreValue() < 19)
+						else if //Neutral Ending, between 15-19 score
+							(nPlayer.getInventory().getItem(i)->getScoreValue() > 15 && nPlayer.getInventory().getItem(i)->getScoreValue() < 19)
 						{
 							std::cout << "You pass the tea over to John." << std::endl;
 							UI::Text::getInstance().johnDialogueNeutralEnding(nPlayer);
 							nQuest.setResult(Quest::Neutral);
 						}
-						else //Good Ending
+						else //Good Ending, 19-30 score
 						{
 							std::cout << "You pass the tea over to John." << std::endl;
 							UI::Text::getInstance().johnDialogueGoodEnding(nPlayer);
@@ -123,6 +120,10 @@ namespace GameObject
 				nQuest.advanceState(Quest::Completed, nPlayer);
 				UI::pauseAndFlush();
 			}
+		}
+		else if (m_eventType == "FillKettle")
+		{
+
 		}
 	}
 	

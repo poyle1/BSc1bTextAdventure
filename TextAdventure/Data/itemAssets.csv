@@ -1,11 +1,11 @@
 addTo,name,description,isQuestItem,isKey,keyID
 0,Bedroom Key,Opens the door between the hallway and the bedroom,false,true,1
-1,Teabag,A standard issue teabag,true
+1,Teabag,A standard issue teabag,true,false
 2,Living Room Key,Opens the door between the living room and the kitchen,false,true,2
-3,Sugar,A bad of sugar,true
-6,Spoon,A simple teaspoon,true
-7,Milk,A bottle of milk,true
-8,Kettle,An electric kettle that is ready to boil water,true
-8,Kitchen key,Opens the door between the kitchen and garage,false,true,3
-8,Shed key,Opens the door to the shed in the back garden,false,true,4
-9,Mug,A mug for building tea into,true,
+3,Sugar,A bad of sugar,true,false
+5,Spoon,A simple teaspoon,true,false
+6,Milk,A bottle of milk,true,false
+2,Kettle,An electric kettle that is ready to boil water,true,false
+7,Kitchen key,Opens the door between the kitchen and garage,false,true,3
+7,Shed key,Opens the door to the shed in the back garden,false,true,4
+8,Mug,A mug for building tea into,true,false

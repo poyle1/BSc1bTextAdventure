@@ -56,15 +56,13 @@ jgs  W               W  /    \
 XXXXXXXXXXXXXXXXXXXXXXXXXXX
 X     johns recipe book   X
 X                         X
-X   TEA:                  X
-X                         X
-X    bag+sugar            X
+X TEA:                    X
+X   in mug, add:          X
+X    teabag+sugar         X
 X    water                X
 X     milk                X
-X   stir!!!               X
 X                         X
-X                         X
-X                         X
+X    stir!!!              X
 X                         X
 XXXXXXXXXXXXXXXXXXXXXXXXXXX
 [Hallway]

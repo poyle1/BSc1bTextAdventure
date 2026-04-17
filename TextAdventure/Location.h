@@ -27,18 +27,18 @@ namespace GameObject
 		};
 		int m_index;
 		std::string m_name;
-		std::string m_inspectText;
+		std::string m_description;
 		Inventory m_locItems;
 		bool m_searched;
 		std::vector<Door> m_doors;
 		
 	public:
 		Location();
-		Location(const int nIndex, std::string nName);
+		Location(const int nIndex, std::string nName, std::string nDescription);
 
 		std::string getName() const;
-		std::string getInspectText() const;
-		void setInspectText(std::string nText);
+		std::string getDescription() const;
+		void setDescription(std::string nText);
 		int getIndex() const; //gets the index number of the selected location
 
 		Inventory& getInventory();

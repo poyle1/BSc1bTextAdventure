@@ -16,14 +16,16 @@ namespace GameObject
 	Location::Location()
 	{
 		m_index = NULL;
-		m_name = "A location";
+		m_name = "Location";
+		m_description = "An empty location.";
 		m_searched = false;
 	}
 
-	Location::Location(const int nIndex, std::string nName)
+	Location::Location(const int nIndex, std::string nName, std::string nDescription)
 	{
 		m_index = nIndex;
 		m_name = nName;
+		m_description = nDescription;
 		m_searched = false;
 	}
 
@@ -32,14 +34,14 @@ namespace GameObject
 		return m_name;
 	}
 
-	std::string Location::getInspectText() const
+	std::string Location::getDescription() const
 	{
-		return m_inspectText;
+		return m_description;
 	}
 
-	void Location::setInspectText(std::string nText)
+	void Location::setDescription(std::string nText)
 	{
-		m_inspectText = nText;
+		m_description = nText;
 	}
 
 	int Location::getIndex() const
@@ -79,8 +81,7 @@ namespace GameObject
 
 	void Location::investigateRoom(Inventory& playerInventory)
 	{
-		//std::cout << getInspectText() \n\n;
-		std::cout << "ROOM INSPECT TEXT PLACEHOLDER \n\n";
+		std::cout << getDescription() << "\n\n";
 		if (m_searched)
 		{
 			std::cout << "You've already grabbed everything you need." << std::endl;
@@ -89,14 +90,14 @@ namespace GameObject
 		}
 		if (hasItems())
 		{
-			std::cout << "You look around and grab: " << std::endl;
+			std::cout << "You look around for anything useful and find: " << std::endl;
 			for (Item* collectedItem : m_locItems.getInventory())
 			{
 				if (collectedItem == nullptr) //Safety check
 				{
 					std::cout << "error" << std::endl;
 				}
-				std::cout << "- " << collectedItem->getName() << std::endl;
+				std::cout << "> " << collectedItem->getName() << std::endl;
 				playerInventory.addItem(collectedItem);
 			}
 			getInventory().clear();
@@ -190,7 +191,7 @@ namespace GameObject
 
 	void Location::unlockNextDoor(Location* target)
 	{
-		for (auto& door : m_doors)
+		for (Door& door : m_doors)
 		{
 			if (door.destination == target)
 			{

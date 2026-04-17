@@ -1,11 +1,10 @@
-Index,Name,isEventRoom,EventPrompt,ReqQItems,EventType
-0,Living Room,true,Talk to John,0,John
-1,Hallway,false
-2,Kitchen,true,Make a tea,5,Tea
-3,Bedroom,false
-4,En suite,false
-5,Bathroom,false
-6,Back Garden,false
-7,Front Garden,false
-8,Garage,false
-9,Shed,false
+index$name$Ddescription$isEventRoom$eventPrompt$reqQItems$eventType
+0$Living Room$John is watching the telly. He is watching reruns of The Chase.$true$Talk to John$0$John
+1$Hallway$There is a stack of misdelivered letters and local takeaway leaflets on the side table.$false
+2$Kitchen$John is waiting on a plumber to fix the sink. He has to get water from the bathroom tap for now...$true$Make a tea$5$Tea
+3$Bedroom$The bed is freshly made. A thin layer of dust covers John's trinkets, which all seem very thoughtfully placed.$false
+4$Bathroom$A very small and wet sink sits in the corner of the bathroom. The wall is speckled with plastic tropical fish.$true$Fill up the kettle$1$FillKettle
+5$Back Garden$The modest garden is fenced by large hedges. A shed sits at the end.$false
+6$Front Garden$A single garden gnome lies face first in the grass next to an empty birdbath.$false
+7$Garage$The garage is filled with loaded cardboard boxes - most of which used to house crisps or frozen chips.$false
+8$Shed$John's shed is mostly bare other than a few books and a deck chair. Perhaps this is his home away from home.$false

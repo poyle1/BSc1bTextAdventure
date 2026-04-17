@@ -21,7 +21,7 @@ namespace GameObject
 
     public:
         EventRoom();
-        EventRoom(int nIndex, std::string nName, std::string nEventPrompt, int nQItemReq, std::string nEventType);
+        EventRoom(int nIndex, std::string nName, std::string nDescription, std::string nEventPrompt, int nQItemReq, std::string nEventType);
 
         bool canStartEvent(Inventory& playerInventory, int reqAmount) override;
         std::string getEventPrompt() override;

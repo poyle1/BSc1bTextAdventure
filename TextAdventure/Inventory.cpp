@@ -79,7 +79,7 @@ namespace GameObject
 			std::cout << "None." << std::endl;
 			return;
 		}
-		for (Item* item : getInventory())
+		for (Item* item : m_items)
 		{
 			std::cout << item->getName() << std::endl;
 		}
@@ -94,13 +94,13 @@ namespace GameObject
 		}
 		for (int i = 0; i < getInventory().size(); i++)
 		{
-			std::cout << i + 1 << ")" << getInventory()[i]->getName() << std::endl;
+			std::cout << i + 1 << ")" << m_items[i]->getName() << std::endl;
 		}
 	}
 
 	void Inventory::outputQuestItems()
 	{
-		for (Item* item : getInventory())
+		for (Item* item : m_items)
 		{
 			if (item->isQuestItem())
 			{
@@ -124,5 +124,28 @@ namespace GameObject
 		{
 			return false;
 		}
+	}
+	bool Inventory::hasItem(std::string nItem)
+	{
+		for (Item* item : m_items)
+		{
+			if (item->getName() == nItem)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	int Inventory::itemAmount(std::string nItem)
+	{
+		int amount = 0;
+		for (Item* item : m_items)
+		{
+			if (item->getName() == nItem)
+			{
+				amount++;
+			}
+		}
+		return amount;
 	}
 }
