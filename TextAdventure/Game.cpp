@@ -170,32 +170,64 @@ namespace GameObject
 			rowstream = std::stringstream(row); //Convert each row to a stringstream
 			std::string index, name, description, isEventRoom, eventPrompt, reqQItems, eventType;
 
-			getline(rowstream, index, '$');
-			getline(rowstream, name, '$');
-			getline(rowstream, description, '$');
-			getline(rowstream, isEventRoom, '$');
+			getline(rowstream, index, '%');
+			getline(rowstream, name, '%');
+			getline(rowstream, description, '%');
+			getline(rowstream, isEventRoom, '%');
 
-			bool eventRoom = (isEventRoom == "true");
-
-			if (eventRoom)
-			{
-				getline(rowstream, eventPrompt, '$');
-				getline(rowstream, reqQItems, '$');
-				getline(rowstream, eventType, '$');
-				EventRoom* newEvent = new EventRoom(stoi(index), name, description, eventPrompt, stoi(reqQItems),eventType);
-				m_worldMap.push_back(newEvent);
-			} 
-			else
-			{
-				Location* newLocation = new Location(stoi(index), name, description);
-				m_worldMap.push_back(newLocation);
-			}
+			Location* newLocation = new Location(stoi(index), name, description);
+			m_worldMap.push_back(newLocation);
 		}
 		locationFile.close();
 		if (!m_worldMap.empty())
 		{
 			m_currentLocation = m_worldMap.front();
 		}
+	}
+
+	void Game::loadEvents(std::string filename)
+	{
+		std::ifstream locationFile(filename);
+
+		if (!locationFile.is_open())
+		{
+			std::cout << "Error, could not find file " << filename << std::endl;
+			return;
+		}
+		std::string row;
+		std::stringstream rowstream;
+
+		getline(locationFile, row); // skips header of csv
+
+		while (getline(locationFile, row))
+		{
+			rowstream = std::stringstream(row); //Convert each row to a stringstream
+
+			std::string addTo, functionID, name, prompt, requiresItems, reqItemName, reqItemAmount;
+
+			getline(rowstream, addTo, '%');
+			getline(rowstream, functionID, '%');
+			getline(rowstream, name, '%');
+			getline(rowstream, prompt, '%');
+			getline(rowstream, requiresItems, '%');
+
+			bool reqItem = (requiresItems == "true"); //String to bool
+			Event* newEvent = nullptr;
+
+			if (reqItem)
+			{
+				getline(rowstream, reqItemName, '%');
+				getline(rowstream, reqItemAmount, '%');
+				newEvent = new Event(functionID, name, prompt, reqItem, reqItemName, stoi(reqItemAmount));
+			}
+			else
+			{
+				newEvent = new Event(functionID, name, prompt, reqItem);
+			}
+			Location* pAddTo = m_worldMap[stoi(addTo)];
+			pAddTo->addEvent(newEvent);
+		}
+		locationFile.close();
 	}
 
 	void Game::loadDoors(std::string filename)
@@ -279,11 +311,12 @@ namespace GameObject
 		locationFile.close();
 	}
 
-	void Game::loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName)
+	void Game::loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName, std::string eventFileName)
 	{
 		loadLocations(locFileName);
 		loadDoors(doorFileName);
 		loadItems(itemFileName);
+		loadEvents(eventFileName);
 	}
 
 
@@ -325,13 +358,22 @@ namespace GameObject
 	void Game::currentActionsInfo(int investigateRoomOption, int startEventOption)
 	{
 		std::cout << "\tAvailable Actions:" << "\n";
+		//Doors
 		getCurrentLocation()->outputDoors();
+		//Investigate Room
 		std::cout << "\t" << investigateRoomOption << ") Investigate the area" << std::endl;
-		if (getCurrentLocation()->getIsEventRoom() == true)
+		//Event List
+		if (getCurrentLocation()->hasEvent())
 		{
-			std::cout << "\t" << startEventOption << ") " << getCurrentLocation()->getEventPrompt();
-			UI::Text::getInstance().lineSpace();
+			//Local variable for readability and optimisation
+			const std::vector<Event*>& nEvents = getCurrentLocation()->getEvents();
+			for (int i = 0; i < nEvents.size(); i++)
+			{
+				int selection = startEventOption + i;
+				std::cout << "\t" << selection << ") " << nEvents[i]->getPrompt() << std::endl;
+			}
 		}
+
 		UI::Text::getInstance().lineSpace();
 		UI::Text::getInstance().lineBreak(); ///
 		std::cout << "Enter a character to complete an action:\n\n";

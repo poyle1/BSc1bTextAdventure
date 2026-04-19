@@ -30,9 +30,10 @@ namespace GameObject
 		void setIsRunning(bool nRunning);
 
 		void loadLocations(std::string filename);
+		void loadEvents(std::string filename);
 		void loadDoors(std::string filename);
 		void loadItems(std::string filename);
-		void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName);
+		void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName, std::string eventFileName);
 
 		Location* getCurrentLocation();
 		void setCurrentLocation(Location* newLoc);

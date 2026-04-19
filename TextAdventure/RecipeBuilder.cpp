@@ -24,6 +24,10 @@ namespace GameObject
 		m_recipeName = nRecipeName;
 		m_recipeSteps = nRecipeSteps;
 	}
+	std::string RecipeBuilder::getName() const
+	{
+		return m_recipeName;
+	}
 	int RecipeBuilder::getRecipeSteps() const
 	{
 		return m_recipeSteps;
@@ -73,7 +77,7 @@ namespace GameObject
 				std::cout << "Enter the item you want to add to the recipe: ";
 				std::cout << std::endl;
 				int playerInput = UI::getValidIntInput(1, nPlayer.getInventory().getSize());
-				Item* selectedItem = nPlayer.getInventory().getItem(playerInput - 1); //Get the selected item from the player's inventory
+				Item* selectedItem = nPlayer.getInventory().getItemViaIndex(playerInput - 1); //Get the selected item from the player's inventory
 				std::cout << std::endl;
 
 				if (!selectedItem->isQuestItem())
@@ -96,7 +100,7 @@ namespace GameObject
 						std::cout << "You pour sugar onto the counter. I hope you like ants." << std::endl;
 						failed = true;
 					}
-					else if (selectedItem->getName() == "Kettle")
+					else if (selectedItem->getName() == "Filled Kettle")
 					{
 						std::cout << "You pour boiling water onto the kitchen counter. Well done." << std::endl;
 						failed = true;
@@ -124,7 +128,7 @@ namespace GameObject
 						std::cout << "You put the " << selectedItem->getName() << " in the mug." << std::endl;
 						selectedItem->setScoreValue(score2DArray[1][currentStep]);
 					}
-					else if (selectedItem->getName() == "Kettle")
+					else if (selectedItem->getName() == "Filled Kettle")
 					{
 						std::cout << "You pour water into the mug." << std::endl;
 						selectedItem->setScoreValue(score2DArray[3][currentStep]);

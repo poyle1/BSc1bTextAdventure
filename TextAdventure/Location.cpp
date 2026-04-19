@@ -19,6 +19,7 @@ namespace GameObject
 		m_name = "Location";
 		m_description = "An empty location.";
 		m_searched = false;
+		m_eventPresent = false;
 	}
 
 	Location::Location(const int nIndex, std::string nName, std::string nDescription)
@@ -27,6 +28,7 @@ namespace GameObject
 		m_name = nName;
 		m_description = nDescription;
 		m_searched = false;
+		m_eventPresent = false;
 	}
 
 	std::string Location::getName() const
@@ -75,7 +77,7 @@ namespace GameObject
 	{
 		for (int i = 0; i < m_locItems.getSize(); i++)
 		{
-			std::cout << i + 1 << ")" << m_locItems.getItem(i);
+			std::cout << i + 1 << ")" << m_locItems.getItemViaIndex(i);
 		}
 	}
 
@@ -174,13 +176,13 @@ namespace GameObject
 
 		for (int i = 0; i < playerInventory.getInventory().size(); i++)
 		{
-			if (playerInventory.getItem(i)->getKeyID() == m_doors[index].requiredKeyID)
+			if (playerInventory.getItemViaIndex(i)->getKeyID() == m_doors[index].requiredKeyID)
 			{
 				currentDoor.locked = false;
 				Location* nextRoom = currentDoor.destination;
 				nextRoom->unlockNextDoor(this);
 
-				std::cout << "You use the " << playerInventory.getItem(i)->getName() << " to unlock the door." << std::endl;
+				std::cout << "You use the " << playerInventory.getItemViaIndex(i)->getName() << " to unlock the door." << std::endl;
 				playerInventory.getInventory().erase(playerInventory.getInventory().begin() + i);
 				UI::pauseAndFlush();
 				return true; //Exit loop
@@ -224,27 +226,49 @@ namespace GameObject
 		UI::pauseAndFlush();
 	}
 
-	bool Location::canStartEvent(Inventory& playerInventory, int reqAmount)
+	bool Location::hasEvent() const
 	{
-		return false;
+		return m_eventPresent;
+	}
+	 std::vector<Event*>& Location::getEvents()
+	{
+		return m_events;
+	}
+	
+	void Location::addEvent(Event* nEvent)
+	{
+		if (nEvent == nullptr)
+		{
+			std::cout << "ERROR NULLPTR" << std::endl;
+			system("pause");
+			return; //Safety check
+		}
+		m_events.push_back(nEvent);
+		m_eventPresent = true;
 	}
 
-	std::string Location::getEventPrompt()
+	void Location::removeEvent(int nIndex)
 	{
-		return std::string("");
+		if (nIndex < 0 || nIndex >= m_events.size())
+		{
+			return; //saftey check
+		}
+		m_events.erase(m_events.begin() + nIndex);
+		if (m_events.empty())
+		{
+			m_eventPresent = false;
+		}
+	}
+
+	Event* Location::getEvent(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= m_events.size()) {
+			return nullptr; //Safety check
+		}
+		return m_events[nIndex];
 	}
 
 	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
-	{
-		return;
-	}
-
-	bool Location::getIsEventRoom() const
-	{
-		return false;
-	}
-
-	void Location::setIsEventRoom(bool nIsEventRoom)
 	{
 		return;
 	}

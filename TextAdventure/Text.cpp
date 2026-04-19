@@ -137,7 +137,7 @@ namespace UI
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *sips*..." << std::endl;
-		UI::pauseAndFlush;
+		UI::pauseAndFlush();
 		std::cout << "John falls to the floor." << std::endl;
 	}
 	void Text::johnDialogueNeutralEnding(const GameObject::Player& nPlayer)
@@ -148,7 +148,7 @@ namespace UI
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: \"Umm...Thanks... Yeah, this is good, thanks...\"" << std::endl;
-		UI::pauseAndFlush;
+		UI::pauseAndFlush();
 		std::cout << "John: \"....Hmm, whats that?\"" << std::endl;
 		std::cout << "John: \"Oh yeah, I suppose I'll tell you about a tale of lost histories then.\"" << std::endl;
 	}
@@ -161,7 +161,7 @@ namespace UI
 		std::cout << "John: *blows*" << std::endl;
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: \"Thats lovely, great stuff.\"" << std::endl;
-		UI::pauseAndFlush;
+		UI::pauseAndFlush();
 		std::cout << "John: \"Now then, let me tell you all about a tale of lost histories!\"" << std::endl;
 	}
 	void Text::lineBreak()

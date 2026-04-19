@@ -24,17 +24,34 @@ namespace GameObject
 		}
 	}
 
-	void Inventory::removeItem(int index)
+	void Inventory::removeItem(int nIndex)
 	{
-		if (index < 0 || index >= m_items.size()) {
+		if (nIndex < 0 || nIndex >= m_items.size()) {
 			return; //Safety check
 		}
-		if (m_items[index]->isQuestItem())
+		if (m_items[nIndex]->isQuestItem())
 		{
 			m_collectedQuestItems--;
 		}
-		m_items.erase(m_items.begin() + index);
+		m_items.erase(m_items.begin() + nIndex);
 	}
+
+	//void Inventory::removeItemViaName(const std::string& nName)
+	//{
+	//	
+	//	for (int i = 0; i <= m_items.size(); i++)
+	//	{
+	//		if (m_items[i]->getName() == nName)
+	//		{
+	//			m_items.erase(i);
+	//		}
+	//	}
+	//	return;
+	//	/*std::erase_if(m_items, [&](Item& item)
+	//		{
+	//			return item.getName() == nName;
+	//		}*/
+	//}
 
 	void Inventory::clear()
 	{
@@ -42,12 +59,24 @@ namespace GameObject
 		m_collectedQuestItems = 0;
 	}
 
-	Item* Inventory::getItem(int index)
+	Item* Inventory::getItemViaIndex(int nIndex) const
 	{
-		if (index < 0 || index >= m_items.size()) {
+		if (nIndex < 0 || nIndex >= m_items.size()) {
 			return nullptr; //Safety check
 		}
-		return m_items[index];
+		return m_items[nIndex];
+	}
+
+	Item* Inventory::getItemViaName(const std::string& nName) const
+	{
+		for (Item* item : m_items)
+		{
+			if (item->getName() == nName)
+			{
+				return item;
+			}
+		}
+		return nullptr;
 	}
 
 	std::vector<Item*>& Inventory::getInventory()
@@ -55,12 +84,12 @@ namespace GameObject
 		return m_items;
 	}
 
-	int Inventory::getSize()
+	int Inventory::getSize() const
 	{
 		return m_items.size();
 	}
 
-	bool Inventory::isEmpty()
+	bool Inventory::isEmpty() const
 	{
 		if (m_items.empty())
 		{
@@ -72,7 +101,7 @@ namespace GameObject
 		}
 	}
 
-	void Inventory::outputInventory() 
+	void Inventory::outputInventory() const
 	{
 		if (m_items.empty())
 		{
@@ -98,7 +127,7 @@ namespace GameObject
 		}
 	}
 
-	void Inventory::outputQuestItems()
+	void Inventory::outputQuestItems() const
 	{
 		for (Item* item : m_items)
 		{
@@ -111,6 +140,14 @@ namespace GameObject
 
 	int Inventory::getQuestItemTotal()
 	{
+		m_collectedQuestItems = 0;
+		for (Item* item : m_items)
+		{
+			if (item->isQuestItem())
+			{
+				m_collectedQuestItems ++;
+			}
+		}
 		return m_collectedQuestItems;
 	}
 
@@ -125,7 +162,7 @@ namespace GameObject
 			return false;
 		}
 	}
-	bool Inventory::hasItem(std::string nItem)
+	bool Inventory::hasAnItem(const std::string& nItem) const
 	{
 		for (Item* item : m_items)
 		{
@@ -136,7 +173,7 @@ namespace GameObject
 		}
 		return false;
 	}
-	int Inventory::itemAmount(std::string nItem)
+	int Inventory::getItemAmount(const std::string& nItem) const
 	{
 		int amount = 0;
 		for (Item* item : m_items)

@@ -20,11 +20,11 @@ int main()
 	GameObject::Game mainGame;
 	GameObject::Player mainPlayer;
 	//Load world and art assets//
-	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv");
+	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv", "./Data/eventAssets.csv");
 	UI::Text::getInstance().loadArtLibrary("./Data/asciiAssets.txt");
 	//Set quest and recipe details//
 	GameObject::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
-	GameObject::RecipeBuilder teaRecipe("Cup of Tea", 6);
+	GameObject::RecipeBuilder teaRecipe("a Cup of Tea", 6);
 
 	while (mainGame.getIsRunning())
 	{
@@ -35,14 +35,15 @@ int main()
 		{
 			system("cls");
 			mainGame.getCurrentLocation()->outputItems(); //DEBUG
+		
 			//Available Actions Logic//
-			int investigateRoomOption = mainGame.getCurrentLocation()->getNumDoors() + 1;
-			int startEventOption = mainGame.getCurrentLocation()->getNumDoors() + 2;
-			int maxValidInput = investigateRoomOption;
-			if (mainGame.getCurrentLocation()->getIsEventRoom() == true)
-			{
-				maxValidInput = startEventOption;
-			}
+			int numDoors = mainGame.getCurrentLocation()->getNumDoors(); //Doors
+			int investigateRoomOption = numDoors + 1; //Doors +1
+			int startEventOption = numDoors + 2; //Doors +2
+
+			int numEvents = mainGame.getCurrentLocation()->getEvents().size(); //Events
+			int maxValidInput = investigateRoomOption + numEvents; //Doors + 1 + Events
+			
 
 			//Current Location & Art//
 			mainGame.currentLocationInfo();
@@ -58,13 +59,13 @@ int main()
 			mainGame.currentActionsInfo(investigateRoomOption, startEventOption);
 
 			//User Input//
-			int userInput = UI::getValidIntInput(1, maxValidInput);
+			int userInput = UI::getValidIntInput(1, maxValidInput); //1, Doors + 1 + Events
 			UI::Text::getInstance().lineBreak();
 
-
-			if (userInput == startEventOption)
+			if (userInput >= startEventOption)
 			{
-				mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest);
+				int eventIndex = userInput - startEventOption; //eventIndex should always start from 0
+				mainGame.getCurrentLocation()->getEvent(eventIndex)->runFunction(teaRecipe, mainPlayer, mainQuest);
 				continue;
 			}
 			/*if (!mainPlayer.getHasActiveQuest())

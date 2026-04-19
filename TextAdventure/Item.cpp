@@ -20,6 +20,10 @@ namespace GameObject
 	{
 		return m_questItem;
 	}
+	void Item::setQuestItem(bool nQuestItem)
+	{
+		m_questItem = nQuestItem;
+	}
 	std::string Item::getName()
 	{
 		return m_name;

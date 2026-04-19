@@ -33,6 +33,7 @@ namespace GameObject
 	public:
 		RecipeBuilder();
 		RecipeBuilder(std::string nRecipeName, int nRecipeSteps);
+		std::string getName() const;
 		int getRecipeSteps() const;
 		bool teaBuilderMkII(Player& nPlayer, Quest& nQuest);
 	};

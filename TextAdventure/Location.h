@@ -3,8 +3,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <map>
 
 #include "Inventory.h"
+#include "Event.h"
+
 
 namespace UI {
 	class Text;
@@ -32,6 +35,9 @@ namespace GameObject
 		bool m_searched;
 		std::vector<Door> m_doors;
 		
+		std::vector<Event*> m_events;
+		bool m_eventPresent;
+
 	public:
 		Location();
 		Location(const int nIndex, std::string nName, std::string nDescription);
@@ -60,10 +66,11 @@ namespace GameObject
 		void outputDoors();
 		void enterLocation();
 
-		virtual bool canStartEvent(Inventory& playerInventory, int reqAmount);
-		virtual std::string getEventPrompt();
-		virtual void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
-		virtual bool getIsEventRoom() const;
-		virtual void setIsEventRoom(bool nIsEventRoom);
+		bool hasEvent() const;
+		std::vector<Event*>& getEvents();
+		void addEvent(Event* nEvent);
+		void removeEvent(int nIndex);
+		Event* getEvent(int nIndex);
+		void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
 	};
 }

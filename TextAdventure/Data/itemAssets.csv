@@ -5,7 +5,7 @@ addTo,name,description,isQuestItem,isKey,keyID
 3,Sugar,A bad of sugar,true,false
 5,Spoon,A simple teaspoon,true,false
 6,Milk,A bottle of milk,true,false
-2,Kettle,An electric kettle that is ready to boil water,true,false
+2,Empty Kettle,An electric kettle that is ready to boil water,false,false
 7,Kitchen key,Opens the door between the kitchen and garage,false,true,3
 7,Shed key,Opens the door to the shed in the back garden,false,true,4
 8,Mug,A mug for building tea into,true,false

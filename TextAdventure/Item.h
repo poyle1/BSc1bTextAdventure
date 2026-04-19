@@ -18,6 +18,7 @@ namespace GameObject
 		Item(std::string nName, std::string nDescription, bool isQuest);
 
 		bool isQuestItem();
+		void setQuestItem(bool nQuestItem);
 
 		std::string getName();
 		std::string getDescription();

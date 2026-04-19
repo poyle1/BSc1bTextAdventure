@@ -1,0 +1,4 @@
+addTo%name%prompt%requiresItems%requiredItemName%requiredItemAmount%
+0%JOHN%john%Talk to John%false%NONE%0%
+2%TEA%tea%Make a cup of tea%false%NONE%0%
+4%SINK%ink%Use the sink%true%Empty Kettle%1%
