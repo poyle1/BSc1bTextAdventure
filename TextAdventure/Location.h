@@ -27,8 +27,6 @@ namespace GameObject
 		std::string requiredKeyID = "";
 	};
 
-
-
 	class Location
 	{
 	protected:
@@ -76,6 +74,6 @@ namespace GameObject
 		void addEvent(Event* nEvent);
 		void removeEvent(int nIndex);
 		Event* getEvent(int nIndex);
-		void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
+		void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID);
 	};
 }

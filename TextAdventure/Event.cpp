@@ -127,6 +127,11 @@ namespace GameObject
 			}
 		}
 	}
+
+	void Event::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
+	{
+
+	}
 	void Event::runFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
 		if (!canStartEvent(nPlayer, getReqItemName()))

@@ -16,7 +16,7 @@ namespace GameObject
 
     class Event
     {
-    private:
+    protected:
         std::string m_name;
         std::string m_prompt;
         bool m_completed;
@@ -48,6 +48,8 @@ namespace GameObject
         void setCollected(bool nCollected);
 
         bool canStartEvent(Player& nPlayer, std::string nItem) const;
+        virtual void eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
+
         void runFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
         void teaBuilder(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
         void talkToJohn(Player& nPlayer, Quest& nQuest);

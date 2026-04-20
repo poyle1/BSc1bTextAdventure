@@ -9,12 +9,16 @@ namespace GameObject
 		m_name = "An item";
 		m_description = "This is an item.";
 		m_questItem = false;
+		m_scoreValue = -1;
+		m_recipeIndex = -1;
 	}
 	Item::Item(std::string nName, std::string nDescription, bool isQuest)
 	{
 		m_name = nName;
 		m_description = nDescription;
 		m_questItem = isQuest;
+		m_scoreValue = -1;
+		m_recipeIndex = -1;
 	}
 	bool Item::isQuestItem()
 	{

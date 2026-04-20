@@ -77,7 +77,7 @@ namespace GameObject
 	{
 		for (int i = 0; i < m_locItems.getSize(); i++)
 		{
-			std::cout << i + 1 << ")" << m_locItems.getItemViaIndex(i);
+			std::cout << i + 1 << ")" << m_locItems.getItemViaIndex(i)->getName();
 		}
 	}
 
@@ -268,8 +268,9 @@ namespace GameObject
 		return m_events[nIndex];
 	}
 
-	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
+	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID)
 	{
+		m_events[eventID]->eventFunction(nRecipe, nPlayer, nQuest);
 		return;
 	}
 }

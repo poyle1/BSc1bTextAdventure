@@ -13,6 +13,8 @@
 #include "RecipeBuilder.h"
 #include "Text.h"
 #include "Utility.h"
+#include "Event.h"
+#include "EventJohn.h"
 
 int main()
 {
@@ -30,11 +32,13 @@ int main()
 	{
 		//mainGame.mainMenu(); //Main menu, player name input, short intro scene
 
+		GameObject::EventJohn John("sda","asdasd","asdasd",false);
+		mainGame.getCurrentLocation()->addEvent(John);
+
 		//Main Game Loop// Quest states are advanced by EventRoom.cpp 
 		while (mainQuest.getState() != GameObject::Quest::Completed)
 		{
 			system("cls");
-			mainGame.getCurrentLocation()->outputItems(); //DEBUG
 		
 			//Available Actions Logic//
 			int numDoors = mainGame.getCurrentLocation()->getNumDoors(); //Doors
@@ -65,7 +69,7 @@ int main()
 			if (userInput >= startEventOption)
 			{
 				int eventIndex = userInput - startEventOption; //eventIndex should always start from 0
-				mainGame.getCurrentLocation()->getEvent(eventIndex)->runFunction(teaRecipe, mainPlayer, mainQuest);
+				mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest, eventIndex);
 				continue;
 			}
 			/*if (!mainPlayer.getHasActiveQuest())
