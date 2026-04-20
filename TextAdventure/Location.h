@@ -18,16 +18,21 @@ namespace GameObject
 	class Player;
 	class RecipeBuilder;
 	class Quest;
+	class Location;
+
+	struct Door
+	{
+		Location* destination = nullptr;
+		bool locked = false;
+		std::string requiredKeyID = "";
+	};
+
+
 
 	class Location
 	{
 	protected:
-		struct Door
-		{
-			Location* destination = nullptr;
-			bool locked = false;
-			std::string requiredKeyID = "";
-		};
+		
 		int m_index;
 		std::string m_name;
 		std::string m_description;

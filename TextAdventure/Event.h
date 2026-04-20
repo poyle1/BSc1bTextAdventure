@@ -8,6 +8,12 @@ namespace GameObject
     class Quest;
     class RecipeBuilder;
 
+      struct RequirementDetails {
+            std::string itemName;
+            int amount = 0;
+            bool collected = false;
+        };
+
     class Event
     {
     private:
@@ -17,15 +23,10 @@ namespace GameObject
         std::string m_functionID;
 
         bool m_requirement;
-        struct RequirementDetails {
-            std::string itemName;
-            int amount = 0;
-            bool collected = false;
-        };
+      
         RequirementDetails m_eventRequirements;
 
     public:
-       
 
         Event();
         Event(std::string nID, std::string nName, std::string nPrompt, bool nReq);
