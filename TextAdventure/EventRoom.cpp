@@ -20,7 +20,8 @@
 //		m_isEventRoom = true;
 //		m_searched = false;
 //	}
-//	EventRoom::EventRoom(int nIndex, std::string nName, std::string nDescription, std::string nEventPrompt, int nQItemReq, std::string nEventType) : Location(nIndex, nName, nDescription)
+//	EventRoom::EventRoom(int nIndex, std::string nName, std::string nDescription, std::string nEventPrompt, int nQItemReq, std::string nEventType)
+//		: Location(nIndex, nName, nDescription)
 //	{
 //		m_eventPrompt = nEventPrompt;
 //		m_eventCompleted = false;

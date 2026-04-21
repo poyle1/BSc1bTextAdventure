@@ -9,6 +9,8 @@
 #include "Key.h"
 #include "EventRoom.h"
 #include "Text.h"
+#include "Event.h"
+#include "EventJohn.h"
 
 namespace GameObject
 {
@@ -214,16 +216,10 @@ namespace GameObject
 			bool reqItem = (requiresItems == "true"); //String to bool
 			Event* newEvent = nullptr;
 
-			if (reqItem)
-			{
-				getline(rowstream, reqItemName, '%');
-				getline(rowstream, reqItemAmount, '%');
-				newEvent = new Event(functionID, name, prompt, reqItem, reqItemName, stoi(reqItemAmount));
-			}
-			else
-			{
-				newEvent = new Event(functionID, name, prompt, reqItem);
-			}
+			getline(rowstream, reqItemName, '%');
+			getline(rowstream, reqItemAmount, '%');
+			newEvent = new Event(functionID, name, prompt, reqItem, reqItemName, stoi(reqItemAmount));
+
 			Location* pAddTo = m_worldMap[stoi(addTo)];
 			pAddTo->addEvent(newEvent);
 		}
@@ -311,12 +307,19 @@ namespace GameObject
 		locationFile.close();
 	}
 
+	void Game::loadEventsMk2()
+	{
+		EventJohn* john = new EventJohn();
+		m_worldMap[0]->addEvent(john);
+	}
+
 	void Game::loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName, std::string eventFileName)
 	{
 		loadLocations(locFileName);
 		loadDoors(doorFileName);
 		loadItems(itemFileName);
-		loadEvents(eventFileName);
+		loadEventsMk2();
+		//loadEvents(eventFileName);
 	}
 
 

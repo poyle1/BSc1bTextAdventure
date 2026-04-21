@@ -24,18 +24,6 @@ namespace GameObject
 		m_eventRequirements.amount = 0;
 		m_eventRequirements.collected = false;
 	}
-	Event::Event(std::string nID, std::string nName, std::string nPrompt, bool nReq)
-	{
-		m_functionID = nID;
-		m_name = nName;
-		m_prompt = nPrompt;
-		m_completed = false;
-
-		m_requirement = nReq;
-		m_eventRequirements.itemName;
-		m_eventRequirements.amount = 0;
-		m_eventRequirements.collected = false;
-	}
 	Event::Event(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount)
 	{
 		m_functionID = nID;
@@ -132,31 +120,7 @@ namespace GameObject
 	{
 
 	}
-	void Event::runFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
-	{
-		if (!canStartEvent(nPlayer, getReqItemName()))
-		{
-			return;
-		}
-
-		if (m_functionID == "JOHN")
-		{
-			talkToJohn(nPlayer, nQuest);
-		}
-		else if (m_functionID == "TEA")
-		{
-			teaBuilder(nRecipe, nPlayer, nQuest);
-		}
-		else if (m_functionID == "SINK")
-		{
-			fillKettle(nPlayer);
-		}
-		else
-		{
-			std::cout << "Nothing happens." << std::endl;
-			UI::pauseAndFlush();
-		}
-	}
+	\
 	//Starts the RecipeBuilder minigame if the player has quest items >= the
 	// amount of steps in the recipe. It then advances the quest state.
 	void Event::teaBuilder(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
@@ -173,51 +137,6 @@ namespace GameObject
 		return;
 	}
 
-	void Event::talkToJohn(Player& nPlayer, Quest& nQuest)
-	{
-		Quest::questStates state = nQuest.getState();
-
-		if (state == Quest::Unknown)
-		{
-			UI::Text::getInstance().johnDialogue1(nPlayer);
-			nQuest.advanceState(Quest::Accepted, nPlayer);
-			UI::pauseAndFlush();
-		}
-		else if (state == Quest::Accepted)
-		{
-			UI::Text::getInstance().johnDialogue2(nPlayer);
-			UI::pauseAndFlush();
-		}
-		else if (state == Quest::Achieved)
-		{
-			Item* tea = nPlayer.getInventory().getItemViaName("Cup of Tea");
-
-			if (tea == nullptr) //Safety check
-			{
-				std::cout << "ERROR - TEA NAME MISSMATCH" << std::endl;
-				return;
-			}
-			std::cout << "You pass the tea over to John." << std::endl;
-			int score = tea->getScoreValue();
-			if (score <= 15) //Bad ending, 15 or less score
-			{
-				UI::Text::getInstance().johnDialogueBadEnding(nPlayer);
-				nQuest.setResult(Quest::Bad);
-			}
-			else if (score < 19) //Neutral Ending, between 15-19 score	
-			{
-				UI::Text::getInstance().johnDialogueNeutralEnding(nPlayer);
-				nQuest.setResult(Quest::Neutral);
-			}
-			else //Good Ending, 19-30 score
-			{
-				UI::Text::getInstance().johnDialogueGoodEnding(nPlayer);
-				nQuest.setResult(Quest::Good);
-			}
-			nQuest.advanceState(Quest::Completed, nPlayer);
-			UI::pauseAndFlush();
-		}
-	}
 	void Event::fillKettle(Player& nPlayer)
 	{
 		if (nPlayer.getInventory().getItemViaName("Empty Kettle"))

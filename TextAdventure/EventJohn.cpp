@@ -12,19 +12,21 @@
 
 namespace GameObject
 {
-	EventJohn::EventJohn() : Event ()
+	EventJohn::EventJohn()
 	{
 		m_functionID = "0";
 		m_name = "John";
 		m_prompt = "Talk to John";
-	}
-	EventJohn::EventJohn(std::string nID, std::string nName, std::string nPrompt, bool nReq) : Event()
-	{
 
+		m_requirement = false;
+		m_eventRequirements.itemName;
+		m_eventRequirements.amount = 0;
+		m_eventRequirements.collected = false;
 	}
-	EventJohn::EventJohn(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount) : Event()
+	EventJohn::EventJohn(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount)
+		: Event(nID, nName, nPrompt, nReq, nRequItemName, nRequItemAmount)
 	{
-
+		
 	}
 
 	void EventJohn::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)

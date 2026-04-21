@@ -10,13 +10,13 @@ namespace GameObject
     class Quest;
     class RecipeBuilder;
 
-    class EventJohn : public Event
+    class EventTea : public Event
     {
     private:
 
     public:
-        EventJohn();
-        EventJohn(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount);
+        EventTea();
+        EventTea(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount);
 
         void eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest) override;
     };

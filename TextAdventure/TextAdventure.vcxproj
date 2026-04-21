@@ -132,6 +132,7 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventJohn.cpp" />
     <ClCompile Include="EventRoom.cpp" />
+    <ClCompile Include="EventTea.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventJohn.h" />
     <ClInclude Include="EventRoom.h" />
+    <ClInclude Include="EventTea.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />

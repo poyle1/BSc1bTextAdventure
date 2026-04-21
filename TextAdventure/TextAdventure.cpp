@@ -32,9 +32,6 @@ int main()
 	{
 		//mainGame.mainMenu(); //Main menu, player name input, short intro scene
 
-		GameObject::EventJohn John("sda","asdasd","asdasd",false);
-		mainGame.getCurrentLocation()->addEvent(John);
-
 		//Main Game Loop// Quest states are advanced by EventRoom.cpp 
 		while (mainQuest.getState() != GameObject::Quest::Completed)
 		{

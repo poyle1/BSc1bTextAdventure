@@ -23,13 +23,11 @@ namespace GameObject
         std::string m_functionID;
 
         bool m_requirement;
-      
         RequirementDetails m_eventRequirements;
 
     public:
 
         Event();
-        Event(std::string nID, std::string nName, std::string nPrompt, bool nReq);
         Event(std::string nID, std::string nName, std::string nPrompt, bool nReq, std::string nRequItemName, int nRequItemAmount);
 
         std::string getName() const;
@@ -52,7 +50,6 @@ namespace GameObject
 
         void runFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
         void teaBuilder(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
-        void talkToJohn(Player& nPlayer, Quest& nQuest);
         void fillKettle(Player& nPlayer);
 
         //void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);

@@ -33,6 +33,7 @@ namespace GameObject
 		void loadEvents(std::string filename);
 		void loadDoors(std::string filename);
 		void loadItems(std::string filename);
+		void loadEventsMk2();
 		void loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName, std::string eventFileName);
 
 		Location* getCurrentLocation();

@@ -16,7 +16,8 @@ namespace GameObject
 		m_questItem = false;
 	}
 
-	Key::Key(std::string nName, std::string nDescription, bool nIsKey, std::string nKeyID) : Item(nName, nDescription, false)
+	Key::Key(std::string nName, std::string nDescription, bool nIsKey, std::string nKeyID)
+		: Item(nName, nDescription, false)
 	{
 		m_isKey = nIsKey;
 		m_keyID = nKeyID;
