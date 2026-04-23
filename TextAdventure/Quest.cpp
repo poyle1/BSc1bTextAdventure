@@ -97,4 +97,10 @@ namespace GameObject {
 		}
 		UI::Text::getInstance().lineBreak();
 	}
+	void Quest::resetQuest(Player& nPlayer)
+	{
+		m_state = Unknown;
+		m_result = Incomplete;
+		nPlayer.setHasActiveQuest(false);
+	}
 }

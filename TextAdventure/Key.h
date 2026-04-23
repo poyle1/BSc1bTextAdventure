@@ -16,7 +16,7 @@ namespace GameObject
 		Key();
 		Key(std::string nName, std::string nDescription, bool nIsKey, std::string nKeyID);
 
-		std::string toString() override;
-		std::string getKeyID() override;
+		std::string getKeyID() const override;
+		std::string toString() const override;
 	};
 }

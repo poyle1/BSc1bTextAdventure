@@ -2,7 +2,7 @@
 #include <string>
 #include <windows.h>
 
-#include "EventRoom.h"
+
 #include "Game.h"
 #include "Inventory.h"
 #include "Item.h"
@@ -21,22 +21,28 @@ int main()
 	//Core game initialization//
 	GameObject::Game mainGame;
 	GameObject::Player mainPlayer;
-	//Load world and art assets//
-	mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv", "./Data/eventAssets.csv");
 	UI::Text::getInstance().loadArtLibrary("./Data/asciiAssets.txt");
-	//Set quest and recipe details//
-	GameObject::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
-	GameObject::RecipeBuilder teaRecipe("a Cup of Tea", 6);
 
 	while (mainGame.getIsRunning())
 	{
-		//mainGame.mainMenu(); //Main menu, player name input, short intro scene
+		mainGame.mainMenu(mainPlayer); //Main menu, player name input, short intro scene
+
+		//Clear & Reset Game Objects
+		mainPlayer.getInventory().clear();
+		mainGame.resetWorld();
+
+		//Load world gameobject assets//
+		mainGame.loadWorld("./Data/locationAssets.csv", "./Data/doorAssets.csv", "./Data/itemAssets.csv", "./Data/eventAssets.csv");
+
+		//Set quest and recipe details//
+		GameObject::Quest mainQuest("Tea Time", "Bring John a cup of tea.");
+		GameObject::RecipeBuilder teaRecipe("a Cup of Tea", 6);
 
 		//Main Game Loop// Quest states are advanced by EventRoom.cpp 
 		while (mainQuest.getState() != GameObject::Quest::Completed)
 		{
 			system("cls");
-		
+			system("Color 70");
 			//Available Actions Logic//
 			int numDoors = mainGame.getCurrentLocation()->getNumDoors(); //Doors
 			int investigateRoomOption = numDoors + 1; //Doors +1
@@ -45,7 +51,6 @@ int main()
 			int numEvents = mainGame.getCurrentLocation()->getEvents().size(); //Events
 			int maxValidInput = investigateRoomOption + numEvents; //Doors + 1 + Events
 			
-
 			//Current Location & Art//
 			mainGame.currentLocationInfo();
 
@@ -69,11 +74,11 @@ int main()
 				mainGame.getCurrentLocation()->startEvent(teaRecipe, mainPlayer, mainQuest, eventIndex);
 				continue;
 			}
-			/*if (!mainPlayer.getHasActiveQuest())
+			if (!mainPlayer.getHasActiveQuest())
 			{
 				std::cout << "You should talk to John first before exploring around." << std::endl;
 				UI::pauseAndFlush();
-			}*/
+			}
 			else
 			{
 				//Investigate Current Location//

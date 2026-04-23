@@ -44,36 +44,37 @@ namespace GameObject
 	public:
 		Location();
 		Location(const int nIndex, std::string nName, std::string nDescription);
+		~Location();
 
 		std::string getName() const;
 		std::string getDescription() const;
 		void setDescription(std::string nText);
-		int getIndex() const; //gets the index number of the selected location
+		int getIndex() const;
 
 		Inventory& getInventory();
-		bool hasItems();
-		void itemCheck();
+		bool hasItems() const;
+		void itemCheck() const;
 		void outputItems();
 		void investigateRoom(Inventory& playerInventory);
 		bool getSearched() const;
 		void setSearched(bool nSearched);
-		void searchCheck();
+		void searchCheck() const;
 
 		void addDoor(Location* targetLoc, bool locked, std::string keyID);
-		int getNumDoors();
+		int getNumDoors() const;
 		Location* getDoor(int index);
-		bool isDoorLocked(int index); //Checks if a specific connection is locked, used to check if the player can move to a location before moving there
+		bool isDoorLocked(int index) const;
 		bool unlockDoor(int index, Inventory& playerInventory); //Checks the player's inventory for the correct key and unlocks the location if found
 		void unlockNextDoor(Location* target);
 		void setLocked(int index, bool locked);
-		void outputDoors();
-		void enterLocation();
+		void outputDoors() const;
+		void enterLocation() const;
 
 		bool hasEvent() const;
 		std::vector<Event*>& getEvents();
 		void addEvent(Event* nEvent);
 		void removeEvent(int nIndex);
 		Event* getEvent(int nIndex);
-		void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID);
+		void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID) const;
 	};
 }

@@ -88,7 +88,7 @@ namespace GameObject
 	{
 		m_eventRequirements.collected = nCollected;
 	}
-	bool Event::canStartEvent(Player& nPlayer, std::string nItem) const
+	bool Event::canStartEvent(Player& nPlayer) const
 	{
 		if (!m_requirement)
 		{
@@ -96,15 +96,15 @@ namespace GameObject
 		}
 		else
 		{
-			if (nPlayer.getInventory().getItemAmount(nItem) < m_eventRequirements.amount)
+			if (nPlayer.getInventory().getItemAmount(m_eventRequirements.itemName) < m_eventRequirements.amount)
 			{
 				if (m_eventRequirements.amount == 1)
 				{
-					std::cout << "You need: '" << nItem << "' to continue!" << std::endl;
+					std::cout << "You need: '" << m_eventRequirements.itemName << "' to continue!" << std::endl;
 				}
 				else
 				{
-					std::cout << "You need " << m_eventRequirements.amount << " " << nItem << "s" << std::endl;
+					std::cout << "You need " << m_eventRequirements.amount << " " << m_eventRequirements.itemName << "s" << std::endl;
 				}
 				UI::pauseAndFlush();
 				return false;
@@ -119,36 +119,5 @@ namespace GameObject
 	void Event::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
 
-	}
-	\
-	//Starts the RecipeBuilder minigame if the player has quest items >= the
-	// amount of steps in the recipe. It then advances the quest state.
-	void Event::teaBuilder(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
-	{
-		if (!nPlayer.getInventory().hasReqQuestItems(nRecipe.getRecipeSteps()))
-		{
-			std::cout << "You have " << nPlayer.getInventory().getQuestItemTotal() << " out of " << nRecipe.getRecipeSteps() << " ingredients!" << std::endl;
-			std::cout << "Collect them all to start making: " << nRecipe.getName() << "." << std::endl;
-			UI::pauseAndFlush();
-			return;
-		}
-		nQuest.advanceState(Quest::Achieved, nPlayer);
-		nRecipe.teaBuilderMkII(nPlayer, nQuest);
-		return;
-	}
-
-	void Event::fillKettle(Player& nPlayer)
-	{
-		if (nPlayer.getInventory().getItemViaName("Empty Kettle"))
-		{
-			std::cout << "You fill up the kettle with water!" << std::endl;
-			nPlayer.getInventory().getItemViaName("Empty Kettle")->setName("Filled Kettle");
-			nPlayer.getInventory().getItemViaName("Filled Kettle")->setQuestItem(true);
-			UI::pauseAndFlush();
-		}
-		else
-		{
-			return;
-		}
 	}
 }

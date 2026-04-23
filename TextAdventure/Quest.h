@@ -64,5 +64,6 @@ namespace GameObject
 		void outputObjectives() const;*/
 
 		void currentQuestInfo(Player& nPlayer) const; 
+		void resetQuest(Player& nPlayer);
 	};
 }

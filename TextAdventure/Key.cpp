@@ -23,12 +23,12 @@ namespace GameObject
 		m_keyID = nKeyID;
 	}
 
-	std::string Key::getKeyID()
+	std::string Key::getKeyID() const
 	{
 		return m_keyID;
 	}
 
-	std::string Key::toString()
+	std::string Key::toString() const
 	{
 		return m_name + "! Maybe it opens the door to the " + m_keyID;
 	}

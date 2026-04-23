@@ -45,13 +45,7 @@ namespace GameObject
         bool getCollected() const;
         void setCollected(bool nCollected);
 
-        bool canStartEvent(Player& nPlayer, std::string nItem) const;
+        bool canStartEvent(Player& nPlayer) const;
         virtual void eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
-
-        void runFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
-        void teaBuilder(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
-        void fillKettle(Player& nPlayer);
-
-        //void startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest);
     };
 }

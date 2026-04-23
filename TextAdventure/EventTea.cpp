@@ -31,6 +31,15 @@ namespace GameObject
 
 	void EventTea::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
-
+		if (!nPlayer.getInventory().hasReqQuestItems(nRecipe.getRecipeSteps()))
+		{
+			std::cout << "You have " << nPlayer.getInventory().getQuestItemTotal() << " out of " << nRecipe.getRecipeSteps() << " ingredients!" << std::endl;
+			std::cout << "Collect them all to start making: " << nRecipe.getName() << "." << std::endl;
+			UI::pauseAndFlush();
+			return;
+		}
+		nQuest.advanceState(Quest::Achieved, nPlayer);
+		nRecipe.teaBuilderMkII(nPlayer, nQuest);
+		return;
 	}
 }

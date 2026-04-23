@@ -13,22 +13,22 @@ namespace GameObject
 
 	public:
 		Inventory();
+		~Inventory();
 
 		void addItem(Item* nItem);
 		void removeItem(int nIndex);
-		//void removeItemViaName(const std::string& nName);
 		void clear();
-		Item* getItemViaIndex(int nIndex) const;
-		Item* getItemViaName(const std::string& nName) const;
+		Item* getItemViaIndex(int nIndex);
+		Item* getItemViaName(const std::string& nName);
 		std::vector<Item*>& getInventory();
 		int getSize() const;
 		bool isEmpty() const;
 
 		void outputInventory() const;
-		void outputInventoryWithNumbers();
+		void outputInventoryWithNumbers() const;
 		void outputQuestItems() const;
 
-		int getQuestItemTotal();
+		int getQuestItemTotal() ;
 		bool hasReqQuestItems(int reqAmount) const;
 
 		bool hasAnItem(const std::string& nItem) const;

@@ -7,10 +7,12 @@
 #include "Quest.h"
 #include "Utility.h"
 #include "Key.h"
-#include "EventRoom.h"
 #include "Text.h"
 #include "Event.h"
 #include "EventJohn.h"
+#include "EventTea.h"
+#include "EventSink.h"
+#include "Player.h"
 
 namespace GameObject
 {
@@ -27,7 +29,7 @@ namespace GameObject
 		m_currentLocation = nStartLocation;
 	}
 
-	void Game::mainMenu()
+	void Game::mainMenu(Player& nPlayer)
 	{
 		while (m_isRunning)
 		{
@@ -47,6 +49,7 @@ namespace GameObject
 
 			if (userInput == 1)
 			{
+				gameStart(nPlayer);
 				UI::Text::getInstance().gameIntro();
 				break;
 			}
@@ -67,7 +70,7 @@ namespace GameObject
 		}
 	}
 
-	void Game::displayRules()
+	void Game::displayRules() const
 	{
 		system("cls");
 		UI::Text::getInstance().printArt("RULES");
@@ -79,7 +82,7 @@ namespace GameObject
 		UI::pauseAndFlush();
 	}
 
-	void Game::displayCredits()
+	void Game::displayCredits() const
 	{
 		system("cls");
 		std::cout << "====================================================================================================\n";
@@ -89,37 +92,35 @@ namespace GameObject
 		std::cout << "Art assets, courtesy of ASCII Art Archive, asciiart.eu:" << std::endl;
 		std::cout << std::endl;
 		std::cout << "Living Room: Untitled by Joan G. Stark." << std::endl;
-		std::cout << "Kitchen: Sink by Joan G. Stark." << std::endl;
 		std::cout << "Hallway: Drawer by Riitta Rasimus." << std::endl;
 		std::cout << "Bathroom: Untitled by Praseodymium 59." << std::endl;
-		std::cout << "On Suite: Untitled by Joan G. Stark." << std::endl;
 		std::cout << "Garage: Ready to Paint by Joan G. Stark." << std::endl;
 		std::cout << "Front garden: Flower garden by Joan G. Stark." << std::endl;
 		std::cout << "Back garden: Untitled by Joan G. Stark." << std::endl;
 		std::cout << "Shed: Untitled by Anonymous" << std::endl;
-		std::cout << "QuestCompleteP1: Coffee mug by H P Barmario." << std::endl;
 		std::cout << "Misc art and titles created using the ASCII Art Archive ASCII Art Tools." << std::endl;
 		std::cout << std::endl;
 		std::cout << "====================================================================================================\n";
 		system("pause");
 	}
 
-	void Game::gameOver(Quest& nQuest)
+	void Game::gameOver(Quest& nQuest) const
 	{
 		std::cout << "====================================================================================================\n";
 
 		if (nQuest.getResult() == Quest::Bad)
 		{ 
-			UI::Text::getInstance().printArt("BadEnd");
-		}
-		else if (nQuest.getResult() == Quest::Neutral)
-		{
-			UI::Text::getInstance().printArt("NeutralEnd");
+			UI::Text::getInstance().printArt("BADEND");
 		}
 		else if (nQuest.getResult() == Quest::Good)
 		{
-			UI::Text::getInstance().printArt("GoodEnd");
+			UI::Text::getInstance().printArt("GOODEND");
 		}
+		else
+		{
+			UI::Text::getInstance().printArt("NEUTRALEND");
+		}
+		
 		std::cout << "====================================================================================================\n";
 		std::cout << "Enter '1' to quit the game.\n";
 		std::cout << "Enter '2' to return to the main menu.\n";
@@ -140,6 +141,29 @@ namespace GameObject
 		{
 			return;
 		}
+	}
+
+	void Game::gameStart(Player& nPlayer)
+	{
+		system("cls");
+		bool playerNamed = false;
+		std::string newName;
+
+		std::cin.ignore(1000, '\n');
+		while (!playerNamed) {
+			std::cout << "====================================================================================================\n";
+			std::cout << "\tEnter player name:\n";
+			std::cout << "====================================================================================================\n";
+			std::getline(std::cin, newName);
+
+			if (newName.empty())
+			{
+				system("cls");
+				continue;
+			}
+			playerNamed = true;
+		}
+		nPlayer.setName(newName);
 	}
 
 	bool Game::getIsRunning() const
@@ -187,6 +211,7 @@ namespace GameObject
 		}
 	}
 
+	//Currently Not In Use
 	void Game::loadEvents(std::string filename)
 	{
 		std::ifstream locationFile(filename);
@@ -296,12 +321,14 @@ namespace GameObject
 				Key* newKey = new Key(name, description, key, keyID);
 				Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newKey);
+				m_allGameItems.push_back(newKey);
 			}
 			else
 			{
 				Item* newItem = new Item(name, description, questItem);
 				Location* pAddTo = m_worldMap[stoi(addTo)];
 				pAddTo->getInventory().addItem(newItem);
+				m_allGameItems.push_back(newItem);
 			}
 		}
 		locationFile.close();
@@ -310,7 +337,11 @@ namespace GameObject
 	void Game::loadEventsMk2()
 	{
 		EventJohn* john = new EventJohn();
+		EventTea* tea = new EventTea();
+		EventSink* sink = new EventSink();
 		m_worldMap[0]->addEvent(john);
+		m_worldMap[2]->addEvent(tea);
+		m_worldMap[4]->addEvent(sink);
 	}
 
 	void Game::loadWorld(std::string locFileName, std::string doorFileName, std::string itemFileName, std::string eventFileName)
@@ -348,7 +379,7 @@ namespace GameObject
 		}
 	}
 
-	void Game::currentLocationInfo()
+	void Game::currentLocationInfo() const
 	{
 		UI::Text::getInstance().lineBreak(); ///
 		std::cout << "Current location: " << m_currentLocation->getName() << " | ";
@@ -358,7 +389,7 @@ namespace GameObject
 		UI::Text::getInstance().lineBreak(); ///
 	}
 
-	void Game::currentActionsInfo(int investigateRoomOption, int startEventOption)
+	void Game::currentActionsInfo(int investigateRoomOption, int startEventOption) 
 	{
 		std::cout << "\tAvailable Actions:" << "\n";
 		//Doors
@@ -389,5 +420,19 @@ namespace GameObject
 		{
 			std::cout << l->getIndex() << l->getName() << std::endl;
 		}
+	}
+	void Game::resetWorld()
+	{
+		for (Item* item : m_allGameItems)
+		{
+			delete item;
+		}
+		m_allGameItems.clear();
+
+		for (Location* loc : m_worldMap)
+		{
+			delete loc;
+		}
+		m_worldMap.clear();
 	}
 }

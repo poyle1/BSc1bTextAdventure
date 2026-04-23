@@ -20,7 +20,7 @@ namespace GameObject
 		m_scoreValue = -1;
 		m_recipeIndex = -1;
 	}
-	bool Item::isQuestItem()
+	bool Item::isQuestItem() const
 	{
 		return m_questItem;
 	}
@@ -28,11 +28,11 @@ namespace GameObject
 	{
 		m_questItem = nQuestItem;
 	}
-	std::string Item::getName()
+	std::string Item::getName() const
 	{
 		return m_name;
 	}
-	std::string Item::getDescription()
+	std::string Item::getDescription() const
 	{
 		return m_description;
 	}
@@ -44,7 +44,7 @@ namespace GameObject
 	{
 		m_description = nDesc;
 	}
-	int Item::getScoreValue()
+	int Item::getScoreValue() const
 	{
 		return m_scoreValue;
 	}
@@ -52,7 +52,7 @@ namespace GameObject
 	{
 		m_scoreValue = nScore;
 	}
-	int Item::getRecipeIndex()
+	int Item::getRecipeIndex() const
 	{
 		return m_recipeIndex;
 	}
@@ -60,11 +60,11 @@ namespace GameObject
 	{
 		m_recipeIndex = nIndex;
 	}
-	std::string Item::toString()
+	std::string Item::toString() const
 	{
 		return m_name + "." + m_description;
 	}
-	std::string Item::getKeyID()
+	std::string Item::getKeyID() const
 	{
 		return "";
 	}

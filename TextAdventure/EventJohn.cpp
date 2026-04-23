@@ -31,7 +31,7 @@ namespace GameObject
 
 	void EventJohn::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
-		if (!canStartEvent(nPlayer, getReqItemName()))
+		if (!canStartEvent(nPlayer))
 		{
 			return;
 		}

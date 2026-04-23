@@ -31,6 +31,17 @@ namespace GameObject
 		m_eventPresent = false;
 	}
 
+	Location::~Location()
+	{
+		for (Event* event : m_events)
+		{
+			delete event;
+		}
+		m_events.clear();
+
+		m_doors.clear();
+	}
+
 	std::string Location::getName() const
 	{
 		return m_name;
@@ -56,12 +67,12 @@ namespace GameObject
 		return m_locItems;
 	}
 
-	bool Location::hasItems()
+	bool Location::hasItems() const
 	{
 		return !m_locItems.isEmpty();
 	}
 
-	void Location::itemCheck()
+	void Location::itemCheck() const
 	{
 		if (hasItems())
 		{
@@ -122,7 +133,7 @@ namespace GameObject
 		m_searched = nSearched;
 	}
 
-	void Location::searchCheck()
+	void Location::searchCheck() const
 	{
 		if (m_searched)
 		{
@@ -143,7 +154,7 @@ namespace GameObject
 		m_doors.push_back(newDoor);
 	}
 
-	int Location::getNumDoors()
+	int Location::getNumDoors() const
 	{
 		return m_doors.size();
 	}
@@ -157,7 +168,7 @@ namespace GameObject
 		return m_doors[index].destination;
 	}
 
-	bool Location::isDoorLocked(int index)
+	bool Location::isDoorLocked(int index) const
 	{
 		if (index < 0 || index >= m_doors.size())
 		{
@@ -207,7 +218,7 @@ namespace GameObject
 		m_doors[index].locked = nLocked;
 	}
 
-	void Location::outputDoors()
+	void Location::outputDoors() const
 	{
 		for (int i = 0; i < m_doors.size(); i++)
 		{
@@ -220,7 +231,7 @@ namespace GameObject
 		}
 	}
 
-	void Location::enterLocation()
+	void Location::enterLocation() const
 	{
 		std::cout << "You have entered the " << getName() << "." << std::endl;
 		UI::pauseAndFlush();
@@ -260,7 +271,7 @@ namespace GameObject
 		}
 	}
 
-	Event* Location::getEvent(int nIndex)
+	Event* Location::getEvent(int nIndex) 
 	{
 		if (nIndex < 0 || nIndex >= m_events.size()) {
 			return nullptr; //Safety check
@@ -268,7 +279,7 @@ namespace GameObject
 		return m_events[nIndex];
 	}
 
-	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID)
+	void Location::startEvent(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest, int eventID) const
 	{
 		m_events[eventID]->eventFunction(nRecipe, nPlayer, nQuest);
 		return;

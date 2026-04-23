@@ -13,90 +13,108 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\GameObjectCPP">
+      <UniqueIdentifier>{3411eba4-4432-4b74-a32e-cba7a20e320b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectH">
+      <UniqueIdentifier>{7f51deda-01e8-430e-b100-7a584ca4c294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjectH\EventsH">
+      <UniqueIdentifier>{621d4275-6ce3-41a8-8098-bc8964c64c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectCPP\EventsCPP">
+      <UniqueIdentifier>{eec00429-2eb5-4095-a08a-e01b14518d4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TextAdventure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Location.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Key.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EventRoom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Quest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RecipeBuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObjectCPP\EventsCPP</Filter>
     </ClCompile>
     <ClCompile Include="EventJohn.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObjectCPP\EventsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSink.cpp">
+      <Filter>Source Files\GameObjectCPP\EventsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTea.cpp">
+      <Filter>Source Files\GameObjectCPP\EventsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Location.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Quest.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="RecipeBuilder.cpp">
+      <Filter>Source Files\GameObjectCPP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Location.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Key.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventRoom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Quest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RecipeBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjectH\EventsH</Filter>
     </ClInclude>
     <ClInclude Include="EventJohn.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjectH\EventsH</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSink.h">
+      <Filter>Header Files\GameObjectH\EventsH</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTea.h">
+      <Filter>Header Files\GameObjectH\EventsH</Filter>
+    </ClInclude>
+    <ClInclude Include="RecipeBuilder.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Location.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\GameObjectH</Filter>
+    </ClInclude>
+    <ClInclude Include="Quest.h">
+      <Filter>Header Files\GameObjectH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,11 +8,13 @@
 namespace GameObject
 {
 	class Quest;
+	class Player;
 
 	class Game
 	{
 	private:
 		std::vector<Location*> m_worldMap;
+		std::vector<Item*> m_allGameItems;
 		bool m_isRunning = true;
 		Location* m_currentLocation;
 
@@ -21,10 +23,11 @@ namespace GameObject
 		Game(bool nRunning, Location* nStartLocation = nullptr);
 
 		//void run();
-		void mainMenu();
-		void displayRules();
-		void displayCredits();
-		void gameOver(Quest& nQuest);
+		void mainMenu(Player& nPlayer);
+		void displayRules() const;
+		void displayCredits() const;
+		void gameOver(Quest& nQuest) const;
+		void gameStart(Player& nPlayer);
 
 		bool getIsRunning() const;
 		void setIsRunning(bool nRunning);
@@ -40,10 +43,11 @@ namespace GameObject
 		void setCurrentLocation(Location* newLoc);
 		void movePlayer(int nextLocationIndex);
 
-		void currentLocationInfo();
+		void currentLocationInfo() const;
 		void currentActionsInfo(int investigateRoomOption, int startEventOption);
 
 		//debug functions
 		void outputWorld();
+		void resetWorld();
 	};
 }

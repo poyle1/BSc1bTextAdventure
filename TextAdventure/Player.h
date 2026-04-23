@@ -17,6 +17,7 @@ namespace GameObject
 	public:
 		Player();
 		Player(std::string nName);
+		~Player();
 
 		void setName(std::string nName);
 		std::string getName() const;

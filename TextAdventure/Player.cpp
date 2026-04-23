@@ -15,6 +15,10 @@ namespace GameObject
 		m_name = nName;
 		m_hasActiveQuest = false;
 	}
+	Player::~Player()
+	{
+
+	}
 	void Player::setName(std::string nName)
 	{
 		m_name = nName;

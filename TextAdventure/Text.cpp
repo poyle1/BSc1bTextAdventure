@@ -24,7 +24,7 @@ namespace UI
 	void Text::loadArtLibrary(std::string fileName)
 	{
 		std::ifstream artFile(fileName);
-		auto& artLibrary = getMap();
+		std::map<std::string, std::string>& artLibrary = getMap();
 		if (!artFile.is_open())
 		{
 			std::cout << "Error, could not find file " << fileName << std::endl;
@@ -65,9 +65,9 @@ namespace UI
 		artFile.close();
 	}
 
-	void Text::printArt(std::string artName)
+	void Text::printArt(std::string artName) const
 	{
-		auto& artLibrary = getMap();
+		std::map<std::string, std::string>& artLibrary = getMap();
 		if (artLibrary.count(artName))
 		{
 			std::cout << artLibrary[artName];
@@ -78,7 +78,7 @@ namespace UI
 		}
 	}
 
-	void Text::printDialogue(std::string artName, std::string dialogue)
+	void Text::printDialogue(std::string artName, std::string dialogue) const
 	{
 		system("cls");
 		printArt(artName); //Draw ASCII art
@@ -86,7 +86,7 @@ namespace UI
 		system("pause");
 	}
 
-	void Text::gameIntro()
+	void Text::gameIntro() const
 	{
 		system("cls");
 		printArt("INTRO1");
@@ -103,7 +103,7 @@ namespace UI
 		pauseAndWipe();
 	}
 
-	void Text::dialogueBox(std::string nCharacter, std::string nArtName)
+	void Text::dialogueBox(std::string nCharacter, std::string nArtName) const
 	{
 		system("cls");
 		lineBreak();
@@ -114,7 +114,7 @@ namespace UI
 		lineSpace();
 	}
 
-	void Text::johnDialogue1(const GameObject::Player& nPlayer)
+	void Text::johnDialogue1(const GameObject::Player& nPlayer) const
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: \"Oh hello " << nPlayer.getName() << "!\"" << std::endl;
@@ -122,7 +122,7 @@ namespace UI
 		std::cout << "John: \"I was just about to make myself a tea, but I've unpacked the shopping in a VERY strange way...\"" << std::endl;
 		std::cout << "John: \"Please could you have a look around and make me a tea once you have everything?\"" << std::endl;
 	}
-	void Text::johnDialogue2(const GameObject::Player& nPlayer)
+	void Text::johnDialogue2(const GameObject::Player& nPlayer) const
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "\"How's that tea coming along, " << nPlayer.getName() << "?\"" << std::endl;
@@ -130,7 +130,7 @@ namespace UI
 		std::cout << "\"There is a key somewhere in here for my bedroom. I think I left the sugar in there...\"" << std::endl;
 	}
 	
-	void Text::johnDialogueBadEnding(const GameObject::Player& nPlayer)
+	void Text::johnDialogueBadEnding(const GameObject::Player& nPlayer) const
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
@@ -138,9 +138,10 @@ namespace UI
 		std::cout << "John: *...*" << std::endl;
 		std::cout << "John: *sips*..." << std::endl;
 		UI::pauseAndFlush();
+		UI::Text::lineSpace();
 		std::cout << "John falls to the floor." << std::endl;
 	}
-	void Text::johnDialogueNeutralEnding(const GameObject::Player& nPlayer)
+	void Text::johnDialogueNeutralEnding(const GameObject::Player& nPlayer) const
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
@@ -149,10 +150,11 @@ namespace UI
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: \"Umm...Thanks... Yeah, this is good, thanks...\"" << std::endl;
 		UI::pauseAndFlush();
+		UI::Text::lineSpace();
 		std::cout << "John: \"....Hmm, whats that?\"" << std::endl;
 		std::cout << "John: \"Oh yeah, I suppose I'll tell you about a tale of lost histories then.\"" << std::endl;
 	}
-	void Text::johnDialogueGoodEnding(const GameObject::Player& nPlayer)
+	void Text::johnDialogueGoodEnding(const GameObject::Player& nPlayer) const
 	{
 		dialogueBox("John", "JOHN");
 		std::cout << "John: \"Oh thank you " << nPlayer.getName() << "! This is just what I needed.\"" << std::endl;
@@ -162,13 +164,14 @@ namespace UI
 		std::cout << "John: *sips*" << std::endl;
 		std::cout << "John: \"Thats lovely, great stuff.\"" << std::endl;
 		UI::pauseAndFlush();
+		UI::Text::lineSpace();
 		std::cout << "John: \"Now then, let me tell you all about a tale of lost histories!\"" << std::endl;
 	}
-	void Text::lineBreak()
+	void Text::lineBreak() const
 	{
 		std::cout << "====================================================================================================\n";
 	}
-	void Text::lineSpace()
+	void Text::lineSpace() const
 	{
 		std::cout << std::endl;
 	}
