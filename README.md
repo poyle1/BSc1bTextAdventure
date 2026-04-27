@@ -39,7 +39,8 @@ Garage: Ready to Paint by Joan G. Stark.\
 Front garden: Flower garden by Joan G. Stark.\
 Back garden: Untitled by Joan G. Stark.\
 Shed: Untitled by Anonymous\
-Misc art and titles created using the ASCII Art Archive ASCII Art Tools.
+Misc art and titles created using the ASCII Art Archive ASCII Art Tools.\
+README template by [Bane Sullivan - How to write a good README](https://github.com/banesullivan/README)
 
 ## 🚀 Usage
 
