@@ -32,13 +32,13 @@ The first of many projects by Tyler Poyle of TyPo Games.
 
 Art assets, courtesy of ASCII Art Archive, asciiart.eu:
 
-Living Room: Untitled by Joan G. Stark.
-Hallway: Drawer by Riitta Rasimus.
-Bathroom: Untitled by Praseodymium 59.
-Garage: Ready to Paint by Joan G. Stark.
-Front garden: Flower garden by Joan G. Stark.
-Back garden: Untitled by Joan G. Stark.
-Shed: Untitled by Anonymous
+Living Room: Untitled by Joan G. Stark.\
+Hallway: Drawer by Riitta Rasimus.\
+Bathroom: Untitled by Praseodymium 59.\
+Garage: Ready to Paint by Joan G. Stark.\
+Front garden: Flower garden by Joan G. Stark.\
+Back garden: Untitled by Joan G. Stark.\
+Shed: Untitled by Anonymous\
 Misc art and titles created using the ASCII Art Archive ASCII Art Tools.
 
 ## 🚀 Usage
@@ -51,5 +51,4 @@ The main gameplay loop repeats until the 'main quest' has been completed - it wi
 
 
 ## 💭 Feedback and Contributing
-Please leave any comments regarding this project here - anything is appreciated!
-https://github.com/poyle1/BSc1bTextAdventure/discussions/1
+Please leave any comments regarding this project [here - anything is appreciated!](https://github.com/poyle1/BSc1bTextAdventure/discussions/1)
