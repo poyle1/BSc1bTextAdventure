@@ -18,6 +18,7 @@
 
 int main()
 {
+	system("Color 70");
 	//Core game initialization//
 	GameObject::Game mainGame;
 	GameObject::Player mainPlayer;

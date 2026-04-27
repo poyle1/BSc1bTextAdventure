@@ -44,12 +44,13 @@ namespace GameObject
 			std::cout << "You fill up the kettle with water!" << std::endl;
 			kettle->setName("Filled Kettle");
 			kettle->setQuestItem(true);
+			m_completed = true;
 			UI::pauseAndFlush();
 		}
 		else
 		{
 			std::cout << "You turn the tap on and water flows through." << std::endl;
-			std::cout << "If you may be able to fill up an empty container here..." << std::endl;
+			std::cout << "You may be able to fill up an empty container here..." << std::endl;
 			UI::pauseAndFlush();
 		}
 	}

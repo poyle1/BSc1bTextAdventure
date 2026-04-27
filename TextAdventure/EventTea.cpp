@@ -17,7 +17,7 @@ namespace GameObject
 		m_functionID = "2";
 		m_name = "Tea";
 		m_prompt = "Make a cup of tea";
-
+		m_completed = false;
 		m_requirement = false;
 		m_eventRequirements.itemName;
 		m_eventRequirements.amount = 0;
@@ -31,6 +31,13 @@ namespace GameObject
 
 	void EventTea::eventFunction(RecipeBuilder& nRecipe, Player& nPlayer, Quest& nQuest)
 	{
+		if (m_completed)
+		{
+			std::cout << "You have already made a cup of tea for John." << std::endl;
+			std::cout << "Bring him the tea before it gets cold!" << std::endl;
+			UI::pauseAndFlush();
+			return;
+		}
 		if (!nPlayer.getInventory().hasReqQuestItems(nRecipe.getRecipeSteps()))
 		{
 			std::cout << "You have " << nPlayer.getInventory().getQuestItemTotal() << " out of " << nRecipe.getRecipeSteps() << " ingredients!" << std::endl;
@@ -40,6 +47,7 @@ namespace GameObject
 		}
 		nQuest.advanceState(Quest::Achieved, nPlayer);
 		nRecipe.teaBuilderMkII(nPlayer, nQuest);
+		m_completed = true;
 		return;
 	}
 }
