@@ -13,15 +13,16 @@ namespace GameObject
 		std::string m_recipeName;
 		int m_recipeSteps;
 
-
 		struct RecipeResults
 		{
 			int score;
 			bool failed;
 		};
 
+		//Score 2D Array - [Ingredient][Step]
+		//E.g, milk (Ingredient) added at step 3 (Step) = score2DArray[4][3] = 2 points
 		int score2DArray[6][6] = 
-		{   //Build order
+		{   //<--Steps-->
 			{ 5, 0, 0, 0, 0, 0 }, //Mug
 			{ -1, 5, 5, 3, 1, 0 },//Teabag
 			{ -1, 5, 5, 3, 1, 0 },//Sugar

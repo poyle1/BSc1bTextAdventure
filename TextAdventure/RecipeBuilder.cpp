@@ -63,7 +63,7 @@ namespace GameObject
 
 				if (!outputVector.empty())
 				{
-					std::cout << "Current Stack:" << std::endl;
+					std::cout << "Cup of tea contents:" << std::endl;
 					std::cout << "=-=-=-=-=-=-=" << std::endl;
 					for (int i = 0; i < outputVector.size(); i++)
 					{

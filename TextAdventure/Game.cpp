@@ -285,6 +285,7 @@ namespace GameObject
 		locationFile.close();
 	}
 
+	//Loading game ites from a cvs 
 	void Game::loadItems(std::string filename)
 	{
 		std::ifstream locationFile(filename);
@@ -312,22 +313,23 @@ namespace GameObject
 			getline(rowstream, isQuestItem, ',');
 			getline(rowstream, isKey, ',');
 
+
 			bool key = (isKey == "true"); //String to bool
 			bool questItem = (isQuestItem == "true"); //String to bool
 
-			if (key)
+			if (key) 
 			{
 				getline(rowstream, keyID, ',');
 				Key* newKey = new Key(name, description, key, keyID);
 				Location* pAddTo = m_worldMap[stoi(addTo)];
-				pAddTo->getInventory().addItem(newKey);
-				m_allGameItems.push_back(newKey);
+				pAddTo->getInventory().addItem(newKey); //Adding the new item to the location, and a master list
+				m_allGameItems.push_back(newKey);		//This is done for easier memory management during the games reset functions
 			}
 			else
 			{
 				Item* newItem = new Item(name, description, questItem);
 				Location* pAddTo = m_worldMap[stoi(addTo)];
-				pAddTo->getInventory().addItem(newItem);
+				pAddTo->getInventory().addItem(newItem); 
 				m_allGameItems.push_back(newItem);
 			}
 		}
